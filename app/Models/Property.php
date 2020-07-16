@@ -88,7 +88,7 @@ class Property extends Model
         parent::boot();
 
         static::created(function($property){
-            for($i=1;$i<=7;$i++):
+            /*for($i=1;$i<=7;$i++):
                 $timings[] = [
                     'property_id' => $property->id,
                     'day_name' => now()->subDays($i)->format('D'),
@@ -98,7 +98,7 @@ class Property extends Model
                 ];
             endfor;
 
-            $property->timings()->insert($timings);
+            $property->timings()->insert($timings);*/
         });
 
         static::deleting(function($property){

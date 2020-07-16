@@ -13,13 +13,13 @@
 
             <li class="nav-item">
                 <a href="javascript:void(0);">
-                    <i class="la la-television"></i>
+                    <i class="la la-bank"></i>
                     <span class="menu-title">Properties</span>
                 </a>
 
                 <ul class="menu-content">
                     <li>
-                        <a class="menu-item" href="{{ route('admin.properties') }}" >All Properties</a>
+                        <a class="menu-item" href="{{ route('admin.property.list') }}" >All Properties</a>
                     </li>
                     <li>
                         <a class="menu-item" href="{{ route('admin.property.add') }}">Add Property</a>

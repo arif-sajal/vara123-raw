@@ -7,6 +7,7 @@
 <script src="{{ asset('administration/app-assets/vendors/js/extensions/toastr.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('administration/app-assets/vendors/js/extensions/sweetalert.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('administration/app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('administration/app-assets/vendors/dropify/dist/js/dropify.min.js') }}" type="text/javascript"></script>
 @stack('page.vendor.js')
 <!-- END PAGE VENDOR JS-->
 

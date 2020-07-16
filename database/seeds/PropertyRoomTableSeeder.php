@@ -24,7 +24,6 @@ class PropertyRoomTableSeeder extends Seeder
                     'total' => $total,
                     'available' => $available,
                     'booked' => $total - $available,
-                    'name' => $faker->name,
                     'description' => $faker->text(500),
                     'for_person' => rand(1,4),
                     'bed_count' => rand(1,4),

@@ -204,3 +204,7 @@ $(document).on('click','[data-action="confirm"]',function(e){
 $(document).on('click','[data-toggle="tab"]', function (e) {
     switchTab($(this).data('href'),$(this).data('content'));
 });
+
+$(document).on('click','[data-click="fireAjax"]', function (e) {
+    fireAjax($(this).data('url'),$(this).data('type'),$(this).data('data'));
+});

@@ -22,12 +22,12 @@ class CreatePropertyRoomsTable extends Migration
             $table->integer('available');
             $table->integer('booked');
 
-            $table->string('name');
             $table->text('description')->nullable();
+            $table->string('featured_image')->nullable();
             $table->integer('for_person');
             $table->integer('bed_count');
-            $table->string('featured_image')->nullable();
-            $table->enum('room_type',['single','double','queen','king']);
+            $table->enum('room_type',['Single','Double','Queen','King']);
+            $table->boolean('active')->default('true');
             $table->timestamps();
         });
     }

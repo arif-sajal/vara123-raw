@@ -3,7 +3,7 @@
 
 @include('administration.compo.head')
 
-<body class="vertical-layout vertical-menu 2-columns   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu" data-col="2-columns">
+<body class="vertical-layout vertical-menu 2-columns menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu" data-col="2-columns">
 
 <!-- fixed-top-->
 @include('administration.compo.topMenu')
@@ -19,7 +19,7 @@
 <!-- ////////////////////////////////////////////////////////////////////////////-->
 @include('administration.compo.footer')
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZDni5W-iV-mDZmL44FwTFqhWbv7YgMGI&callback=initMap"></script>
+@include('administration.compo.scripts')
 
 <!-- MY MODAL Extra LARGE -->
 <div class="modal fade modal-size-large" id="myModalExtraLarge" role="dialog" aria-labelledby="modal-default-header">

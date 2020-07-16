@@ -17,6 +17,7 @@ class CreatePropertyTypesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('identity');
+            $table->string('item');
             $table->string('featured_image');
             $table->string('property_featured_image_not_found');
             $table->string('title');

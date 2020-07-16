@@ -18,7 +18,7 @@ class CreateRoomBedsTable extends Migration
             $table->integer('room_id');
             $table->integer('property_id');
             $table->integer('provider_id');
-            $table->enum('size',['single','double','queen','king']);
+            $table->enum('size',['Single','Double','Queen','King']);
             $table->integer('for_person');
             $table->timestamps();
         });

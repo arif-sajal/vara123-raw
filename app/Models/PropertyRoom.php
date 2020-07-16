@@ -11,6 +11,10 @@ class PropertyRoom extends Model
         return $this->belongsTo(Property::class);
     }
 
+    public function provider(){
+        return $this->belongsTo(Provider::class);
+    }
+
     public function currency(){
         return $this->belongsTo(Currency::class);
     }

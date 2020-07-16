@@ -18,15 +18,15 @@
             </div>
 
             <div class="btn-group btn-block" role="group" aria-label="Basic example">
-                <a href="{{ route('admin.property.view',$property->id) }}" type="button" class="btn btn-success">
+                <a href="{{ route('admin.property.view',$property->id) }}" type="button" class="btn btn-success w-100">
                     <i class="la la-eye"></i>
                 </a>
-                <button type="button" class="btn btn-primary">
+                <a href="{{ route('admin.property.edit',$property->id) }}" class="btn btn-primary w-100">
                     <i class="la la-pencil"></i>
-                </button>
-                <button type="button" class="btn btn-danger">
+                </a>
+                <a href="#" class="btn btn-danger w-100">
                     <i class="la la-trash-o"></i>
-                </button>
+                </a>
             </div>
 
         </div>

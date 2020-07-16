@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('administration/app-assets/vendors/css/extensions/toastr.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('administration/app-assets/vendors/css/extensions/sweetalert.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('administration/app-assets/vendors/css/forms/selects/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('administration/app-assets/vendors/dropify/dist/css/dropify.min.css') }}">
     @stack('page.vendor.css')
     <!-- END VENDOR CSS-->
 
@@ -37,7 +38,5 @@
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('administration/assets/css/style.css') }}">
     <!-- END Custom CSS-->
-
-    @include('administration.compo.scripts')
 
 </head>

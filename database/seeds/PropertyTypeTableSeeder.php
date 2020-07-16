@@ -15,6 +15,7 @@ class PropertyTypeTableSeeder extends Seeder
             [
                 'name' => 'Accommodation',
                 'identity' => 'accommodation',
+                'item' => 'Room',
                 'featured_image' => 'system/accommodation.jpg',
                 'property_featured_image_not_found' => 'system/no-accommodation.jpg',
                 'title' => 'Ready To Stay Accommodation',
@@ -25,6 +26,7 @@ class PropertyTypeTableSeeder extends Seeder
             [
                 'name' => 'Parking Lot',
                 'identity' => 'parking_lot',
+                'item' => 'Spot',
                 'featured_image' => 'system/parking.jpg',
                 'property_featured_image_not_found' => 'system/no-parking-lot.jpg',
                 'title' => 'Find Nearest Parking Spot',
@@ -35,6 +37,7 @@ class PropertyTypeTableSeeder extends Seeder
             [
                 'name' => 'Vehicle Rental',
                 'identity' => 'vehicle_rental',
+                'item' => 'Vehicle',
                 'featured_image' => 'system/car-rental.jpg',
                 'property_featured_image_not_found' => 'system/no-vehicle-rental.jpg',
                 'title' => 'Your Personal Car As You Want',

@@ -10,8 +10,26 @@ Route::group(['prefix'=>'admin','namespace'=>'Administration'],function(){
 
     Route::group(['middleware'=>[],'as'=>'admin.'],function(){
         Route::get('dashboard','DashboardController@dashboardView')->name('dashboard');
-        Route::get('properties','PropertyController@propertiesView')->name('properties');
-        Route::get('property/view/{id}','PropertyController@singlePropertyView')->name('property.view');
-        Route::get('property/add','PropertyController@addPropertyView')->name('property.add');
+
+        Route::group(['as'=>'property.', 'prefix'=>'property'], function () {
+            Route::get('properties','PropertyController@propertiesView')->name('list');
+            Route::get('property/view/{id}','PropertyController@singlePropertyView')->name('view');
+
+            Route::get('property/add','PropertyController@addPropertyView')->name('add');
+            Route::post('property/add','PropertyController@addProperty')->name('add');
+
+            Route::get('property/edit/{id}','PropertyController@editPropertyView')->name('edit');
+            Route::post('property/edit/{id}','PropertyController@editProperty')->name('edit');
+
+            Route::post('property/delete/{id}','PropertyController@deleteProperty')->name('delete');
+
+            Route::get('property/delete/{id}','PropertyController@addPropertyView')->name('delete');
+        });
     });
+
 });
+
+require_once 'ar/modals.php';
+require_once 'ar/tables.php';
+require_once 'ar/tabs.php';
+require_once 'ar/form-submission.php';

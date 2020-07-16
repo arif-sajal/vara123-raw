@@ -98,7 +98,7 @@
                                 <ul class="nav nav-tabs nav-underline no-hover-bg">
                                     @foreach($tabs as $tab)
                                         <li class="nav-item" data-tab-url="{{ route('user.lead',[$lead,'tab'=>Str::camel($tab)]) }}">
-                                            <a class="nav-link  @if((request()->has('tab') && request()->tab == Str::camel($tab)) || (!request()->has('tab') && $loop->first)) active @endif" id="active-tab" data-toggle="tab" data-href="#tabView" data-content="{{ route('user.tab.lead',[$lead->id,\Illuminate\Support\Str::camel($tab)]) }}" aria-controls="active" aria-expanded="true">{{ $tab }}</a>
+                                            <a class="nav-link @if((request()->has('tab') && request()->tab == Str::camel($tab)) || (!request()->has('tab') && $loop->first)) active @endif" id="active-tab" data-toggle="tab" data-href="#tabView" data-content="{{ route('user.tab.lead',[$lead->id,\Illuminate\Support\Str::camel($tab)]) }}" aria-controls="active" aria-expanded="true">{{ $tab }}</a>
                                         </li>
                                     @endforeach
                                 </ul>
