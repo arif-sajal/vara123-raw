@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Administrator\Property\Room;
+namespace App\Http\Requests\Administration\Property\Room;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -27,7 +27,7 @@ class Add extends FormRequest
         return [
             'room_type'=>[Rule::in(['Single','Double','Queen','King'])],
             'description'=>'required',
-            'featured_image'=>'required|image',
+            'featured_image'=>'nullable|image',
             'total'=>'required',
             'beds'=>'array',
             'beds.*.bed_type'=>[Rule::in(['Single','Double','Queen','King'])],

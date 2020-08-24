@@ -46,7 +46,7 @@ $(document).ready(function() {
     [ "Tatyana Fitzpatrick", "Regional Director", "London", "1965", "2010/03/17", "$385,750" ],
     [ "Michael Silva", "Marketing Designer", "London", "1581", "2012/11/27", "$198,500" ],
     [ "Paul Byrd", "Chief Financial Officer (CFO)", "New York", "3059", "2010/06/09", "$725,000" ],
-    [ "Gloria Little", "Systems Administrator", "New York", "1721", "2009/04/10", "$237,500" ],
+    [ "Gloria Little", "Systems Administration", "New York", "1721", "2009/04/10", "$237,500" ],
     [ "Bradley Greer", "Software Engineer", "London", "2558", "2012/10/13", "$132,000" ],
     [ "Dai Rios", "Personnel Lead", "Edinburgh", "2290", "2012/09/26", "$217,500" ],
     [ "Jenette Caldwell", "Development Lead", "New York", "1937", "2011/09/03", "$345,000" ],

@@ -23,7 +23,7 @@ function fireAjax(url,type='get',data={}){
             if(data.message){
                 notify(null,data.message);
             }else{
-                notify(null,"Something Going Wrong, Contact Administrator");
+                notify(null,"Something Going Wrong, Contact Administration");
             }
         },
     });

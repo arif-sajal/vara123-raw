@@ -27,7 +27,7 @@ class CreatePropertyRoomsTable extends Migration
             $table->integer('for_person');
             $table->integer('bed_count');
             $table->enum('room_type',['Single','Double','Queen','King']);
-            $table->boolean('active')->default('true');
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

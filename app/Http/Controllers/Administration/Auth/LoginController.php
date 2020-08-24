@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Administration\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Administrator\Auth\Login;
+use App\Http\Requests\Administration\Auth\Login;
 use Illuminate\Http\Request;
 use Library\Notify\Facades\Notify;
 
@@ -29,12 +29,12 @@ class LoginController extends Controller
     protected function checkBan(){
         if(auth('admin')->check() && !auth('admin')->user()->is_active):
             auth()->logout();
-            return Notify::send('error','Your Account Is Not Active, Please Contact With Administrator.')->json();
+            return Notify::send('error','Your Account Is Not Active, Please Contact With Administration.')->json();
         endif;
 
         if(auth('provider')->check() && !auth('provider')->user()->is_active):
             auth()->logout();
-            return Notify::send('error','Your Account Is Not Active, Please Contact With Administrator.')->json();
+            return Notify::send('error','Your Account Is Not Active, Please Contact With Administration.')->json();
         endif;
 
         $redirect = route('admin.dashboard');

@@ -56,11 +56,11 @@
                             <div class="card-header p-0">
                                 <ul class="nav nav-tabs nav-underline no-hover-bg">
                                     <li class="nav-item" data-tab-url="{{ route('admin.property.view',[$property->id,'tab'=>\Illuminate\Support\Str::camel($property->property_type->item)]) }}">
-                                        <a class="nav-link active" id="active-tab" data-toggle="tab" data-href="#tabView" data-content="{{ route('admin.tab.item.list',[$property->property_type->identity,$property->id]) }}" aria-controls="active" aria-expanded="true">{{ $property->property_type->item }}</a>
+                                        <a class="nav-link @if(request()->has('tab') && request()->get('tab') == strtolower($property->property_type->item)) active @endif @if(!request()->has('tab')) active @endif" id="active-tab" data-toggle="tab" data-href="#tabView" data-content="{{ route('admin.tab.item.list',[$property->property_type->identity,$property->id]) }}" aria-controls="active" aria-expanded="true">{{ $property->property_type->item }}</a>
                                     </li>
                                     @foreach($tabs as $tab)
-                                        <li class="nav-item" data-tab-url="{{ route('admin.property.view',[$property->id,'tab'=>\Illuminate\Support\Str::camel($tab)]) }}">
-                                            <a class="nav-link @if(request()->has('tab') && request()->get('tab') == \Illuminate\Support\Str::camel($tab)) active @endif" id="active-tab" data-toggle="tab" data-href="#tabView" data-content="{{ route('admin.tab.item.list',[$tab,$property->id]) }}" aria-controls="active" aria-expanded="true">{{ $tab }}</a>
+                                        <li class="nav-item" data-tab-url="{{ route('admin.property.view',[$property->id,'tab'=>\Illuminate\Support\Str::camel(strtolower($tab))]) }}">
+                                            <a class="nav-link @if(request()->has('tab') && request()->get('tab') == \Illuminate\Support\Str::camel($tab)) active @endif" id="active-tab" data-toggle="tab" data-href="#tabView" data-content="{{ route('admin.tab.item.list',[strtolower($tab),$property->id]) }}" aria-controls="active" aria-expanded="true">{{ $tab }}</a>
                                         </li>
                                     @endforeach
                                 </ul>

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Administration\Property;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Administrator\Property\Room\Add;
+use App\Http\Requests\Administration\Property\Room\Add;
+use App\Http\Requests\Administration\Property\Room\EditBilling;
 use App\Models\Billing;
 use App\Models\Property;
 use App\Models\PropertyRoom;
 use App\Models\RoomBed;
-use Illuminate\Http\Request;
 use Library\Notify\Facades\Notify;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -101,5 +101,17 @@ class RoomController extends Controller
         endif;
 
         return Notify::send('error','Can\'t Delete Room Now, Please Try Again Later.')->reload('table','RoomsTable')->json();
+    }
+
+    public function editRoomBilling(EditBilling $request){
+        $bills = $request->get('price');
+        foreach($bills as $id => $bill):
+            $billing = Billing::find($id);
+            $billing->amount = $bill;
+            if(!$billing->save()):
+                return Notify::send('error','Can\'t Update Billing, Please Try Again')->json();
+            endif;
+        endforeach;
+        return Notify::send('success','Billing Updated Successfully.')->json();
     }
 }

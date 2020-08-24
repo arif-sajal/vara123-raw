@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Administration;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Administrator\Property\Add;
-use App\Http\Requests\Administrator\Property\Edit;
+use App\Http\Requests\Administration\Property\Add;
+use App\Http\Requests\Administration\Property\Edit;
 use App\Models\City;
 use App\Models\Day;
 use App\Models\Property;
@@ -44,6 +44,8 @@ class PropertyController extends Controller
             return view('administration.tabs.property.spots')->with('property',$property);
         elseif($type === 'vehicle_rental'):
             return view('administration.tabs.property.vehicles')->with('property',$property);
+        elseif($type === 'amenities'):
+            return view('administration.tabs.property.amenities')->with('property',$property);
         endif;
     }
 

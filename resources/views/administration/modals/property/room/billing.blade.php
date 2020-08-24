@@ -4,7 +4,7 @@
         <span aria-hidden="true">×</span>
     </button>
 </div>
-<form class="ajax-form" action="{{ route('admin.form.submission.property.room.add',$room->id) }}" method="POST">
+<form class="ajax-form" action="{{ route('admin.form.submission.property.room.billing.edit') }}" method="POST">
     <div class="modal-body">
 
         <div class="form-group">
@@ -35,12 +35,6 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Add</button>
+        <button type="submit" class="btn btn-primary">Save</button>
     </div>
 </form>
-
-<script src="{{ asset('administration/app-assets/vendors/js/forms/repeater/jquery.repeater.min.js') }}"></script>
-
-<script>
-    $('.bed-repeater').repeater();
-</script>

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Administrator\Auth;
+namespace App\Http\Requests\Administration\Property\Room;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Login extends FormRequest
+class EditBilling extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class Login extends FormRequest
     public function rules()
     {
         return [
-            'username'=> 'required',
-            'password'=> 'required'
+            'bed.*' => 'required'
         ];
     }
 }
