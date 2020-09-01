@@ -261,3 +261,4 @@
 @push('page.vendor.js')
     <script src="{{ asset('administration/app-assets/vendors/js/tables/datatable/datatables.min.js') }}" type="text/javascript"></script>
 @endpush
+

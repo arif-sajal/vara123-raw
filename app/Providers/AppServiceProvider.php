@@ -31,5 +31,6 @@ class AppServiceProvider extends ServiceProvider
                 \Config::set($config->key, $config->value);
             endforeach;
         endif;
+       
     }
 }

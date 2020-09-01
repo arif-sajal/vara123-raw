@@ -18,7 +18,9 @@
     </div>
     <div class="card-content collapse show">
         <div class="card-body card-dashboard table-responsive">
-            <table class="table table-striped table-bordered" data-table-type="datatable" data-table-name="AmenitiesTable" data-table-content="{{ route('admin.table.property.amenities',$property->id) }}" style="width: 100%;">
+            <table class="table table-striped table-bordered" data-table-type="datatable"
+            data-table-name="AmenitiesTable"
+            data-table-content="{{ route('admin.table.property.amenities',$property->id) }}" style="width: 100%;">
                 <thead>
                     <tr>
                         <th>Name</th>

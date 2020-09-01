@@ -25,7 +25,31 @@
                         <a class="menu-item" href="{{ route('admin.property.add') }}">Add Property</a>
                     </li>
                 </ul>
+            </li>
 
+            <li class="nav-item">
+                <a href="javascript:void(0);">
+                    <i class="la la-automobile"></i>
+                    <span class="menu-title">Bookings</span>
+                </a>
+
+                <ul class="menu-content">
+                    <li>
+                        <a class="menu-item" href="{{ route('admin.booking.list') }}" >All Bookings</a>
+                    </li>
+
+                    <li>
+                        <a class="menu-item" href="#">This Month</a>
+                    </li>
+
+                    <li>
+                        <a class="menu-item" href="#">This Year</a>
+                    </li>
+
+                    <li>
+                        <a class="menu-item" href="#">Search</a>
+                    </li>
+                </ul>
             </li>
 
             <li class="navigation-header">

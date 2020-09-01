@@ -25,6 +25,17 @@ Route::group(['prefix'=>'admin','namespace'=>'Administration'],function(){
 
             Route::get('property/delete/{id}','PropertyController@addPropertyView')->name('delete');
         });
+
+        //{{====================================  SOHAN'S (Booking) MODULE =========================================== }}
+        Route::group(['as'=>'booking.', 'prefix'=>'booking','namespace'=>'Booking'], function () {
+            Route::get('bookings','BookingController@bookingListView')->name('list');
+            Route::get('booking/view/{id}','BookingController@singleBookingView')->name('view');
+            Route::get('booking/delete/{id}','BookingController@deleteBooking')->name('delete');
+
+
+        });
+
+
     });
 
 });
