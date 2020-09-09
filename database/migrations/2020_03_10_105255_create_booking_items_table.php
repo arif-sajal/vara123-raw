@@ -13,8 +13,10 @@ class CreateBookingItemsTable extends Migration
      */
     public function up()
     {
+        Schema::defaultStringLength(191);
         Schema::create('booking_items', function (Blueprint $table) {
             $table->id();
+            $table->morphs('property_item',200);
             $table->timestamps();
         });
     }

@@ -9,7 +9,7 @@ Route::group(['prefix'=>'admin/table','namespace'=>'Administration','as'=>'admin
         Route::post('amenity/list/{id}','AmenityController@amenitiesTable')->name('amenities');
     });
 
-      //Put by Sohan
-      Route::post('all/bookings','Booking\BookingController@allBooking')->name('bookings');
+    //Put by Sohan
+    Route::post('all/bookings','Booking\BookingController@allBooking')->name('bookings');
 
 });

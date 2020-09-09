@@ -12,27 +12,25 @@ Route::group(['prefix'=>'admin','namespace'=>'Administration'],function(){
         Route::get('dashboard','DashboardController@dashboardView')->name('dashboard');
 
         Route::group(['as'=>'property.', 'prefix'=>'property'], function () {
-            Route::get('properties','PropertyController@propertiesView')->name('list');
-            Route::get('property/view/{id}','PropertyController@singlePropertyView')->name('view');
+            Route::get('all','PropertyController@propertiesView')->name('list');
+            Route::get('view/{id}','PropertyController@singlePropertyView')->name('view');
 
-            Route::get('property/add','PropertyController@addPropertyView')->name('add');
-            Route::post('property/add','PropertyController@addProperty')->name('add');
+            Route::get('add','PropertyController@addPropertyView')->name('add');
+            Route::post('add','PropertyController@addProperty')->name('add');
 
-            Route::get('property/edit/{id}','PropertyController@editPropertyView')->name('edit');
-            Route::post('property/edit/{id}','PropertyController@editProperty')->name('edit');
+            Route::get('edit/{id}','PropertyController@editPropertyView')->name('edit');
+            Route::post('edit/{id}','PropertyController@editProperty')->name('edit');
 
-            Route::post('property/delete/{id}','PropertyController@deleteProperty')->name('delete');
+            Route::post('delete/{id}','PropertyController@deleteProperty')->name('delete');
 
-            Route::get('property/delete/{id}','PropertyController@addPropertyView')->name('delete');
+            Route::get('delete/{id}','PropertyController@addPropertyView')->name('delete');
         });
 
         //{{====================================  SOHAN'S (Booking) MODULE =========================================== }}
         Route::group(['as'=>'booking.', 'prefix'=>'booking','namespace'=>'Booking'], function () {
-            Route::get('bookings','BookingController@bookingListView')->name('list');
-            Route::get('booking/view/{id}','BookingController@singleBookingView')->name('view');
-            Route::get('booking/delete/{id}','BookingController@deleteBooking')->name('delete');
-
-
+            Route::get('all','BookingController@bookingListView')->name('list');
+            Route::get('view/{id}','BookingController@singleBookingView')->name('view');
+            Route::get('delete/{id}','BookingController@deleteBooking')->name('delete');
         });
 
 

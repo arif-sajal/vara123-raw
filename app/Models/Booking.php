@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
+    protected $dates = [
+        'from_date','from_time','to_date','to_time'
+    ];
+
     public function customer(){
         return $this->belongsTo(Customer::class);
     }

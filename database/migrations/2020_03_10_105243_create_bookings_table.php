@@ -27,7 +27,6 @@ class CreateBookingsTable extends Migration
             $table->time('to_time')->nullable();
 
             $table->decimal('cost_per_unit','8','2');
-            $table->float('quantity');
             $table->decimal('cost_total','8','2');
 
             $table->integer('currency_id');
