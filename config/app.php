@@ -179,6 +179,7 @@ return [
         \Library\Configs\ConfigsServiceProvider::class,
         \Grimzy\LaravelMysqlSpatial\SpatialServiceProvider::class,
         \Yajra\DataTables\DataTablesServiceProvider::class,
+        \Cartalyst\Converter\Laravel\ConverterServiceProvider::class
 
     ],
 

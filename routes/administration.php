@@ -29,8 +29,6 @@ Route::group(['namespace'=>'Administration'],function(){
             Route::get('view/{id}','BookingController@singleBookingView')->name('view');
             Route::get('delete/{id}','BookingController@deleteBooking')->name('delete');
         });
-
-
     });
 
 });

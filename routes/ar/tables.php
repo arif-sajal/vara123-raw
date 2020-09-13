@@ -8,6 +8,7 @@ Route::group(['prefix'=>'table','namespace'=>'Administration','as'=>'app.table.'
 
     Route::group(['as'=>'property.', 'prefix'=>'property','namespace'=>'Property'], function () {
         Route::post('room/list/{id}','RoomController@roomsTable')->name('rooms');
+        Route::post('vehicle/list/{id}','VehicleController@vehiclesTable')->name('vehicles');
         Route::post('amenity/list/{id}','AmenityController@amenitiesTable')->name('amenities');
     });
 

@@ -25,7 +25,6 @@ class AmenityController extends Controller
                 ";
             })
             ->toJson();
-        dd($amenities);
     }
 
     public function deleteAmenity($id){
