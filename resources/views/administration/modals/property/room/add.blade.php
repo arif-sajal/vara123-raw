@@ -4,7 +4,7 @@
         <span aria-hidden="true">×</span>
     </button>
 </div>
-<form class="ajax-form" action="{{ route('admin.form.submission.property.room.add',$property->id) }}" method="POST">
+<form class="ajax-form" action="{{ route('app.form.submission.property.room.add',$property->id) }}" method="POST">
     <div class="modal-body">
 
         <div class="form-group">

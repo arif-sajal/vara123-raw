@@ -21,14 +21,14 @@ class PropertyController extends Controller
         'Amenities','Gallery','Timings'
     ];
 
-    public function propertiesView(){
+    public function propertyListView(){
         $properties = Property::query();
 
         if(auth('provider')->check()):
             $properties->where('provider_id',auth('provider')->id());
         endif;
 
-        return view('administration.pages.property.all',['properties'=>$properties->paginate(15)]);
+        return view('administration.pages.property.list',['properties'=>$properties->paginate(15)]);
     }
 
     public function singlePropertyView($propertyID){

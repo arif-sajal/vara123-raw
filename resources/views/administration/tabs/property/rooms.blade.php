@@ -4,7 +4,7 @@
         <div class="heading-elements">
             <ul class="list-inline mb-0">
                 <li>
-                    <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#myModalLarge" data-content="{{ route('admin.modal.property.room.add',$property->id) }}">
+                    <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#myModalLarge" data-content="{{ route('app.modal.property.room.add',$property->id) }}">
                         Add Room
                     </button>
                 </li>
@@ -19,7 +19,7 @@
     <div class="card-content collapse show">
         <div class="card-body card-dashboard table-responsive">
             <table class="table table-striped table-bordered" data-table-type="datatable"
-            data-table-name="RoomsTable" data-table-content="{{ route('admin.table.property.rooms',$property->id) }}" style="width: 100%;">
+            data-table-name="RoomsTable" data-table-content="{{ route('app.table.property.rooms',$property->id) }}" style="width: 100%;">
                 <thead>
                 <tr>
                     <th>Room Type</th>

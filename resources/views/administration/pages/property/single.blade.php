@@ -34,7 +34,7 @@
                                                 <h2 class="py-2">{{ $property->spots()->count() }} Spots</h2>
                                             @endif
 
-                                            <a href="{{ route('admin.property.edit',$property->id) }}" class="btn btn-info btn-glow text-uppercase p-1">Edit</a>
+                                            <a href="{{ route('app.property.edit',$property->id) }}" class="btn btn-info btn-glow text-uppercase p-1">Edit</a>
                                         </div>
                                         <div class="col-xl-6 col-md-12">
                                             @if(\Illuminate\Support\Facades\Storage::has($property->featured_image))
@@ -55,12 +55,12 @@
                         <div class="card mb-0">
                             <div class="card-header p-0">
                                 <ul class="nav nav-tabs nav-underline no-hover-bg">
-                                    <li class="nav-item" data-tab-url="{{ route('admin.property.view',[$property->id,'tab'=>\Illuminate\Support\Str::camel($property->property_type->item)]) }}">
-                                        <a class="nav-link @if(request()->has('tab') && request()->get('tab') == strtolower($property->property_type->item)) active @endif @if(!request()->has('tab')) active @endif" id="active-tab" data-toggle="tab" data-href="#tabView" data-content="{{ route('admin.tab.item.list',[$property->property_type->identity,$property->id]) }}" aria-controls="active" aria-expanded="true">{{ $property->property_type->item }}</a>
+                                    <li class="nav-item" data-tab-url="{{ route('app.property.view',[$property->id,'tab'=>\Illuminate\Support\Str::camel($property->property_type->item)]) }}">
+                                        <a class="nav-link @if(request()->has('tab') && request()->get('tab') == strtolower($property->property_type->item)) active @endif @if(!request()->has('tab')) active @endif" id="active-tab" data-toggle="tab" data-href="#tabView" data-content="{{ route('app.tab.item.list',[$property->property_type->identity,$property->id]) }}" aria-controls="active" aria-expanded="true">{{ $property->property_type->item }}</a>
                                     </li>
                                     @foreach($tabs as $tab)
-                                        <li class="nav-item" data-tab-url="{{ route('admin.property.view',[$property->id,'tab'=>\Illuminate\Support\Str::camel(strtolower($tab))]) }}">
-                                            <a class="nav-link @if(request()->has('tab') && request()->get('tab') == \Illuminate\Support\Str::camel($tab)) active @endif" id="active-tab" data-toggle="tab" data-href="#tabView" data-content="{{ route('admin.tab.item.list',[strtolower($tab),$property->id]) }}" aria-controls="active" aria-expanded="true">{{ $tab }}</a>
+                                        <li class="nav-item" data-tab-url="{{ route('app.property.view',[$property->id,'tab'=>\Illuminate\Support\Str::camel(strtolower($tab))]) }}">
+                                            <a class="nav-link @if(request()->has('tab') && request()->get('tab') == \Illuminate\Support\Str::camel($tab)) active @endif" id="active-tab" data-toggle="tab" data-href="#tabView" data-content="{{ route('app.tab.item.list',[strtolower($tab),$property->id]) }}" aria-controls="active" aria-expanded="true">{{ $tab }}</a>
                                         </li>
                                     @endforeach
                                 </ul>

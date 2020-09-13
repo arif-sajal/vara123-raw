@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix'=>'admin/modal','namespace'=>'Administration','as'=>'admin.modal.'],function(){
+Route::group(['prefix'=>'modal','namespace'=>'Administration','as'=>'app.modal.'],function(){
 
     Route::group(['as'=>'property.', 'prefix'=>'property','namespace'=>'Property'], function () {
         Route::get('room/add/{id}','RoomController@addRoomView')->name('room.add');

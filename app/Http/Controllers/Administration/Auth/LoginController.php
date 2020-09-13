@@ -37,7 +37,6 @@ class LoginController extends Controller
             return Notify::send('error','Your Account Is Not Active, Please Contact With Administration.')->json();
         endif;
 
-        $redirect = route('admin.dashboard');
-        return Notify::send('success','Logged In Successfully. Redirecting, Please Wait.')->callback(['redirect'=>$redirect])->json();
+        return Notify::send('success','Logged In Successfully. Redirecting, Please Wait.')->callback(['redirect'=>route('app.dashboard')])->json();
     }
 }

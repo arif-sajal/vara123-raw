@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Administration\Booking;
+namespace App\Http\Controllers\Administration;
 
 use App\Http\Controllers\Controller;
 use Cartalyst\Converter\Laravel\Facades\Converter;
@@ -16,10 +16,14 @@ class BookingController extends Controller
          return view('administration.pages.booking.list');
     }
 
-    public function allBooking(){
-        $booking = Booking::with(['property','property.property_type','provider','item','currency'])->latest()->get();
+    public function bookingsTable(){
+        $booking = Booking::with(['property','property.property_type','provider','item','currency']);
 
-        return DataTables::make($booking)
+        if(auth('provider')->check()):
+            $booking->where('provider_id',auth('provider')->id())->latest()->get();
+        endif;
+
+        return DataTables::make($booking->latest()->get())
             ->editColumn('is_payment_done',function(Booking $booking){
                 return $booking->is_poayment_done ? 'Paid' : "Unpaid";
             })
@@ -41,11 +45,11 @@ class BookingController extends Controller
             ->addColumn('action',function($booking){
                 return "
                     <button class='btn btn-sm btn-primary'data-content='"
-                    .route('admin.booking.view',$booking->id)."
+                    .route('app.booking.view',$booking->id)."
                     'data-hover='tooltip' data-original-title='View Room'><i class='la la-eye'></i></button>
 
                     <button class='btn btn-sm btn-danger' data-action='confirm' data-action-route='".
-                    route('admin.booking.delete',$booking->id)."' data-hover='tooltip'
+                    route('app.booking.delete',$booking->id)."' data-hover='tooltip'
                     data-original-title='Delete Room'><i class='la la-trash'></i></button>
                 ";
             })

@@ -37,9 +37,9 @@ class RoomController extends Controller
             })
             ->addColumn('action',function(PropertyRoom $room){
                 return "
-                    <button class='btn btn-sm btn-primary' data-toggle='modal' data-target='#myModal' data-content='".route('admin.modal.property.room.view',$room->id)."' data-hover='tooltip' data-original-title='View Room'><i class='la la-eye'></i></button>
-                    <button class='btn btn-sm btn-success' data-toggle='modal' data-target='#myModal' data-content='".route('admin.modal.property.room.billing.edit',$room->id)."' data-hover='tooltip' data-original-title='Edit Billing'><i class='la la-dollar'></i></button>
-                    <button class='btn btn-sm btn-danger' data-action='confirm' data-action-route='".route('admin.form.submission.property.room.delete',$room->id)."' data-hover='tooltip' data-original-title='Delete Room'><i class='la la-trash'></i></button>
+                    <button class='btn btn-sm btn-primary' data-toggle='modal' data-target='#myModal' data-content='".route('app.modal.property.room.view',$room->id)."' data-hover='tooltip' data-original-title='View Room'><i class='la la-eye'></i></button>
+                    <button class='btn btn-sm btn-success' data-toggle='modal' data-target='#myModal' data-content='".route('app.modal.property.room.billing.edit',$room->id)."' data-hover='tooltip' data-original-title='Edit Billing'><i class='la la-dollar'></i></button>
+                    <button class='btn btn-sm btn-danger' data-action='confirm' data-action-route='".route('app.form.submission.property.room.delete',$room->id)."' data-hover='tooltip' data-original-title='Delete Room'><i class='la la-trash'></i></button>
                 ";
             })
             ->toJson();

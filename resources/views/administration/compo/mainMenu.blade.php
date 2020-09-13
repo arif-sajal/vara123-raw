@@ -4,9 +4,18 @@
 
             @if(auth('admin')->check() || auth('provider')->check())
                 <li class="nav-item">
-                    <a href="{{ route('admin.dashboard') }}">
+                    <a href="{{ route('app.dashboard') }}">
                         <i class="la la-television"></i>
                         <span class="menu-title">Dashboard</span>
+                    </a>
+                </li>
+            @endif
+
+            @if(auth('admin')->check())
+                <li class="nav-item">
+                    <a href="{{ route('app.provider.list') }}">
+                        <i class="la la-user"></i>
+                        <span class="menu-title">Providers</span>
                     </a>
                 </li>
             @endif
@@ -19,10 +28,10 @@
 
                 <ul class="menu-content">
                     <li>
-                        <a class="menu-item" href="{{ route('admin.property.list') }}" >All Properties</a>
+                        <a class="menu-item" href="{{ route('app.property.list') }}" >All Properties</a>
                     </li>
                     <li>
-                        <a class="menu-item" href="{{ route('admin.property.add') }}">Add Property</a>
+                        <a class="menu-item" href="{{ route('app.property.add') }}">Add Property</a>
                     </li>
                 </ul>
             </li>
@@ -35,7 +44,7 @@
 
                 <ul class="menu-content">
                     <li>
-                        <a class="menu-item" href="{{ route('admin.booking.list') }}" >All Bookings</a>
+                        <a class="menu-item" href="{{ route('app.booking.list') }}" >All Bookings</a>
                     </li>
 
                     <li>

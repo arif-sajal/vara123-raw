@@ -6,6 +6,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Provider extends Authenticatable
 {
+    protected $appends = [
+        'full_name'
+    ];
+
     protected $fillable = [
         'token_created','token_expired_at','token'
     ];
@@ -20,5 +24,9 @@ class Provider extends Authenticatable
 
     public function currency(){
         return $this->belongsTo(Currency::class);
+    }
+
+    public function getFullNameAttribute(){
+        return $this->attributes['first_name']." ".$this->attributes['last_name'];
     }
 }
