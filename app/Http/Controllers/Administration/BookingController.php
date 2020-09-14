@@ -63,4 +63,8 @@ class BookingController extends Controller
     public function deleteBooking($id){
 
     }
+
+    public function newAddedFunction(){
+      
+    }
 }
