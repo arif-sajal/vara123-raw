@@ -57,14 +57,10 @@ class BookingController extends Controller
     }
 
     public function singleBookingView($id){
-
+        return view('administration.pages.booking.single');
     }
 
     public function deleteBooking($id){
-
-    }
-
-    public function newFunction(){
 
     }
 }
