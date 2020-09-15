@@ -1,264 +1,271 @@
 @extends('administration.layout')
+@push('title')
+  Single Booking View ({{ $booking->id }})
+@endpush
+
 
 @section('mainContent')
-    <div class="content-wrapper">
-        <div class="content-detached content-left">
-            <div class="content-body">
-                <section class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="card-body p-0">
-                                    <div class="row">
-                                        <div class="col-xl-6 col-md-12 p-2 pl-3">
-                                            <div class="">
-                                                <h2>{{ $property->name }} ({{ $property->property_type->name }})</h2>
-                                                <div class="rating warning mb-1">
-                                                    @for($rv=1;$rv <= 5; $rv++)
-                                                        @if($property->reviews()->avg('average') >= $rv)
-                                                            <i class="la la-star"></i>
-                                                        @else
-                                                            <i class="la la-star-o"></i>
-                                                        @endif
-                                                    @endfor
-                                                    {{ $property->reviews()->count() }} Reviews
-                                                </div>
-                                                <p>{{ $property->description }}</p>
-                                            </div>
+  <div class="card">
+      <div class="card-header">
+              <h1 class="text-center mb-3 text-dark text-uppercase" style="font-weight:bold;">Booking Details Information <span class="text-success">(#{{$booking->id }})</span>
+                <a style="font-weight:bold;" class="btn btn-warning btn-sm text-dark pull-right"
+                 href="{{ route('app.booking.new-pending')}}"> Go Back</a>
+              </h1>
+      </div>
 
-                                            @if($property->property_type->identity === 'accommodation')
-                                                <h2 class="py-2">{{ $property->rooms()->count() }} Rooms</h2>
-                                            @elseif($property->property_type->identity === 'vehicle_rental')
-                                                <h2 class="py-2">{{ $property->vehicles()->count() }} Vehicles</h2>
-                                            @elseif($property->property_type->identity === 'parking_lot')
-                                                <h2 class="py-2">{{ $property->spots()->count() }} Spots</h2>
-                                            @endif
+      <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <h2 class="mb-2 text-primary">Customer Information</h2>
+              <div class="row">
+                <div class="col-md-5">
+                  <ul style="list-style-type:none;">
+                    <li>First Name : <span class="ml-1 text-info">{{ $booking->customer->first_name }}</span></li>
+                    <li>Last Name : <span class="ml-1 text-info">{{ $booking->customer->last_name }}</span></li>
+                    <li>Username : <span class="ml-1 text-info">{{ $booking->customer->username }}</span></li>
+                    <li>NID # : <span class="ml-1 text-info">{{ $booking->customer->nid_number }}</span></li>
+                    <li>Address : <span class="ml-1 text-info">{{ $booking->customer->address }}</span></li>
+                    <li>Country : <span class="ml-1 text-info">{{ $booking->customer->country }}</span></li>
+                    <li>State : <span class="ml-1 text-info">{{ $booking->customer->state }}</span></li>
+                    <li>City : <span class="ml-1 text-info">{{ $booking->customer->city }}</span></li>
+                    <li>Post Code : <span class="ml-1 text-info">{{ $booking->customer->post_code }}</span></li>
 
-                                            <a href="{{ route('admin.property.edit',$property->id) }}" class="btn btn-info btn-glow text-uppercase p-1">Edit</a>
-                                        </div>
-                                        <div class="col-xl-6 col-md-12">
-                                            @if(\Illuminate\Support\Facades\Storage::has($property->featured_image))
-                                                <img class="img-fluid" src="{{ \Illuminate\Support\Facades\Storage::url($property->featured_image) }}" alt="Card image cap">
-                                            @else
-                                                <img class="img-fluid" src="{{ \Illuminate\Support\Facades\Storage::url($property->property_type->property_featured_image_not_found) }}" alt="Card image cap">
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                    <li>Email Varified Status :
+                      @if($booking->customer->is_email_varified == 1)
+                        <span class="badge badge-success">Varified</span>
+                      @else
+                        <span class="badge badge-danger">Not Varified</span>
+                      @endif
+                    </li>
 
-                <section class="row">
-                    <div class="col-md-12">
-                        <div class="card mb-0">
-                            <div class="card-header p-0">
-                                <ul class="nav nav-tabs nav-underline no-hover-bg">
-                                    <li class="nav-item" data-tab-url="{{ route('admin.property.view',[$property->id,'tab'=>\Illuminate\Support\Str::camel($property->property_type->item)]) }}">
-                                        <a class="nav-link @if(request()->has('tab') && request()->get('tab') == strtolower($property->property_type->item)) active @endif @if(!request()->has('tab')) active @endif" id="active-tab" data-toggle="tab" data-href="#tabView" data-content="{{ route('admin.tab.item.list',[$property->property_type->identity,$property->id]) }}" aria-controls="active" aria-expanded="true">{{ $property->property_type->item }}</a>
-                                    </li>
-                                    @foreach($tabs as $tab)
-                                        <li class="nav-item" data-tab-url="{{ route('admin.property.view',[$property->id,'tab'=>\Illuminate\Support\Str::camel(strtolower($tab))]) }}">
-                                            <a class="nav-link @if(request()->has('tab') && request()->get('tab') == \Illuminate\Support\Str::camel($tab)) active @endif" id="active-tab" data-toggle="tab" data-href="#tabView" data-content="{{ route('admin.tab.item.list',[strtolower($tab),$property->id]) }}" aria-controls="active" aria-expanded="true">{{ $tab }}</a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="tabView" aria-labelledby="active-tab" aria-expanded="true"></div>
-                        </div>
-
-                    </div>
-                </section>
-
-            </div>
-        </div>
-
-        <div class="sidebar-detached sidebar-right">
-            <div class="sidebar">
-                <div class="project-sidebar-content">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Project Details</h4>
-                            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                            <div class="heading-elements">
-                                <ul class="list-inline mb-0">
-                                    <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <!-- project search -->
-                            <div class="card-body border-top-blue-grey border-top-lighten-5">
-                                <div class="project-search">
-                                    <div class="project-search-content">
-                                        <form action="#">
-                                            <div class="position-relative">
-                                                <input type="search" class="form-control" placeholder="Search project task, bug, users...">
-                                                <div class="form-control-position">
-                                                    <i class="la la-search text-size-base text-muted"></i>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /project search -->
-                            <!-- project progress -->
-                            <div class="card-body">
-                                <div class="insights">
-                                    <p>Project Overall Progress
-                                        <span class="float-right text-warning h3">72%</span>
-                                    </p>
-                                    <div class="progress progress-sm mt-1 mb-0">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 72%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- project progress -->
-                        </div>
-                    </div>
-                    <!-- Project Overview -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Project Overview</h4>
-                            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                            <div class="heading-elements">
-                                <ul class="list-inline mb-0">
-                                    <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <div class="card-body">
-                                <p>
-                                    <strong>Pellentesque habitant morbi tristique</strong> senectus et netus
-                                    et malesuada fames ac turpis egestas. Vestibulum tortor quam,
-                                    feugiat vitae.
-                                    <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend
-                                    leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum
-                                    erat wisi, condimentum sed, <code>commodo vitae</code>, ornare
-                                    sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum,
-                                    eros ipsum rutrum orci, sagittis tempus lacus enim ac dui.
-                                    <a href="#">Donec non enim</a>.</p>
-                                <p>
-                                    <strong>Lorem ipsum dolor sit</strong>
-                                </p>
-                                <ol>
-                                    <li>Consectetuer adipiscing</li>
-                                    <li>Aliquam tincidunt mauris</li>
-                                    <li>Consectetur adipiscing</li>
-                                    <li>Vivamus pretium ornare</li>
-                                    <li>Curabitur massa</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ Project Overview -->
-                    <!-- Project Users -->
-                    <div class="card">
-                        <div class="card-header mb-0">
-                            <h4 class="card-title">Project Users</h4>
-                            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                            <div class="heading-elements">
-                                <ul class="list-inline mb-0">
-                                    <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <div class="card-content">
-                                <div class="card-body  py-0 px-0">
-                                    <div class="list-group">
-                                        <a href="javascript:void(0)" class="list-group-item">
-                                            <div class="media">
-                                                <div class="media-left pr-1">
-                            <span class="avatar avatar-sm avatar-online rounded-circle">
-                              <img src="../../../app-assets/images/portrait/small/avatar-s-1.png" alt="avatar"><i></i></span>
-                                                </div>
-                                                <div class="media-body w-100">
-                                                    <h6 class="media-heading mb-0">Margaret Govan</h6>
-                                                    <p class="font-small-2 mb-0 text-muted">Project Owner</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="javascript:void(0)" class="list-group-item">
-                                            <div class="media">
-                                                <div class="media-left pr-1">
-                            <span class="avatar avatar-sm avatar-busy rounded-circle">
-                              <img src="../../../app-assets/images/portrait/small/avatar-s-2.png" alt="avatar"><i></i></span>
-                                                </div>
-                                                <div class="media-body w-100">
-                                                    <h6 class="media-heading mb-0">Bret Lezama</h6>
-                                                    <p class="font-small-2 mb-0 text-muted">Project Manager</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="javascript:void(0)" class="list-group-item">
-                                            <div class="media">
-                                                <div class="media-left pr-1">
-                            <span class="avatar avatar-sm avatar-online rounded-circle">
-                              <img src="../../../app-assets/images/portrait/small/avatar-s-3.png" alt="avatar"><i></i></span>
-                                                </div>
-                                                <div class="media-body w-100">
-                                                    <h6 class="media-heading mb-0">Carie Berra</h6>
-                                                    <p class="font-small-2 mb-0 text-muted">Senior Developer</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="javascript:void(0)" class="list-group-item">
-                                            <div class="media">
-                                                <div class="media-left pr-1">
-                            <span class="avatar avatar-sm avatar-away rounded-circle">
-                              <img src="../../../app-assets/images/portrait/small/avatar-s-6.png" alt="avatar"><i></i></span>
-                                                </div>
-                                                <div class="media-body w-100">
-                                                    <h6 class="media-heading mb-0">Eric Alsobrook</h6>
-                                                    <p class="font-small-2 mb-0 text-muted">UI Developer</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="javascript:void(0)" class="list-group-item">
-                                            <div class="media">
-                                                <div class="media-left pr-1">
-                            <span class="avatar avatar-sm avatar-busy rounded-circle">
-                              <img src="../../../app-assets/images/portrait/small/avatar-s-7.png" alt="avatar"><i></i></span>
-                                                </div>
-                                                <div class="media-body w-100">
-                                                    <h6 class="media-heading mb-0">Berra Eric</h6>
-                                                    <p class="font-small-2 mb-0 text-muted">UI Developer</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ Project Users -->
+                    <li>Avatar :
+                    <img class="img-rounded" style="height:100px; " src="{{url('storage/administration/customer/'.$booking->avatar)}}" alt="customer.png">
+                    </li>
+                  </ul>
                 </div>
+
+                <div class="col-md-7">
+                  <ul style="list-style-type:none;">
+                  <li>Gender : <span class="ml-1 text-info">{{ $booking->customer->gender }}</span></li>
+                  <li>Date-of-Birth : <span class="ml-1 text-info">{{ $booking->customer->date_of_birth }}</span></li>
+                  <li>Email : <span class="ml-1 text-info">{{ $booking->customer->post_code }}</span></li>
+                  <li>Phone : <span class="ml-1 text-info">{{ $booking->customer->phone }}</span></li>
+                  <li>Emergerncy-CN # : <span class="ml-1 text-info">{{ $booking->customer->emergency_contact_number }}</span></li>
+                  <li>Password : <span class="ml-1 text-info">{{bcrypt($booking->customer->password)}}</span></li>
+                  <li>Birth Certifcate # : <span class="ml-1 text-info">{{ $booking->customer->birth_certificate_number }}</span></li>
+                  <li>Ban Reason : <span class="ml-1 text-info">{{ $booking->customer->ban_reason }}</span> </li>
+
+                  <li>Active Status :
+                    @if($booking->customer->is_active == 1)
+                      <span class="badge badge-success">Active</span>
+                    @else
+                      <span class="badge badge-danger">Inactive</span>
+                    @endif
+                  </li>
+
+                  <li>Created At : <span class="ml-1 text-info">{{ $booking->customer->created_at->format('d-m-Y') }} || {{ $booking->customer->created_at->format('h:m a') }}</span></li>
+                  <li>Updated At : <span class="ml-1 text-info">{{ $booking->customer->updated_at->format('d-m-Y') }} || {{ $booking->customer->updated_at->format('h:m a') }}</span></li>
+
+                  </ul>
+                </div>
+              </div>
             </div>
-        </div>
-    </div>
+            <div class="col-md-12 mt-2">
+              <h2 class="mb-2 text-danger">Provider Information</h2>
+              <div class="row">
+                <div class="col-md-5">
+
+                  <ul style="list-style-type:none;">
+                    <li>First Name : <span class="ml-1 text-info">{{ $booking->provider->first_name }}</span></li>
+                    <li>Last Name : <span class="ml-1 text-info">{{ $booking->provider->last_name }}</span></li>
+                    <li>User Type :
+                      @if( $booking->provider->user_type === 'Organization')
+                      <span class="ml-1 text-info">Organization</span>
+                      @else
+                      <span class="ml-1 text-info">Individual</span>
+                      @endif
+                    </li>
+                    <li>Gender :<span class="ml-1 text-info">{{ $booking->provider->gender }}</span></li>
+                    <li>Date-of-Birth : <span class="ml-1 text-info">{{ $booking->provider->date_of_birth }}</span></li>
+                    <li>Email : <span class="ml-1 text-info">{{ $booking->provider->email }}</span></li>
+                    <li>Phone : <span class="ml-1 text-info">{{ $booking->provider->phone }}</span></li>
+                    <li>Email Varified Status :
+                      @if($booking->provider->is_email_varified == 1)
+                        <span class="badge badge-success">Varified</span>
+                      @else
+                        <span class="badge badge-warning">Not Varified</span>
+                      @endif
+                    </li>
+                    <li>Phone Varified Status :
+                      @if($booking->provider->is_phone_varified == 1)
+                        <span class="badge badge-success">Varified</span>
+                      @else
+                        <span class="badge badge-warning">Not Varified</span>
+                      @endif
+                    </li>
+
+                  </ul>
+                </div>
+
+                <div class="col-md-7">
+                  <ul style="list-style-type:none;">
+
+                    <li>Username : <span class="ml-1 text-info">{{ $booking->provider->username }}</span></li>
+                    <li>Password :  <span class="ml-1 text-info">{{bcrypt($booking->provider->password)}}</span></li>
+                    <li>Active Status :
+                      @if($booking->provider->is_active == 1)
+                        <span class="badge badge-success">Active</span>
+                      @else
+                        <span class="badge badge-danger">Inactive</span>
+                      @endif
+                    </li>
+                    <li> Registration Varified Status :
+                      @if($booking->provider->is_registration_varified == 1)
+                        <span class="badge badge-success">Varified</span>
+                      @else
+                        <span class="badge badge-warning">Not Varified</span>
+                      @endif
+                    </li>
+                    <li>Ban Reason :  <span class="ml-1 text-info">{{ $booking->provider->ban_reason }}</span></li>
+                    <li>Avatar : <img class="img-rounded" style="height:100px; " src="{{url('storage/administration/provider/'.$booking->avatar)}}" alt="provider.png"></li>
+                    <li>Currency Name :  <span class="ml-1 text-info">{{ $booking->provider->currency->name }}</span></li>
+                    <li>Created At : <span class="ml-1 text-info">{{ $booking->provider->created_at->format('d-m-Y') }} || {{ $booking->provider->created_at->format('h:m a') }}</span></li>
+                    <li>Updated At : <span class="ml-1 text-info">{{ $booking->provider->updated_at->format('d-m-Y') }} || {{ $booking->provider->updated_at->format('h:m a') }}</span></li>
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-md-12 mt-2">
+              <h2 class="mb-2 text-success">Property Information</h2>
+              <div class="row">
+                <div class="col-md-5">
+
+                  <ul style="list-style-type:none;">
+                    <li>Property_type : <span class="ml-1 text-info">{{ $booking->property->property_type->name }}</span></li>
+                    <li>Provider Username : <span class="ml-1 text-info">{{ $booking->property->provider->username }}</span></li>
+                    <li>Currency Name : <span class="ml-1 text-info">{{ $booking->property->currency->name }}</span> </li>
+                    <li>Property Name :<span class="ml-1 text-info">{{ $booking->property->name}}</span></li>
+                    <li>Description : <span class="ml-1 text-info">{{ $booking->property->description }}</span></li>
+                    <li>Feature Image :
+                    <img class="img-rounded" style="height:100px; " src="{{url('storage/administration/property/'.$booking->feature_image)}}" alt="property.png">
+                    </li>
+                    <li>Is Always Open :
+                      @if($booking->property->is_always_open == 1)
+                        <span class="badge badge-success">Open</span>
+                      @else
+                        <span class="badge badge-danger">Closed</span>
+                      @endif
+                    </li>
+                    <li>State : <span class="ml-1 text-info">{{ $booking->property->state->name }}</span></li>
+                    <li>City : <span class="ml-1 text-info">{{ $booking->property->city->name }}</span></li>
+                    <li>Lat : <span class="ml-1 text-info">{{ $booking->property->lat }}</span></li>
+                    <li>Lng : <span class="ml-1 text-info">{{ $booking->property->lng }}</span></li>
+
+                  </ul>
+                </div>
+
+                <div class="col-md-7">
+                  <ul style="list-style-type:none;">
+
+                    <li>Point : <span class="ml-1 text-info">{{ $booking->property->point }}</span></li>
+                    <li>Address :  <span class="ml-1 text-info">{{$booking->property->address}}</span></li>
+                    <li>Country : <span class="ml-1 text-info">{{$booking->property->country->name}}</span></li>
+                    <li>Phone :  <span class="ml-1 text-info">{{$booking->property->phone}}</span></li>
+                    <li>Email :  <span class="ml-1 text-info">{{ $booking->property->email }}</span></li>
+                    <li>Is Active :
+                      @if($booking->property->is_active == 1)
+                        <span class="badge badge-success">Active</span>
+                      @else
+                        <span class="badge badge-danger">Inactive</span>
+                      @endif
+                    </li>
+                    <li>Is Varified :
+                      @if($booking->property->varified == 1)
+                        <span class="badge badge-success">Varified</span>
+                      @else
+                        <span class="badge badge-danger">Not Varified</span>
+                      @endif
+                    </li>
+                    <li>Status :
+                      @if($booking->property->status == 1)
+                        <span class="badge badge-success">Active</span>
+                      @else
+                        <span class="badge badge-danger">Inactive</span>
+                      @endif
+                    </li>
+                    <li>Viwed :  <span class="ml-1 text-info">{{ $booking->property->viwed }}</span></li>
+                    <li>Created At : <span class="ml-1 text-info">{{ $booking->property->created_at->format('d-m-Y') }} || {{ $booking->property->created_at->format('h:m a') }}</span></li>
+                    <li>Updated At : <span class="ml-1 text-info">{{ $booking->property->updated_at->format('d-m-Y') }} || {{ $booking->property->updated_at->format('h:m a') }}</span></li>
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 mt-2">
+              <h2 class="text-primary">Booking Date & Time Information</h2>
+              <table class="table">
+                <thead class="bg-dark text-white">
+                  <tr>
+                    <th scope="col">From Date</th>
+                    <th scope="col">To Date</th>
+                    <th scope="col">From Time</th>
+                    <th scope="col">To Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ $booking->from_date->format('d M, Y') }}</td>
+                    <td>{{ $booking->to_date->format('d M, Y') }}</td>
+                    <td>{{ $booking->from_time->format('h:m a') }}</td>
+                    <td>{{ $booking->to_time->format('h:m a') }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="col-md-12 mt-2">
+              <h2 class="text-success">Booking Payment Information</h2>
+              <table class="table">
+                <thead class="bg-dark text-white">
+                  <tr >
+                    <th scope="col">Billing ID</th>
+                    <th scope="col">Cost Per Unit</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Cost Total</th>
+                    <th scope="col">Currency Name</th>
+                    <th scope="col">Is Payment Done</th>
+                    <th scope="col">Note</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ $booking->billing->id }}</td>
+                    <td>{{ $booking->cost_per_unit }}</td>
+                    <td>{{ $booking->quantity }}</td>
+                    <td>{{ Converter::to('currency.'.$booking->currency->short_code)->value($booking->cost_total)->format() }}</td>
+                    <td>{{ $booking->currency->name }}</td>
+                    <td>
+                      @if($booking->is_payment_done == 1)
+                        <span class="badge badge-success">Paid</span>
+                      @else
+                        <span class="badge badge-danger">Due</span>
+                      @endif
+                    </td>
+                    <td>{{ $booking->note}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+                <div class="col-md-12 mt-3">
+                  <a class="btn btn-info btn-block text-uppercase" href="#">Confirm Booking</a>
+                  <a class="btn btn-danger btn-block text-uppercase" href="#">Cancel Booking</a>
+                </div>
+          </div>
+      </div>
+  </div>
+
 @endsection
-
-@push('title')
-    Property - {{ $property->name }}
-@endpush
-
-@push('page.vendor.css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('administration/app-assets/vendors/css/tables/datatable/datatables.min.css') }}">
-@endpush
-
-@push('page.vendor.js')
-    <script src="{{ asset('administration/app-assets/vendors/js/tables/datatable/datatables.min.js') }}" type="text/javascript"></script>
-@endpush
-

@@ -44,20 +44,17 @@
 
                 <ul class="menu-content">
                     <li>
-                        <a class="menu-item" href="{{ route('app.booking.list') }}" >All Bookings</a>
+                        <a class="menu-item" href="{{ route('app.booking.new-pending') }}" >New Pending</a>
                     </li>
 
                     <li>
-                        <a class="menu-item" href="#">This Month</a>
+                        <a class="menu-item" href="#">All Confirmed</a>
                     </li>
 
                     <li>
-                        <a class="menu-item" href="#">This Year</a>
+                        <a class="menu-item" href="#">All Canceled</a>
                     </li>
 
-                    <li>
-                        <a class="menu-item" href="#">Search</a>
-                    </li>
                 </ul>
             </li>
 

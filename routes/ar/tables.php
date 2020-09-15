@@ -12,6 +12,6 @@ Route::group(['prefix'=>'table','namespace'=>'Administration','as'=>'app.table.'
         Route::post('amenity/list/{id}','AmenityController@amenitiesTable')->name('amenities');
     });
 
-    Route::post('all/bookings','BookingController@bookingsTable')->name('bookings');
+    Route::post('all/bookings','Booking\BookingController@bookingsTable')->name('bookings');
 
 });

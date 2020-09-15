@@ -23,9 +23,8 @@ Route::group(['namespace'=>'Administration'],function(){
             Route::get('status/switch/{id}','ProviderController@switchActivationStatus')->name('switch.status');
         });
 
-        //{{====================================  SOHAN'S (Booking) MODULE =========================================== }}
-        Route::group(['as'=>'booking.', 'prefix'=>'booking'], function () {
-            Route::get('all','BookingController@bookingListView')->name('list');
+        Route::group(['as'=>'booking.', 'prefix'=>'booking','namespace'=>'Booking'], function () {
+            Route::get('new-pending','BookingController@bookingListView')->name('new-pending');
             Route::get('view/{id}','BookingController@singleBookingView')->name('view');
             Route::get('delete/{id}','BookingController@deleteBooking')->name('delete');
         });
