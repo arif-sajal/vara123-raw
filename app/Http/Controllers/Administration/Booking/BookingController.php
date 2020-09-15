@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Administration;
+namespace App\Http\Controllers\Administration\Booking;
 
 use App\Http\Controllers\Controller;
 use Cartalyst\Converter\Laravel\Facades\Converter;
@@ -13,7 +13,7 @@ class BookingController extends Controller
 {
     public function bookingListView()
     {
-         return view('administration.pages.booking.list');
+         return view('administration.pages.booking.new_pending');
     }
 
     public function bookingsTable(){
@@ -44,9 +44,8 @@ class BookingController extends Controller
             })
             ->addColumn('action',function($booking){
                 return "
-                    <button class='btn btn-sm btn-primary'data-content='"
-                    .route('app.booking.view',$booking->id)."
-                    'data-hover='tooltip' data-original-title='View Room'><i class='la la-eye'></i></button>
+                    <a class='btn btn-sm btn-primary' href='".route('app.booking.view',$booking->id)."
+                    'data-hover='tooltip' data-original-title='View Room'><i class='la la-eye'></i></a>
 
                     <button class='btn btn-sm btn-danger' data-action='confirm' data-action-route='".
                     route('app.booking.delete',$booking->id)."' data-hover='tooltip'
@@ -57,14 +56,12 @@ class BookingController extends Controller
     }
 
     public function singleBookingView($id){
-        return view('administration.pages.booking.single');
+        $booking = Booking::findOrFail($id);
+        return view('administration.pages.booking.single',compact('booking'));
     }
 
     public function deleteBooking($id){
 
     }
 
-    public function newAddedFunction(){
-      
-    }
 }
