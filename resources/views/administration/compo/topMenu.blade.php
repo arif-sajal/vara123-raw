@@ -180,11 +180,14 @@
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#"><i class="ft-user"></i>Profile</a>
-                            <a class="dropdown-item" href="#"><i class="ft-mail"></i> My Inbox</a>
-                            <a class="dropdown-item" href="#"><i class="ft-check-square"></i> Task</a>
-                            <a class="dropdown-item" href="#"><i class="ft-message-square"></i> Chats</a>
-                            <div class="dropdown-divider"></div><a class="dropdown-item" href="{{ route('logout') }}"><i class="ft-power"></i> Logout</a>
+                            <a class="dropdown-item" href="{{ route('app.profile') }}">
+                                <i class="ft-user"></i>
+                                Profile
+                            </a>
+                            <a class="dropdown-item" href="{{ route('logout') }}">
+                                <i class="ft-power"></i>
+                                Logout
+                            </a>
                         </div>
                     </li>
                     <li class="dropdown dropdown-notification nav-item">

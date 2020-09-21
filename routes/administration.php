@@ -10,6 +10,7 @@ Route::group(['namespace'=>'Administration'],function(){
 
     Route::group(['middleware'=>[],'as'=>'app.'],function(){
         Route::get('dashboard','DashboardController@dashboardView')->name('dashboard');
+        Route::get('profile','ProfileController@viewProfile')->name('profile');
 
         Route::group(['as'=>'property.', 'prefix'=>'property'], function () {
             Route::get('all','PropertyController@propertyListView')->name('list');
@@ -23,10 +24,25 @@ Route::group(['namespace'=>'Administration'],function(){
             Route::get('status/switch/{id}','ProviderController@switchActivationStatus')->name('switch.status');
         });
 
-        Route::group(['as'=>'booking.', 'prefix'=>'booking','namespace'=>'Booking'], function () {
-            Route::get('new-pending','BookingController@bookingListView')->name('new-pending');
+        Route::group(['as'=>'customer.', 'prefix'=>'customer'], function () {
+            Route::get('all','CustomerController@customerListView')->name('list');
+            Route::get('status/switch/{id}','ProviderController@switchActivationStatus')->name('switch.status');
+        });
+
+        Route::group(['as'=>'admin.', 'prefix'=>'admin'], function () {
+            Route::get('all','AdminController@adminListView')->name('list');
+            Route::get('status/switch/{id}','ProviderController@switchActivationStatus')->name('switch.status');
+        });
+
+        Route::group(['as'=>'booking.', 'prefix'=>'booking'], function () {
+            Route::get('all','BookingController@bookingListView')->name('list');
             Route::get('view/{id}','BookingController@singleBookingView')->name('view');
             Route::get('delete/{id}','BookingController@deleteBooking')->name('delete');
+        });
+
+        Route::group(['as'=>'setting.', 'prefix'=>'setting'], function () {
+            Route::get('all','SettingController@settingView')->name('view');
+            Route::get('status/switch/{id}','ProviderController@switchActivationStatus')->name('switch.status');
         });
     });
 

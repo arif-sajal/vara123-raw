@@ -19,7 +19,7 @@ class AmenityController extends Controller
             ->addColumn('action',function(PropertyAmenity $amenity){
                 return "
                     <button class='btn btn-sm btn-danger' data-action='confirm'
-                     data-action-route='".route('admin.form.submission.property.amenity.delete',$amenity->id).
+                     data-action-route='".route('app.form.submission.property.amenity.delete',$amenity->id).
                      "' data-hover='tooltip' data-original-title='Delete Amenity'><i class='la la-trash'>
                       </i></button>
                 ";

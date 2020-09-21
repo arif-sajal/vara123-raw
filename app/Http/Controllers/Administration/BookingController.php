@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Administration\Booking;
+namespace App\Http\Controllers\Administration;
 
 use App\Http\Controllers\Controller;
 use Cartalyst\Converter\Laravel\Facades\Converter;
@@ -13,7 +13,7 @@ class BookingController extends Controller
 {
     public function bookingListView()
     {
-         return view('administration.pages.booking.new_pending');
+         return view('administration.pages.booking.list');
     }
 
     public function bookingsTable(){
