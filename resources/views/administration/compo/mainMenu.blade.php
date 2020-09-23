@@ -11,7 +11,6 @@
                 </li>
             @endif
 
-
             @if(auth('admin')->check())
                 <li class="nav-item">
                     <a href="javascript:void(0);">
@@ -33,28 +32,32 @@
                 </li>
             @endif
 
-            <li class="nav-item">
-                <a href="javascript:void(0);">
-                    <i class="la la-bank"></i>
-                    <span class="menu-title">Properties</span>
-                </a>
+            @if(auth('admin')->check() or auth('provider')->check())
+                <li class="nav-item">
+                    <a href="javascript:void(0);">
+                        <i class="la la-bank"></i>
+                        <span class="menu-title">Properties</span>
+                    </a>
 
-                <ul class="menu-content">
-                    <li>
-                        <a class="menu-item" href="{{ route('app.property.list') }}" >All Properties</a>
-                    </li>
-                    <li>
-                        <a class="menu-item" href="{{ route('app.property.add') }}">Add Property</a>
-                    </li>
-                </ul>
-            </li>
+                    <ul class="menu-content">
+                        <li>
+                            <a class="menu-item" href="{{ route('app.property.list') }}" >All Properties</a>
+                        </li>
+                        <li>
+                            <a class="menu-item" href="{{ route('app.property.add') }}">Add Property</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
 
-            <li class="nav-item">
-                <a href="{{ route('app.booking.list') }}">
-                    <i class="la la-automobile"></i>
-                    <span class="menu-title">Bookings</span>
-                </a>
-            </li>
+            @if(auth('admin')->check() or auth('provider')->check())
+                <li class="nav-item">
+                    <a href="{{ route('app.booking.list') }}">
+                        <i class="la la-automobile"></i>
+                        <span class="menu-title">Bookings</span>
+                    </a>
+                </li>
+            @endif
 
             @if(auth('admin')->check())
                 <li class="nav-item">

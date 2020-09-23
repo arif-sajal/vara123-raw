@@ -26,12 +26,12 @@ Route::group(['namespace'=>'Administration'],function(){
 
         Route::group(['as'=>'customer.', 'prefix'=>'customer'], function () {
             Route::get('all','CustomerController@customerListView')->name('list');
-            Route::get('status/switch/{id}','ProviderController@switchActivationStatus')->name('switch.status');
+            Route::get('status/switch/{id}','CustomerController@switchActivationStatus')->name('switch.status');
         });
 
         Route::group(['as'=>'admin.', 'prefix'=>'admin'], function () {
             Route::get('all','AdminController@adminListView')->name('list');
-            Route::get('status/switch/{id}','ProviderController@switchActivationStatus')->name('switch.status');
+            Route::get('status/switch/{id}','AdminController@switchActivationStatus')->name('switch.status');
         });
 
         Route::group(['as'=>'booking.', 'prefix'=>'booking'], function () {

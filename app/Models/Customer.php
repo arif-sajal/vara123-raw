@@ -9,6 +9,10 @@ class Customer extends Authenticatable
 {
     use Notifiable;
 
+    protected $appends = [
+        'full_name'
+    ];
+
     protected $fillable = [
         'token_created','token_expired_at','token'
     ];
@@ -21,4 +25,8 @@ class Customer extends Authenticatable
     protected $hidden = [
         'password'
     ];
+
+    public function getFullNameAttribute(){
+        return $this->attributes['first_name']." ".$this->attributes['last_name'];
+    }
 }

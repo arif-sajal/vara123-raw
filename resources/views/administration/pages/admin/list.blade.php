@@ -14,7 +14,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">All Providers</h4>
+                            <h4 class="card-title">All Admins</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -29,7 +29,7 @@
                         <div class="card-content ">
                             <div class="card-body table-responsive">
                                 <table class="table table-striped table-bordered" data-table-type="datatable"
-                                       data-table-name="ProvidersTable" data-table-content="{{ route('app.table.providers')}}"
+                                       data-table-name="AdminsTable" data-table-content="{{ route('app.table.admins')}}"
                                        style="width: 100%;">
 
                                     <thead>
@@ -71,7 +71,7 @@
 
 @push('page.js')
     <script>
-        window.datatable.ProvidersTable.columns = [
+        window.datatable.AdminsTable.columns = [
             { data: 'id', name: 'id'},
             { data: 'full_name', name: 'full_name'},
             { data: 'email', name: 'email'},
