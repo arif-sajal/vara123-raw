@@ -12,7 +12,7 @@
                     @if( $customers->avatar == NULL )
                     <p class="badge badge-danger">No image uploaded</p>
                     @else
-                    <img src="{{ Storage::url($customers->avatar) }}" width="50px" alt=""> <br> <br>
+                    <img src="{{ Storage::url($customers->avatar) }}" @if(\Illuminate\Support\Facades\Storage::exists($customers->avatar)) data-default-file="{{ \Illuminate\Support\Facades\Storage::url($customers->avatar) }}" @endif width="50px" alt=""> <br> <br>
                     @endif
                 </div>
             </div>
