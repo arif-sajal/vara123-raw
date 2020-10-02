@@ -3,10 +3,6 @@
     Providers
 @endpush
 
-@push('page.vendor.css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('administration/app-assets/vendors/css/tables/datatable/datatables.min.css') }}">
-@endpush
-
 @section('mainContent')
     <div class="content-wrapper">
         <div class="content-body">

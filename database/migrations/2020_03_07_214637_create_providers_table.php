@@ -17,7 +17,7 @@ class CreateProvidersTable extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->enum('user_type',['Organization','Individual']);
+            $table->enum('user_type',['Organization','Individual'])->default('Individual');
             $table->string('gender')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->string('email');

@@ -25,8 +25,9 @@ class AdminController extends Controller
         return view('administration.modals.admin.add');
     }
 
-    public function viewEditAdminModal(Admin $admins){
-        return view('administration.modals.admin.edit', compact('admins'));
+    public function viewEditAdminModal($id){
+        $admin = Admin::find($id);
+        return view('administration.modals.admin.edit')->with('admin', $admin);
     }
 
     public function adminsTable(){
@@ -57,54 +58,45 @@ class AdminController extends Controller
 
     public function addAdmin(Add $request){
 
-        if( $request->password == $request->c_password ){
+        $admin = new Admin();
+        $admin->first_name = $request->first_name;
+        $admin->last_name = $request->last_name;
+        $admin->gender = $request->gender;
+        $admin->date_of_birth = $request->date_of_birth;
+        $admin->email = $request->email;
+        $admin->phone = $request->phone;
+        $admin->emergency_contact_number = $request->phone;
+        $admin->username = $request->username;
+        $admin->password = Hash::make($request->password);
 
-            $admin = new Admin();
-            $admin->first_name                 = $request->first_name;
-            $admin->last_name                  = $request->last_name;
-            $admin->gender                     = $request->gender;
-            $admin->date_of_birth              = $request->date_of_birth;
-            $admin->email                      = $request->email;
-            $admin->phone                      = $request->phone;
-            $admin->emergency_contact_number   = $request->phone;
-            $admin->username                   = $request->username;
-            $admin->password                   = Hash::make($request->password);
-
-            if( $request->image ){
-                $image = Storage::putFile('avatar', $request->file('image'));
-                $admin->avatar = $image;
-            }
-           
-            if( $admin->save() ){
-                return Notify::send('success', 'Admin added successfully')->reload('table','AdminsTable')->json();
-            }
-
-        }
-        else{
-
-            return Notify::send('warning', 'Password didn\'t match.')->json();
-    
+        if($request->hasFile('avatar')){
+            $admin->avatar = Storage::putFile('avatar', $request->file('avatar'));
         }
 
+        if( $admin->save() ){
+            return Notify::send('success', 'Admin added successfully')->reload('table','AdminsTable')->json();
+        }
+
+        return Notify::send('warning', 'Password didn\'t match.')->json();
     }
 
     public function updateAdmin(Update $request,$id){
+        $admin = Admin::find($id);
+        $admin->first_name = $request->first_name;
+        $admin->last_name = $request->last_name;
+        $admin->gender = $request->gender;
+        $admin->date_of_birth = $request->date_of_birth;
+        $admin->email = $request->email;
+        $admin->phone = $request->phone;
+        $admin->emergency_contact_number = $request->phone;
+        $admin->username = $request->username;
 
-        $admin =  Admin::find($id);
-        $admin->first_name                 = $request->first_name;
-        $admin->last_name                  = $request->last_name;
-        $admin->gender                     = $request->gender;
-        $admin->date_of_birth              = $request->date_of_birth;
-        $admin->email                      = $request->email;
-        $admin->phone                      = $request->phone;
-        $admin->emergency_contact_number   = $request->phone;
-        $admin->username                   = $request->username;
-
-        if(  $request->image ){
-            if( Storage::url($admin->avatar ) ){
+        if($request->image){
+            if(Storage::exists($admin->avatar)){
                 Storage::delete($admin->avatar);
                 $admin->avatar = NULL;
             }
+
             $image = Storage::putFile('avatar', $request->file('image'));
             $admin->avatar = $image;
         }

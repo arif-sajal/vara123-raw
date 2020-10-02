@@ -21,12 +21,12 @@ Route::group(['prefix'=>'app/form-submission','namespace'=>'Administration','as'
         Route::post('passwordreset/{id}', 'ProviderController@reset')->name('passwordreset');
     });
 
-    //for admin 
+    //for admin
     Route::group(['as'=>'admin.', 'prefix'=>'admin'], function(){
         Route::post('add', 'AdminController@addAdmin')->name('add');
         Route::post('update/{id}', 'AdminController@updateAdmin')->name('update');
         Route::get('delete/{id}', 'AdminController@deleteAdmin')->name('delete');
-        Route::post('passwordreset/{id}', 'AdminController@reset')->name('passwordreset');
+        Route::post('password-reset/{id}', 'AdminController@reset')->name('passwordreset');
     });
 
     //for customer

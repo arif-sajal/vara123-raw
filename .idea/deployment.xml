@@ -5,7 +5,7 @@
       <paths name="vara123@dev">
         <serverdata>
           <mappings>
-            <mapping deploy="/var/www/raw" local="$PROJECT_DIR$" web="/raw" />
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

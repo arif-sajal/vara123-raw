@@ -26,10 +26,8 @@ class Add extends FormRequest
         return [
             'first_name'=>'required',
             'last_name'=>'required',
-            'email'=>'required',
-            'username'=>'required',
-            'password'=>'required',
-            'c_password'=>'required',
+            'email'=>'required|unique:admins,email,'.$this->route()->id,
+            'username'=>'required|unique:admins,username,'.$this->route()->id,
         ];
     }
 }

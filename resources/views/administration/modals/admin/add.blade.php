@@ -63,7 +63,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Avater</label>
-                        <input type="file" name="image" class="form-control-file">                    
+                        <input type="file" name="avatar" class="form-control-file dropify">
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -75,7 +75,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Confirm Password</label>
-                        <input type="password" name="c_password" class="form-control">
+                        <input type="password" name="password_confirmation" class="form-control">
                     </div>
                 </div>
             </div>
@@ -86,3 +86,9 @@
         </div>
     </form>
 </div>
+
+<script>
+    $('.dropify').each(function(){
+        $(this).dropify();
+    })
+</script>
