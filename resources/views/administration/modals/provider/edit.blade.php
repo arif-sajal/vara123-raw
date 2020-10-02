@@ -66,7 +66,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Upload Image</label> <br>
-                        <img src="{{ Storage::url($provider->avatar) }}" width="50px" alt=""> <br> <br>
+                        <img src="{{ Storage::url($provider->avatar) }}" @if(\Illuminate\Support\Facades\Storage::exists($provider->avatar)) data-default-file="{{ \Illuminate\Support\Facades\Storage::url($provider->avatar) }}" @endif width="50px" alt=""> <br> <br>
                         <input type="file" class="form-control-file" name="image">
                     </div>
                 </div>

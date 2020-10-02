@@ -94,11 +94,8 @@ class AdminController extends Controller
         if($request->image){
             if(Storage::exists($admin->avatar)){
                 Storage::delete($admin->avatar);
-                $admin->avatar = NULL;
             }
-
-            $image = Storage::putFile('avatar', $request->file('image'));
-            $admin->avatar = $image;
+            $admin->avatar = Storage::putFile('avatar', $request->file('image'));
         }
 
         if( $admin->save() ){

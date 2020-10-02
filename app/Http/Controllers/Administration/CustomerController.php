@@ -79,8 +79,7 @@ class CustomerController extends Controller
             $customer->password                     = Hash::make($request->password);
 
             if( $request->image ){
-                $image = Storage::putFile('avatar', $request->file('image'));
-                $customer->avatar = $image;
+                $customer->avatar = Storage::putFile('avatar', $request->file('image'));
             }
             if( $customer->save() ) {
                 return Notify::send('success','Customer added successfully')->reload('table','CustomersTable')->json();
@@ -120,10 +119,8 @@ class CustomerController extends Controller
         if(  $request->image ){
             if( Storage::url($customer->avatar ) ){
                 Storage::delete($customer->avatar);
-                $customer->avatar = NULL;
             }
-            $image = Storage::putFile('avatar', $request->file('image'));
-            $customer->avatar = $image;
+            $customer->avatar = Storage::putFile('avatar', $request->file('image'));
         }
         
         if( $customer->save() ) {
@@ -134,7 +131,6 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
         if( Storage::url($customer->avatar ) ){
             Storage::delete($customer->avatar);
-            $customer->avatar = NULL;
         }
         if( $customer->delete() ){
             return Notify::send('success','Customer deleted successfully')->reload('table','CustomersTable')->json();

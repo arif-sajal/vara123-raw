@@ -65,8 +65,7 @@ class ProviderController extends Controller
             $provider->username         = $request->username;
             $provider->password         = Hash::make($request->password);
             if( $request->image ){
-                $image = Storage::putFile('avatar',$request->file('image'));
-                $provider->avatar = $image;
+                $provider->avatar = Storage::putFile('avatar',$request->file('image'));
             }
             if( $provider->save() ){
                 return Notify::send('success','Provider added successfully')->reload('table','ProvidersTable')->json();
@@ -91,8 +90,7 @@ class ProviderController extends Controller
             if( Storage::url($provider->avatar) ){
                 Storage::delete($provider->avatar);
             }
-            $image = Storage::putFile('avatar',$request->file('image'));
-            $provider->avatar = $image;
+            $provider->avatar = Storage::putFile('avatar',$request->file('image'));
         }
 
         if( $provider->save() ){

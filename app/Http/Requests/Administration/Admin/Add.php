@@ -24,10 +24,11 @@ class Add extends FormRequest
     public function rules()
     {
         return [
-            'first_name'=>'required',
-            'last_name'=>'required',
-            'email'=>'required|unique:admins,email,'.$this->route()->id,
-            'username'=>'required|unique:admins,username,'.$this->route()->id,
+            'first_name'    =>'required',
+            'last_name'     =>'required',
+            'phone'         =>'unique:admins,phone,'.$this->route()->id,
+            'email'         =>'required|unique:admins,email,'.$this->route()->id,
+            'username'      =>'required|unique:admins,username,'.$this->route()->id,
         ];
     }
 }
