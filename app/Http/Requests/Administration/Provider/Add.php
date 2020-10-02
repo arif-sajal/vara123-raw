@@ -24,14 +24,14 @@ class Add extends FormRequest
     public function rules()
     {
         return [
-            'first_name'    => 'required',
-            'last_name'     => 'required',
-            'user_type'     => 'required',
-            'email'         => 'required|unique:providers,email,'.$this->route()->id,
-            'username'      => 'required|unique:providers,username,'.$this->route()->id,
-            'phone'         => 'unique:providers,phone,'.$this->route()->id,
-            'password'      => 'required',
-            'c_password'    => 'required',
+            'first_name' => 'required',
+            'last_name'=> 'required',
+            'user_type' => 'required',
+            'email' => 'required|unique:providers,email,'.$this->route()->id,
+            'username'=> 'required|unique:providers,username,'.$this->route()->id,
+            'phone'=> 'unique:providers,phone,'.$this->route()->id,
+            'password' => 'required',
+            'c_password'=> 'required',
         ];
     }
 }

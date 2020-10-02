@@ -69,13 +69,13 @@ class AdminController extends Controller
         $admin->username = $request->username;
         $admin->password = Hash::make($request->password);
 
-        if($request->hasFile('avatar')){
+        if($request->hasFile('avatar')):
             $admin->avatar = Storage::putFile('avatar', $request->file('avatar'));
-        }
+        endif;
 
-        if( $admin->save() ){
+        if( $admin->save() ):
             return Notify::send('success', 'Admin added successfully')->reload('table','AdminsTable')->json();
-        }
+        endif;
 
         return Notify::send('warning', 'Password didn\'t match.')->json();
     }
@@ -91,28 +91,28 @@ class AdminController extends Controller
         $admin->emergency_contact_number = $request->phone;
         $admin->username = $request->username;
 
-        if($request->image){
-            if(Storage::exists($admin->avatar)){
+        if($request->image):
+            if(Storage::exists($admin->avatar)):
                 Storage::delete($admin->avatar);
-            }
+            endif;
             $admin->avatar = Storage::putFile('avatar', $request->file('image'));
-        }
+        endif;
 
-        if( $admin->save() ){
+        if( $admin->save() ):
             return Notify::send('success', 'Admin updated successfully')->reload('table','AdminsTable')->json();
-        }
+        endif;
 
     }
 
     public function deleteAdmin($id){
         $admins =  Admin::find($id);
-        if( Storage::url($admins->avatar) ){
+        if( Storage::exists($admins->avatar) ):
             Storage::delete($admins->avatar);
             $admins->avatar = NULL;
-        }
-        if( $admins->delete() ) {
+        endif;
+        if( $admins->delete() ) :
             return Notify::send('success', 'Admin deleted successfully')->reload('table','AdminsTable')->json();
-        }
+        endif;
     }
 
     public function adminPasswordReset(Admin $admins){
@@ -122,15 +122,14 @@ class AdminController extends Controller
     public function reset(Reset $request, $id){
         $admin = Admin::find($id);
 
-        if( $request->password == $request->c_password ){
+        if( $request->password == $request->c_password ):
             $admin->password = Hash::make($request->password);
-            if($admin->save()){
+            if($admin->save()):
                 return Notify::send('success', 'Password reset successfully')->reload('table','AdminsTable')->json();
-            }
-        }
-        else{
+            endif;
+        else:
             return Notify::send('warning', 'Password didn\'t match')->reload('table','AdminsTable')->json();
-        }
+        endif;
     }
 
     public function switchActivationStatus($id){
