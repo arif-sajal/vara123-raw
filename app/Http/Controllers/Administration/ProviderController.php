@@ -3,23 +3,24 @@
 namespace App\Http\Controllers\Administration;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Administration\Provider\Add;
+use App\Http\Requests\Administration\Provider\Reset;
+use App\Http\Requests\Administration\Provider\Update;
 use App\Models\Provider;
+use Illuminate\Support\Facades\Hash;
 use Library\Notify\Facades\Notify;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Storage;
 
 class ProviderController extends Controller
 {
     public function providerListView(){
         return view('administration.pages.provider.list');
     }
-
-    public function editProviderView($id){
-
+    public function viewEditModal(Provider $provider){
+        return view('administration.modals.provider.edit', compact('provider'));
     }
-
-    public function singleProviderView($id){
-
-    }
+    
 
     public function providersTable(){
         $providers = Provider::query();
@@ -32,16 +33,104 @@ class ProviderController extends Controller
             ->addColumn('action',function(Provider $provider){
                 return "
                     <button class='btn btn-sm btn-primary'data-content='"
-                    .route('app.booking.view',$provider->id)."
-                    'data-hover='tooltip' data-original-title='View Room'><i class='la la-eye'></i></button>
+                    .route('app.modal.provider.edit',$provider->id)."
+                    'data-hover='tooltip' data-toggle='modal' data-target='#myModal' data-original-title='Edit provider'><i class='la la-edit'></i></button>
 
                     <button class='btn btn-sm btn-danger' data-action='confirm' data-action-route='".
-                    route('app.booking.delete',$provider->id)."' data-hover='tooltip'
+                    route('app.form.submission.provider.delete',$provider->id)."' data-hover='tooltip'
                     data-original-title='Delete Room'><i class='la la-trash'></i></button>
+
+                    <button class='btn btn-sm btn-info'data-content='"
+                    .route('app.modal.provider.resetpassword',$provider->id)."
+                    'data-hover='tooltip' data-toggle='modal' data-target='#myModal' data-original-title='Reset Password'><i class='la la-lock'></i></button>
                 ";
             })
             ->toJson();
     }
+
+    public function viewAddModal(){
+        return view('administration.modals.provider.add');
+    }
+    public function addProvider(Add $request){
+
+        if( $request->password == $request->c_password ){
+            $provider = new Provider();
+            $provider->first_name       = $request->first_name;
+            $provider->last_name        = $request->last_name;
+            $provider->user_type        = $request->user_type;
+            $provider->gender           = $request->gender;
+            $provider->date_of_birth    = $request->date_of_birth;
+            $provider->email            = $request->email;
+            $provider->phone            = $request->phone;
+            $provider->username         = $request->username;
+            $provider->password         = Hash::make($request->password);
+            if( $request->image ){
+                $image = Storage::putFile('avatar',$request->file('image'));
+                $provider->avatar = $image;
+            }
+            if( $provider->save() ){
+                return Notify::send('success','Provider added successfully')->reload('table','ProvidersTable')->json();
+            }
+        }
+        else{
+            return Notify::send('warning','Password didn\'t matched')->reload('table','ProvidersTable')->json();
+        }
+    }
+
+    public function updateProvider(Update $request, $id){
+        $provider = Provider::find($id);
+        $provider->first_name       = $request->first_name;
+        $provider->last_name        = $request->last_name;
+        $provider->user_type        = $request->user_type;
+        $provider->gender           = $request->gender;
+        $provider->date_of_birth    = $request->date_of_birth;
+        $provider->email            = $request->email;
+        $provider->phone            = $request->phone;
+
+        if( $request->image ){
+            if( Storage::url($provider->avatar) ){
+                Storage::delete($provider->avatar);
+            }
+            $image = Storage::putFile('avatar',$request->file('image'));
+            $provider->avatar = $image;
+        }
+
+        if( $provider->save() ){
+            return Notify::send('success','Provider updated successfully')->reload('table','ProvidersTable')->json();
+        }
+
+    }
+
+    public function deleteProvider($id){
+        $provider = Provider::find($id);
+        if( Storage::url($provider->avatar) ){
+            Storage::delete($provider->avatar);
+        }
+        if( $provider->delete() ){
+            return Notify::send('success','Provider deleted successfully')->reload('table','ProvidersTable')->json();
+
+        }
+    }
+
+    public function providerPasswordReset(Provider $provider){
+        return view('administration.modals.provider.resetPassword', compact('provider'));
+    }
+
+    public function reset(Reset $request, $id){
+        $provider = Provider::find($id);
+
+        if( $request->password == $request->c_password ){
+            $provider->password  = Hash::make($request->password);
+            if( $provider->save() ){
+                return Notify::send('success','Password reset successfully')->reload('table','ProvidersTable')->json();
+            }
+        }
+        else{
+            return Notify::send('warning','Password didn\'t matched')->json();
+        }
+    }
+
+    
 
     public function switchActivationStatus($id){
         $provider = Provider::findOrFail($id);

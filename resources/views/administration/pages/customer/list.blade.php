@@ -15,6 +15,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">All Customers</h4>
+                            <button class="btn btn-success" style="margin-top:15px" data-toggle="modal" data-target="#myModal" data-content="{{ route('app.modal.customer.add') }}">Add Customer</button>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -44,14 +45,7 @@
                                     </thead>
 
                                     <tfoot>
-                                    <tr>
-                                        <th>ID#</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Username</th>
-                                        <th>Active</th>
-                                        <th>Action</th>
-                                    </tr>
+                                    
                                     </tfoot>
                                 </table>
                             </div>
