@@ -21,7 +21,7 @@ class CustomerController extends Controller
         return view('administration.pages.customer.list');
     }
     public function viewAddCustomerModal(){
-        return view('administration.modals.customer.add');    
+        return view('administration.modals.customer.add');
     }
 
     public function customersTable(){
@@ -57,7 +57,7 @@ class CustomerController extends Controller
     }
 
     public function addCustomer(Add $request){
-    
+
         if( $request->password == $request->c_password ){
             $customer = new Customer();
             $customer->first_name                   = $request->first_name;
@@ -116,13 +116,14 @@ class CustomerController extends Controller
         $customer->passport_number              = $request->passport_number;
         $customer->emergency_contact_number     = $request->e_contact_number;
 
-        if(  $request->image ){
+        if($request->image){
             if( Storage::url($customer->avatar ) ){
                 Storage::delete($customer->avatar);
             }
+
             $customer->avatar = Storage::putFile('avatar', $request->file('image'));
         }
-        
+
         if( $customer->save() ) {
             return Notify::send('success','Customer updated successfully')->reload('table','CustomersTable')->json();
         }
@@ -155,7 +156,7 @@ class CustomerController extends Controller
         }
     }
 
-    
+
 
     public function switchActivationStatus($id){
         $customer = Customer::findOrFail($id);

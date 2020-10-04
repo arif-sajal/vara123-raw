@@ -91,22 +91,26 @@ class AdminController extends Controller
         $admin->emergency_contact_number = $request->phone;
         $admin->username = $request->username;
 
-        if($request->image){
-            if(Storage::exists($admin->avatar)){
+        if($request->image):
+
+            if(Storage::exists($admin->avatar)):
                 Storage::delete($admin->avatar);
-            }
+            endif;
+
             $admin->avatar = Storage::putFile('avatar', $request->file('image'));
-        }
 
-        if( $admin->save() ){
+        endif;
+
+        if($admin->save()):
             return Notify::send('success', 'Admin updated successfully')->reload('table','AdminsTable')->json();
-        }
+        endif;
 
+        return Notify::send('error', 'Can\'t Add Admin Now, Please Try Again.')->reload('table','AdminsTable')->json();
     }
 
     public function deleteAdmin($id){
         $admins =  Admin::find($id);
-        if( Storage::url($admins->avatar) ){
+        if( Storage::exists($admins->avatar) ){
             Storage::delete($admins->avatar);
             $admins->avatar = NULL;
         }
