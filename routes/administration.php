@@ -24,6 +24,11 @@ Route::group(['namespace'=>'Administration'],function(){
             Route::get('status/switch/{id}','ProviderController@switchActivationStatus')->name('switch.status');
         });
 
+        //coupon
+        Route::group(['as'=>'coupon.','prefix'=>'coupon'], function() {
+            Route::get('all','CouponController@couponList')->name('list');
+        });
+
         Route::group(['as'=>'customer.', 'prefix'=>'customer'], function () {
             Route::get('all','CustomerController@customerListView')->name('list');
             Route::get('status/switch/{id}','CustomerController@switchActivationStatus')->name('switch.status');

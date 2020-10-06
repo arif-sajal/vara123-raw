@@ -7,6 +7,7 @@ Route::group(['prefix'=>'table','namespace'=>'Administration','as'=>'app.table.'
     Route::post('all/providers','ProviderController@providersTable')->name('providers');
     Route::post('all/customers','CustomerController@customersTable')->name('customers');
     Route::post('all/admins','AdminController@adminsTable')->name('admins');
+    Route::post('all/coupons','CouponController@couponsTable')->name('coupons');
 
     Route::group(['as'=>'property.', 'prefix'=>'property','namespace'=>'Property'], function () {
         Route::post('room/list/{id}','RoomController@roomsTable')->name('rooms');

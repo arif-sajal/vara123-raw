@@ -32,6 +32,15 @@
                 </li>
             @endif
 
+            @if(auth('admin')->check())
+                <li class="nav-item">
+                    <a href="{{ route('app.coupon.list') }}">
+                        <i class="la la-gift"></i>
+                        <span class="menu-title">Coupon</span>
+                    </a>
+                </li>
+            @endif
+
             @if(auth('admin')->check() or auth('provider')->check())
                 <li class="nav-item">
                     <a href="javascript:void(0);">
