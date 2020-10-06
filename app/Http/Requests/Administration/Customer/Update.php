@@ -24,19 +24,19 @@ class Update extends FormRequest
     public function rules()
     {
         return [
-            'first_name'                => 'required',
-            'last_name'                 => 'required',
-            'address'                   => 'required',
-            'country'                   => 'required',
-            'state'                     => 'required',
-            'city'                      => 'required',
-            'p_code'                    => 'required',
-            'email'                     => 'required|unique:customers,email,'.$this->route()->id,
-            'phone'                     => 'unique:customers,phone,'.$this->route()->id,
-            'nid_number'                => 'unique:customers,nid_number,'.$this->route()->id,
-            'passport_number'           => 'unique:customers,passport_number,'.$this->route()->id,
-            'birth_certificate_number'  => 'unique:customers,birth_certificate_number,'.$this->route()->id,
-            'username'                  => 'required|unique:customers,username,'.$this->route()->id,
+            'first_name'   => 'required',
+            'last_name' => 'required',
+            'address'  => 'required',
+            'country' => 'required',
+            'state' => 'required',
+            'city'  => 'required',
+            'p_code' => 'required',
+            'email'=> 'required|unique:customers,email,'.$this->route()->id,
+            'phone'  => 'unique:customers,phone,'.$this->route()->id,
+            'nid_number'  => 'unique:customers,nid_number,'.$this->route()->id,
+            'passport_number'=> 'unique:customers,passport_number,'.$this->route()->id,
+            'birth_certificate_number' => 'unique:customers,birth_certificate_number,'.$this->route()->id,
+            'username' => 'required|unique:customers,username,'.$this->route()->id,
         ];
     }
 }

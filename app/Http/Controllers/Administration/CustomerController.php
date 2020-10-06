@@ -21,7 +21,7 @@ class CustomerController extends Controller
         return view('administration.pages.customer.list');
     }
     public function viewAddCustomerModal(){
-        return view('administration.modals.customer.add');
+        return view('administration.modals.customer.add');    
     }
 
     public function customersTable(){
@@ -57,37 +57,36 @@ class CustomerController extends Controller
     }
 
     public function addCustomer(Add $request){
-
-        if( $request->password == $request->c_password ){
+    
+        if( $request->password == $request->c_password ):
             $customer = new Customer();
-            $customer->first_name                   = $request->first_name;
-            $customer->last_name                    = $request->last_name;
-            $customer->address                      = $request->address;
-            $customer->country                      = $request->country;
-            $customer->state                        = $request->state;
-            $customer->city                         = $request->city;
-            $customer->post_code                    = $request->p_code;
-            $customer->gender                       = $request->gender;
-            $customer->date_of_birth                = $request->date_of_birth;
-            $customer->email                        = $request->email;
-            $customer->phone                        = $request->phone;
-            $customer->nid_number                   = $request->nid_number;
-            $customer->birth_certificate_number     = $request->birth_certificate_number;
-            $customer->passport_number              = $request->passport_number;
-            $customer->emergency_contact_number     = $request->e_contact_number;
-            $customer->username                     = $request->username;
-            $customer->password                     = Hash::make($request->password);
+            $customer->first_name  = $request->first_name;
+            $customer->last_name = $request->last_name;
+            $customer->address = $request->address;
+            $customer->country = $request->country;
+            $customer->state  = $request->state;
+            $customer->city  = $request->city;
+            $customer->post_code = $request->p_code;
+            $customer->gender  = $request->gender;
+            $customer->date_of_birth  = $request->date_of_birth;
+            $customer->email = $request->email;
+            $customer->phone  = $request->phone;
+            $customer->nid_number  = $request->nid_number;
+            $customer->birth_certificate_number = $request->birth_certificate_number;
+            $customer->passport_number = $request->passport_number;
+            $customer->emergency_contact_number = $request->e_contact_number;
+            $customer->username  = $request->username;
+            $customer->password   = Hash::make($request->password);
 
-            if( $request->image ){
+            if( $request->image ):
                 $customer->avatar = Storage::putFile('avatar', $request->file('image'));
-            }
-            if( $customer->save() ) {
+            endif;
+            if( $customer->save() ) :
                 return Notify::send('success','Customer added successfully')->reload('table','CustomersTable')->json();
-            }
-        }
-        else{
+            endif;
+        else:
             return Notify::send('warning','Password didn\'t matched')->json();
-        }
+        endif;
     }
 
     public function viewCustomerModal(Customer $customers){
@@ -100,42 +99,41 @@ class CustomerController extends Controller
 
     public function updateCustomer(Update $request, $id){
         $customer = Customer::find($id);
-        $customer->first_name                   = $request->first_name;
-        $customer->last_name                    = $request->last_name;
-        $customer->address                      = $request->address;
-        $customer->country                      = $request->country;
-        $customer->state                        = $request->state;
-        $customer->city                         = $request->city;
-        $customer->post_code                    = $request->p_code;
-        $customer->gender                       = $request->gender;
-        $customer->date_of_birth                = $request->date_of_birth;
-        $customer->email                        = $request->email;
-        $customer->phone                        = $request->phone;
-        $customer->nid_number                   = $request->nid_number;
-        $customer->birth_certificate_number     = $request->birth_certificate_number;
-        $customer->passport_number              = $request->passport_number;
-        $customer->emergency_contact_number     = $request->e_contact_number;
+        $customer->first_name  = $request->first_name;
+        $customer->last_name  = $request->last_name;
+        $customer->address  = $request->address;
+        $customer->country  = $request->country;
+        $customer->state  = $request->state;
+        $customer->city   = $request->city;
+        $customer->post_code  = $request->p_code;
+        $customer->gender  = $request->gender;
+        $customer->date_of_birth = $request->date_of_birth;
+        $customer->email  = $request->email;
+        $customer->phone = $request->phone;
+        $customer->nid_number  = $request->nid_number;
+        $customer->birth_certificate_number = $request->birth_certificate_number;
+        $customer->passport_number   = $request->passport_number;
+        $customer->emergency_contact_number  = $request->e_contact_number;
 
-        if($request->image){
-            if( Storage::url($customer->avatar ) ){
+        if(  $request->image ):
+            if( Storage::exists($customer->avatar ) ):
                 Storage::delete($customer->avatar);
-            }
-
+            endif;
             $customer->avatar = Storage::putFile('avatar', $request->file('image'));
-        }
-
-        if( $customer->save() ) {
+        endif;
+        
+        if( $customer->save() ) :
             return Notify::send('success','Customer updated successfully')->reload('table','CustomersTable')->json();
-        }
+        endif;
     }
     public function deleteCustomer($id){
         $customer = Customer::find($id);
-        if( Storage::url($customer->avatar ) ){
+        if( Storage::exists($customer->avatar ) ):
             Storage::delete($customer->avatar);
-        }
-        if( $customer->delete() ){
+        endif;
+        if( $customer->delete() ):
             return Notify::send('success','Customer deleted successfully')->reload('table','CustomersTable')->json();
-        }
+        endif;
     }
 
     public function customerResetPassword(Customer $customers){
@@ -145,18 +143,17 @@ class CustomerController extends Controller
     public function customerPasswordReset( Reset $request ,$id){
         $customer = Customer::find($id);
 
-        if( $request->password == $request->c_password ){
+        if( $request->password == $request->c_password ):
             $customer->password  = Hash::make($request->password);
-            if( $customer->save() ){
+            if( $customer->save() ):
                 return Notify::send('success','Password reset successfully')->reload('table','CustomersTable')->json();
-            }
-        }
-        else{
+            endif;
+        else:
             return Notify::send('warning','Password didn\'t matched')->json();
-        }
+        endif;
     }
 
-
+    
 
     public function switchActivationStatus($id){
         $customer = Customer::findOrFail($id);

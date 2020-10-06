@@ -13,6 +13,13 @@ Route::group(['prefix'=>'app/form-submission','namespace'=>'Administration','as'
         Route::get('amenity/delete/{id}','AmenityController@deleteAmenity')->name('amenity.delete');
     });
 
+    //for coupon
+    Route::group(['as'=>'coupon.','prefix'=>'coupon'], function(){
+        Route::post('add','CouponController@addCoupon')->name('add');
+        Route::post('update/{id}','CouponController@updateCoupon')->name('update');
+        Route::get('delete/{id}','CouponController@deleteCoupon')->name('delete');
+    });
+
     //for provider
     Route::group(['as'=>'provider.','prefix'=>'provider'], function(){
         Route::post('add','ProviderController@addProvider')->name('add');

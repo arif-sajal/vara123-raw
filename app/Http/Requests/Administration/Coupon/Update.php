@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Administration\Provider;
+namespace App\Http\Requests\Administration\Coupon;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Reset extends FormRequest
+class Update extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class Reset extends FormRequest
     public function rules()
     {
         return [
-            'password' => 'required',
-            'c_password'  => 'required',
+            'code' => 'required|unique:coupons,code,'.$this->route()->id,
+            'type'=> 'required',
+            'amount' => 'required'
         ];
     }
 }
