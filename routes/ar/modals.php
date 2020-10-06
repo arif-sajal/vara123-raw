@@ -14,6 +14,12 @@ Route::group(['prefix'=>'modal','namespace'=>'Administration','as'=>'app.modal.'
         Route::get('vehicle/billing/edit/{id}','VehicleController@editBillingView')->name('vehicle.billing.edit');
     });
 
+    //for coupon
+    Route::group(['as'=>'coupon.','prefix'=> 'coupon'], function(){
+        Route::get('add','CouponController@viewCouponModal')->name('add');
+        Route::get('edit/{coupon:id}','CouponController@viewEditModal')->name('edit');
+    });
+
     //for providers
     Route::group(['as'=>'provider.','prefix'=> 'provider'], function(){
         Route::get('add','ProviderController@viewAddModal')->name('add');
