@@ -25,7 +25,7 @@ class BookingController extends Controller
 
         return DataTables::make($booking->latest()->get())
             ->editColumn('is_payment_done',function(Booking $booking){
-                return $booking->is_poayment_done ? 'Paid' : "Unpaid";
+                return $booking->is_payment_done ? 'Paid' : "Unpaid";
             })
             ->addColumn('booking_from',function(Booking $booking){
                 return $booking->from_date->format('d M, Y') . ($booking->from_time && $booking->from_time != $booking->to_time ?  ' at '.$booking->from_time->format('h:m a') : '');
@@ -45,7 +45,7 @@ class BookingController extends Controller
             ->addColumn('action',function($booking){
                 return "
                     <a class='btn btn-sm btn-primary' href='".route('app.booking.view',$booking->id)."
-                    'data-hover='tooltip' data-original-title='View Room'><i class='la la-eye'></i></a>
+                    'data-hover='tooltip' data-original-title='View Booking'><i class='la la-eye'></i></a>
 
                     <button class='btn btn-sm btn-danger' data-action='confirm' data-action-route='".
                     route('app.booking.delete',$booking->id)."' data-hover='tooltip'
