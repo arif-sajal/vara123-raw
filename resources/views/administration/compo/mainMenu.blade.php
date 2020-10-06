@@ -52,12 +52,19 @@
 
             @if(auth('admin')->check() or auth('provider')->check())
                 <li class="nav-item">
-                    <a href="{{ route('app.booking.list') }}">
+                    <a href="javascript:void(0);">
                         <i class="la la-automobile"></i>
                         <span class="menu-title">Bookings</span>
                     </a>
+
+                    <ul class="menu-content">
+                        <li><a class="menu-item" href="{{ route('app.booking.list') }}" >New Pending</a></li>
+                        <li><a class="menu-item" href="#" >All Confirmed</a></li>
+                        <li><a class="menu-item" href="#" >All Canceled</a></li>
+                    </ul>
                 </li>
             @endif
+
 
             @if(auth('admin')->check())
                 <li class="nav-item">
