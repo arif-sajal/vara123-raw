@@ -55,6 +55,7 @@ return array(
     'Opis\\Closure\\' => array($vendorDir . '/opis/closure/src'),
     'NunoMaduro\\Collision\\' => array($vendorDir . '/nunomaduro/collision/src'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
+    'Library\\Sms\\' => array($baseDir . '/library/Sms/src'),
     'Library\\Notify\\' => array($baseDir . '/library/Notify/src'),
     'Library\\Configs\\' => array($baseDir . '/library/Configs/src'),
     'Library\\Api\\' => array($baseDir . '/library/Api/src'),

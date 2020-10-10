@@ -1,0 +1,43 @@
+{
+    "name": "library/sms",
+    "description": ":package_description",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ariful Islam Sajal",
+            "email": "sajalarifulislam@gmail.com",
+            "homepage": "https://github.com/arifsajal70"
+        }
+    ],
+    "homepage": "https://github.com/library/sms",
+    "keywords": ["Laravel", "Sms"],
+    "require": {
+        "illuminate/support": "~5|~6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0",
+        "mockery/mockery": "^1.1",
+        "orchestra/testbench": "~3|~4",
+        "sempro/phpunit-pretty-print": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Library\\Sms\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Library\\Sms\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Library\\Sms\\SmsServiceProvider"
+            ],
+            "aliases": {
+                "Sms": "Library\\Sms\\Facades\\Sms"
+            }
+        }
+    }
+}

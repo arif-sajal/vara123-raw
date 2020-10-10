@@ -41,7 +41,8 @@
             "App\\": "app/",
             "Library\\Notify\\": "library/Notify/src",
             "Library\\Configs\\": "library/Configs/src",
-            "Library\\Api\\": "library/Api/src"
+            "Library\\Api\\": "library/Api/src",
+            "Library\\Sms\\": "library/Sms/src"
         },
         "classmap": [
             "database/seeds",
