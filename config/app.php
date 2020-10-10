@@ -177,9 +177,14 @@ return [
 
         \Library\Notify\NotifyServiceProvider::class,
         \Library\Configs\ConfigsServiceProvider::class,
+        \Library\Api\ApiServiceProvider::class,
+        # \Library\Sms\SmsServiceProvider::class,
+
         \Grimzy\LaravelMysqlSpatial\SpatialServiceProvider::class,
         \Yajra\DataTables\DataTablesServiceProvider::class,
-        \Cartalyst\Converter\Laravel\ConverterServiceProvider::class
+        \Cartalyst\Converter\Laravel\ConverterServiceProvider::class,
+        \Jenssegers\Agent\AgentServiceProvider::class,
+        
 
     ],
 
