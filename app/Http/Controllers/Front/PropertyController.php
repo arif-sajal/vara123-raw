@@ -46,7 +46,7 @@ class PropertyController extends Controller
         endif;
 
         if($request->has('billingType')):
-            $properties->whereHas('billing',function($query) use ($request) {
+            $properties->whereHas('billings',function($query) use ($request) {
                 $query->where('billing_type_id',$request->get('billingType'));
             });
         endif;

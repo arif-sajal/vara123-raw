@@ -3,7 +3,7 @@
 namespace Library\Api;
 
 use App\Http\Resources\Front\CustomerResource;
-use App\Http\Resources\Provider\ProviderResource;
+# use App\Http\Resources\Provider\ProviderResource;
 use App\Models\Admin;
 use App\Models\Customer;
 use App\Models\Provider;
@@ -47,10 +47,10 @@ class Api
         if($this->session):
             if($this->session->user_type === Customer::class):
                 $this->user = CustomerResource::make($this->session->user_type::find($this->session->user_id));
-            elseif($this->session->user_type === Admin::class):
+            /*elseif($this->session->user_type === Admin::class):
                 $this->user = ProviderResource::make($this->session->user_type::find($this->session->user_id));
             elseif($this->session->user_type === Provider::class):
-                $this->user = ProviderResource::make($this->session->user_type::find($this->session->user_id));
+                $this->user = ProviderResource::make($this->session->user_type::find($this->session->user_id));*/
             endif;
         endif;
     }
