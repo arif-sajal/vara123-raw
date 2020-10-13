@@ -238,6 +238,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'Converter' => Cartalyst\Converter\Laravel\Facades\Converter::class,
 
     ],
 

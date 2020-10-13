@@ -97,8 +97,8 @@ class BookingController extends Controller
         $booking->is_payment_done = false;
         $booking->note = $request->get('note');
 
-        $booking->admin_booking_cut = Configs::get('admin_booking_cut') / 100 * $booking->cost_total;
-        $booking->provider_booking_cut = Configs::get('provider_booking_cut') / 100 * $booking->cost_total;
+        $booking->admin_cut = Configs::get('admin_booking_cut') / 100 * $booking->cost_total;
+        $booking->provider_cut = Configs::get('provider_booking_cut') / 100 * $booking->cost_total;
 
         if($booking->save()):
             return Api::data($booking->refresh())->message('Booked Successfully. Now Pay The Invoice To Confirm It.')->send();

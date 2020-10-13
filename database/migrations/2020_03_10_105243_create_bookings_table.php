@@ -26,8 +26,8 @@ class CreateBookingsTable extends Migration
             $table->time('from_time')->nullable();
             $table->time('to_time')->nullable();
             $table->integer('quantity');
-            $table->integer('admin_booking_cut')->default();
-            $table->integer('provider_booking_cut')->default();
+            $table->integer('admin_cut');
+            $table->integer('provider_cut');
 
             $table->decimal('cost_per_unit','8','2');
             $table->decimal('cost_total','8','2');

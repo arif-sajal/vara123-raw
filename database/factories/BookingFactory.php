@@ -34,6 +34,8 @@ $factory->define(Booking::class, function (Faker $faker) {
       'to_time' => $faker->dateTime,
       'cost_per_unit' => $faker->randomFloat($nbMaxDecimals = null, $min = 0, $max = 500),
       'cost_total' => $faker->randomFloat($nbMaxDecimals = null, $min = 0, $max = 100000),
+      'admin_cut' => $faker->randomFloat($nbMaxDecimals = null, $min = 0, $max = 100000),
+      'provider_cut' => $faker->randomFloat($nbMaxDecimals = null, $min = 0, $max = 100000),
       'is_payment_done' => 0,
       'note' => $faker->text,
     ];

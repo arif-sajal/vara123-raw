@@ -16,6 +16,11 @@ class BookingController extends Controller
          return view('administration.pages.booking.list');
     }
 
+    public function singleBookingView($id){
+        $booking = Booking::findOrFail($id);
+        return view('administration.pages.booking.single')->with('booking', $booking);
+    }
+
     public function bookingsTable(){
         $booking = Booking::with(['property','property.property_type','provider','item','currency']);
 
@@ -53,11 +58,6 @@ class BookingController extends Controller
                 ";
             })
             ->toJson();
-    }
-
-    public function singleBookingView($id){
-        $booking = Booking::findOrFail($id);
-        return view('administration.pages.booking.single',compact('booking'));
     }
 
     public function deleteBooking($id){
