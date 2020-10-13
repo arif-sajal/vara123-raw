@@ -501,6 +501,7 @@
                                       <th scope="col">Cost Per Unit</th>
                                       <th scope="col">Quantity</th>
                                       <th scope="col">Cost Total</th>
+                                      <th scope="col">Provider Booking Cut</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -509,6 +510,7 @@
                                       <td>{{ $booking->cost_per_unit }}</td>
                                       <td>{{ $booking->quantity }}</td>
                                       <td>{{ Converter::to('currency.'.$booking->currency->short_code)->value($booking->cost_total)->format() }}</td>
+                                      <td>{{ $booking->provider_booking_cut }}</td>
                                   </tbody>
                                 </table>
                                 <div class="pull-right pb-2">

@@ -26,6 +26,7 @@ $factory->define(Booking::class, function (Faker $faker) {
       'item_id' => $propertyItem->id,
       'item_type' => get_class($propertyItem),
       'billing_id' => $billing->id,
+      'quantity' => rand(1, 10),
 
       'from_date' =>$faker->date($format = 'Y-m-d', $max = 'now'),
       'to_date' => $faker->date($format = 'Y-m-d', $max = 'now'),

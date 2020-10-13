@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Library\Api\Facades\Api;
+use Library\Configs\Facades\Configs;
 
 class BookingController extends Controller
 {
@@ -30,6 +31,7 @@ class BookingController extends Controller
 
     public function bookNow(Request $request){
         $this->__set_customer__();
+
 
         $validator = Validator::make($request->all(),[
             'billing_id' => 'required|exists:billings,id',
@@ -94,6 +96,9 @@ class BookingController extends Controller
         $booking->currency_id = $billing->currency_id;
         $booking->is_payment_done = false;
         $booking->note = $request->get('note');
+
+        $booking->admin_booking_cut = Configs::get('admin_booking_cut') / 100 * $booking->cost_total;
+        $booking->provider_booking_cut = Configs::get('provider_booking_cut') / 100 * $booking->cost_total;
 
         if($booking->save()):
             return Api::data($booking->refresh())->message('Booked Successfully. Now Pay The Invoice To Confirm It.')->send();
