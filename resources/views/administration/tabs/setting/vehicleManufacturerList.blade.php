@@ -1,9 +1,9 @@
 <div class="card-header border-bottom-danger">
-    <h4 class="card-title">Vehicle Manufacturer</h4>
+    <h4 class="card-title">Vehicle Manufacturers</h4>
     <div class="heading-elements">
         <ul class="list-inline mb-0">
             <li>
-                <button class="btn btn-success btn-sm btn-icon" data-hover="tooltip" data-original-title="Add Vehicle Type">
+                <button class="btn btn-success btn-sm btn-icon" data-hover="tooltip" data-original-title="Add Vehicle Manufacturer" data-toggle="modal" data-target="#myModal" data-content="{{ route('app.modal.setting-vehicle-manufacturer-modal.add') }}">
                     <i class="fa ft-plus"></i>
                     Add Vehicle Manufacturer
                 </button>
