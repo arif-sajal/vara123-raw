@@ -17,7 +17,7 @@
                                 <ul class="nav nav-pills flex-column nav-pill-toolbar">
                                     @foreach ($tabs as $tab)
 
-                                        <li class="nav-item" data-tab-url="{{ route('app.setting.view',['tab1'=>Str::camel($tab['name'])]) }}">
+                                        <li class="nav-item" data-tab-url="{{ route('app.setting.view',['tab1'=>Str::camel($tab['name'])])  }}">
                                             <a class="nav-link @if((request()->has('tab1') && request()->tab1 == Str::camel($tab['name'])) || (!request()->has('tab1') && $loop->first)) active @endif" data-toggle="tab" data-href="#tabView" data-content="{{ route('app.tab.setting.'.$tab['route'],['tab1'=>Str::camel($tab['name']),'tab2'=>request()->tab2]) }}" aria-expanded="true">
                                                 <i class="la {{ $tab['icon'] }}"></i> {{ $tab['name'] }}
                                             </a>

@@ -36,4 +36,23 @@ Route::group(['prefix'=>'modal','namespace'=>'Administration','as'=>'app.modal.'
         Route::get('resetpassword/{customers:id}','CustomerController@customerResetPassword')->name('resetpassword');
     });
 
+    //SETTING (for Vehicle Type)
+    Route::group(['as'=>'setting-vehicle-type-modal.','namespace'=>'Setting','prefix'=>'setting-vehicle-type-modal'], function(){
+        Route::get('add','VehicleTypeController@viewSettingVehicleTypeModal')->name('add');
+        Route::get('edit/{vehicle_types:id}','VehicleTypeController@editVehicleTypeModal')->name('edit');
+    });
+
+    //SETTING (for Vehicle Manufacturer)
+    Route::group(['as'=>'setting-vehicle-manufacturer-modal.','namespace'=>'Setting','prefix'=>'setting-vehicle-manufacturer-modal'], function(){
+        Route::get('add','VehicleManufacturerController@viewSettingVehicleManufacturerModal')->name('add');
+        Route::get('edit/{vehicle_manufacturers:id}','VehicleManufacturerController@editVehicleManufacturerModal')->name('edit');
+    });
+
+    //SETTING (for Vehicle Model)
+    Route::group(['as'=>'setting-vehicle-model-modal.','namespace'=>'Setting','prefix'=>'setting-vehicle-model-modal'], function(){
+        Route::get('add','VehicleModelController@addSettingVehicleModelModal')->name('add');
+        Route::get('view/{vehicle_models:id}','VehicleModelController@viewSettingVehicleModelModal')->name('view');
+        Route::get('edit/{vehicle_models:id}','VehicleModelController@editVehicleModelModal')->name('edit');
+    });
+
 });
