@@ -29,6 +29,7 @@ class Add extends FormRequest
             'phone' =>'unique:admins,phone,'.$this->route()->id,
             'email'  =>'required|unique:admins,email,'.$this->route()->id,
             'username' =>'required|unique:admins,username,'.$this->route()->id,
+            'password' => 'required|confirmed'
         ];
     }
 }

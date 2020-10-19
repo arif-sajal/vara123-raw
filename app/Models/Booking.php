@@ -39,6 +39,6 @@ class Booking extends Model
     }
 
     public function transaction(){
-        return $this->hasOne(BookingTransaction::class);
+        return $this->hasMany(Transaction::class);
     }
 }

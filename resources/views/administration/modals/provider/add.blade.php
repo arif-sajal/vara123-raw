@@ -41,6 +41,12 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" class="form-control" name="address">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
                         <label>Date of Birth</label>
                         <input type="date" name="date_of_birth" class="form-control">
                     </div>
@@ -78,7 +84,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Confirm Password</label>
-                        <input type="password" name="c_password" class="form-control">
+                        <input type="password" name="password_confirmation" class="form-control">
                     </div>
                 </div>
             </div>

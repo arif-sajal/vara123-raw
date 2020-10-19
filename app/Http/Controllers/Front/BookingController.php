@@ -7,6 +7,8 @@ use App\Http\Resources\Front\BookingResource;
 use App\Models\Billing;
 use App\Models\Booking;
 use App\Models\Customer;
+use App\Models\Provider;
+use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -100,8 +102,20 @@ class BookingController extends Controller
         $booking->admin_cut = Configs::get('admin_booking_cut') / 100 * $booking->cost_total;
         $booking->provider_cut = Configs::get('provider_booking_cut') / 100 * $booking->cost_total;
 
-        if($booking->save()):
-            return Api::data($booking->refresh())->message('Booked Successfully. Now Pay The Invoice To Confirm It.')->send();
+        $provider = Provider::find($booking->provider_id);
+        $provider->balance += $booking->provider_cut;
+
+        if($booking->save() && $provider->save() ):
+
+            //create transaction
+            $transaction = new Transaction();
+            $transaction->booking_id = $booking->id;
+            $transaction->amount = $booking->cost_per_unit;
+
+            if($transaction->save()):
+                return Api::data($booking->refresh())->message('Booked Successfully. Now Pay The Invoice To Confirm It.')->send();
+            endif;
+
         endif;
         return Api::message('Can\'t Book Now, Please Try Again Later.')->statusCode(403)->send();
     }

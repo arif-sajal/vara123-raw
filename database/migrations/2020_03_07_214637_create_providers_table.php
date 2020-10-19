@@ -19,10 +19,12 @@ class CreateProvidersTable extends Migration
             $table->string('last_name');
             $table->enum('user_type',['Organization','Individual'])->default('Individual');
             $table->string('gender')->nullable();
+            $table->string('address')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->string('email');
             $table->boolean('is_email_verified')->default(false);
             $table->string('phone')->nullable();
+            $table->unsignedInteger('balance')->default(0);
             $table->boolean('is_phone_verified')->default(false);
             $table->string('username');
             $table->string('password');

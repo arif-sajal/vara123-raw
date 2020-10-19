@@ -24,8 +24,7 @@ class Reset extends FormRequest
     public function rules()
     {
         return [
-            'password' => 'required',
-            'c_password'  => 'required',
+            'password' => 'required|confirmed'
         ];
     }
 }

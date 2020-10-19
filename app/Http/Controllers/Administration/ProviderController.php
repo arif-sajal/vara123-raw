@@ -58,7 +58,7 @@ class ProviderController extends Controller
     public function addProvider(Add $request)
     {
 
-        if ($request->password == $request->c_password) :
+        if ($request->password == $request->password_confirmation) :
             $provider = new Provider();
             $provider->first_name = $request->first_name;
             $provider->last_name = $request->last_name;
@@ -67,6 +67,7 @@ class ProviderController extends Controller
             $provider->date_of_birth = $request->date_of_birth;
             $provider->email = $request->email;
             $provider->phone  = $request->phone;
+            $provider->address = $request->address;
             $provider->username  = $request->username;
             $provider->password = Hash::make($request->password);
             if ($request->image) :
@@ -89,6 +90,7 @@ class ProviderController extends Controller
         $provider->gender  = $request->gender;
         $provider->date_of_birth = $request->date_of_birth;
         $provider->email = $request->email;
+        $provider->address = $request->address;
         $provider->phone  = $request->phone;
 
         if ($request->image) :
@@ -123,7 +125,7 @@ class ProviderController extends Controller
     {
         $provider = Provider::find($id);
 
-        if ($request->password == $request->c_password):
+        if ($request->password == $request->password_confirmation):
             $provider->password  = Hash::make($request->password);
             if ($provider->save()):
                 return Notify::send('success', 'Password reset successfully')->reload('table', 'ProvidersTable')->json();

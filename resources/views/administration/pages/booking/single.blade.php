@@ -38,13 +38,14 @@
                     <!-- Invoice Company Details -->
                     <div id="invoice-company-details" class="row">
                         <div class="col-sm-6 col-12">
+                            <!-- Invoice property details start -->
                             <ul class="list-unstyled">
-                                <li class="text-bold-800">{{ $booking->provider->full_name }}</li>
-                                <li>4025 Oak Avenue,</li>
-                                <li>Melbourne,</li>
-                                <li>Florida 32940,</li>
-                                <li>USA</li>
+                                <li class="text-bold-800"><b>Property Information</b></li>
+                                <li class="text-bold-800"> <b>Title :</b> {{ $booking->property->property_type->title }}</li>
+                                <li class="text-bold-800"> <b>Type :</b> {{ $booking->property->property_type->name }}</li>
+                                <li class="text-bold-800"> <b>Identity :</b> {{ $booking->property->property_type->identity }}</li>
                             </ul>
+                            <!-- Invoice property details end -->
                         </div>
                         <div class="col-sm-6 col-12 text-center text-sm-right">
                             <h2>BOOKING</h2>
@@ -65,27 +66,29 @@
                     </div>
                     <!-- Invoice Company Details -->
 
-                    <!-- Invoice Customer Details -->
+                    <!-- Invoice Provider Details -->
+                    @if( auth('admin')->check() )
                     <div id="invoice-customer-details" class="row pt-2">
                         <div class="col-12 text-center text-sm-left">
-                            <p class="text-muted">Bill To</p>
+                            <p class="text-muted"><b>Provider Information</b></p>
                         </div>
                         <div class="col-sm-6 col-12 text-center text-sm-left">
                             <ul class="px-0 list-unstyled">
-                                <li class="text-bold-800">Mr. Bret Lezama</li>
-                                <li>4879 Westfall Avenue,</li>
-                                <li>Albuquerque,</li>
-                                <li>New Mexico-87102.</li>
+                                <li class="text-bold-800"> <b>Name :</b> {{ $booking->provider->full_name }}</li>
+                                <li> <b>Email :</b> {{ $booking->provider->email }}</li>
+                                <li> <b>Phone :</b> {{ $booking->provider->phone ? $booking->provider->phone : 'N/A' }}</li>
+                                <li> <b>Address :</b> {{ $booking->provider->address ? $booking->provider->address : 'N/A'  }}</li>
+                                <li> <b>Provider Cut :</b> {{ $booking->provider_cut }} tk</li>
                             </ul>
                         </div>
                         <div class="col-sm-6 col-12 text-center text-sm-right">
-                            <p><span class="text-muted">Invoice Date :</span> 06/05/2019</p>
+                            <p><span class="text-muted">Invoice Date :</span> {{ $booking->created_at->toDayDateTimeString() }}</p>
                             <p><span class="text-muted">Terms :</span> Due on Receipt</p>
                             <p><span class="text-muted">Due Date :</span> 10/05/2019</p>
                         </div>
                     </div>
-                    <!-- Invoice Customer Details -->
-
+                    @endif
+                    <!-- Invoice Provider Details -->
                     <!-- Invoice Items Details -->
                     <div id="invoice-items-details" class="pt-2">
                         <div class="row">
@@ -104,33 +107,44 @@
                                     <tr>
                                         <th scope="row">1</th>
                                         <td>
-                                            <p>Create PSD for mobile APP</p>
-                                            <p class="text-muted">Simply dummy text of the printing and typesetting industry.
-                                            </p>
+                                            @if(  $booking->item_type == 'App\Models\PropertyRoom' )
+                                                @php
+                                                    $room = $booking->item_type::find($booking->item_id);
+                                                @endphp
+                                                <p>
+                                                    {{ $room->room_type }}
+                                                </p>
+                                                <p class="text-muted">
+                                                    {{ $room->description }}
+                                                </p>
+                                            @elseif( $booking->item_type == 'App\Models\PropertySpot' )
+                                                @php
+                                                    $spot = $booking->item_type::find($booking->item_id);
+                                                @endphp
+                                                <p>
+                                                    {{ $spot->name }}
+                                                </p>
+                                                <p class="text-muted">
+                                                    {{ $spot->description ? $spot->description : 'N/A' }}
+                                                </p>
+                                            @elseif( $booking->item_type == 'App\Models\PropertyVehicle' )
+                                                @php
+                                                    $vehicle = $booking->item_type::find($booking->item_id);
+                                                    $vehicle_model = App\Models\VehicleModel::find($vehicle->vehicle_model_id);
+                                                @endphp
+                                                <p>
+                                                    {{ $vehicle_model->model_name }}
+                                                </p>
+                                            @endif
                                         </td>
-                                        <td class="text-right">$20.00/hr</td>
-                                        <td class="text-right">120</td>
-                                        <td class="text-right">$2400.00</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>
-                                            <p>iOS Application Development</p>
-                                            <p class="text-muted">Pellentesque maximus feugiat lorem at cursus.</p>
-                                        </td>
-                                        <td class="text-right">$25.00/hr</td>
-                                        <td class="text-right">260</td>
-                                        <td class="text-right">$6500.00</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>
-                                            <p>WordPress Template Development</p>
-                                            <p class="text-muted">Vestibulum convallis.</p>
-                                        </td>
-                                        <td class="text-right">$20.00/hr</td>
-                                        <td class="text-right">300</td>
-                                        <td class="text-right">$6000.00</td>
+                                        <td class="text-right">${{ $booking->billing->amount }}/{{ $booking->billing->billing_type->per }}</td>
+                                        @php
+                                            $from = \Carbon\Carbon::parse($booking->from_time);
+                                            $to = \Carbon\Carbon::parse($booking->to_time);
+                                            $hour = $to->diffInHours($from);
+                                        @endphp
+                                        <td class="text-right">{{ $hour }}hr</td>
+                                        <td class="text-right">${{ $booking->cost_total }}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -138,33 +152,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-7 col-12 text-center text-sm-left">
-                                <p class="lead">Payment Methods:</p>
-                                <div class="row">
-                                    <div class="col-sm-8">
-                                        <div class="table-responsive">
-                                            <table class="table table-borderless table-sm">
-                                                <tbody>
-                                                <tr>
-                                                    <td>Bank name:</td>
-                                                    <td class="text-right">ABC Bank, USA</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Acc name:</td>
-                                                    <td class="text-right">Amanda Orton</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>IBAN:</td>
-                                                    <td class="text-right">FGS165461646546AA</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>SWIFT code:</td>
-                                                    <td class="text-right">BTNPP34</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
                             <div class="col-sm-5 col-12">
                                 <p class="lead">Total due</p>
@@ -173,23 +161,28 @@
                                         <tbody>
                                         <tr>
                                             <td>Sub Total</td>
-                                            <td class="text-right">$14,900.00</td>
+                                            <td class="text-right">${{ $booking->cost_total }}</td>
                                         </tr>
                                         <tr>
-                                            <td>TAX (12%)</td>
-                                            <td class="text-right">$1,788.00</td>
+                                            <td>TAX ({{ \Library\Configs\Facades\Configs::get('tax') }}%)</td>
+                                            @php
+                                                $vat = \Library\Configs\Facades\Configs::get('tax') / 100;
+                                                $total_vat_price = $booking->cost_total * $vat;
+                                                $total_price = $total_vat_price + $booking->cost_total;
+                                            @endphp
+                                            <td class="text-right">${{ $total_vat_price }}</td>
                                         </tr>
                                         <tr>
                                             <td class="text-bold-800">Total</td>
-                                            <td class="text-bold-800 text-right"> $16,688.00</td>
+                                            <td class="text-bold-800 text-right">${{ $total_price }}</td>
                                         </tr>
                                         <tr>
                                             <td>Payment Made</td>
-                                            <td class="pink text-right">(-) $4,688.00</td>
+                                            <td class="pink text-right">(-) {{ $booking->cost_per_unit }}</td>
                                         </tr>
                                         <tr class="bg-grey bg-lighten-4">
-                                            <td class="text-bold-800">Balance Due</td>
-                                            <td class="text-bold-800 text-right">$12,000.00</td>
+                                            <td class="text-bold-800">Payment Due</td>
+                                            <td class="text-bold-800 text-right">${{ $total_price - $booking->cost_per_unit }}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -211,11 +204,14 @@
                                 <h6>Terms &amp; Condition</h6>
                                 <p>Test pilot isn't always the healthiest business.</p>
                             </div>
+                            @if(!$booking->is_payment_done)
                             <div class="col-sm-5 col-12 text-center">
-                                <button type="button" class="btn btn-info btn-print btn-lg my-1"><i class="la la-paper-plane-o mr-50"></i>
-                                    Print
-                                    Invoice</button>
+                                <button type="button" data-content="{{ route('app.modal.booking.modal', $booking->id) }}" class="btn btn-info btn-print btn-lg my-1" data-toggle="modal" data-target="#myModal" >
+                                 <i class="la la-paper-plane-o mr-50"></i>
+                                    Booking Confirm
+                                </button>
                             </div>
+                            @endif
                         </div>
                     </div>
                     <!-- Invoice Footer -->

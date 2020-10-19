@@ -15,6 +15,8 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('booking_id');
+            $table->double('amount');
             $table->timestamps();
         });
     }

@@ -28,6 +28,11 @@ Route::group(['prefix'=>'app/form-submission','namespace'=>'Administration','as'
         Route::post('passwordreset/{id}', 'ProviderController@reset')->name('passwordreset');
     });
 
+    //for booking confirmation
+    Route::group(['as'=>'booking.','prefix'=>'booking'], function(){
+        Route::post('confirm/{id}','BookingController@confirmBooking')->name('confirm');
+    });
+
     //for admin
     Route::group(['as'=>'admin.', 'prefix'=>'admin'], function(){
         Route::post('add', 'AdminController@addAdmin')->name('add');

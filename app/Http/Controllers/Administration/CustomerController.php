@@ -21,7 +21,7 @@ class CustomerController extends Controller
         return view('administration.pages.customer.list');
     }
     public function viewAddCustomerModal(){
-        return view('administration.modals.customer.add');    
+        return view('administration.modals.customer.add');
     }
 
     public function customersTable(){
@@ -57,8 +57,8 @@ class CustomerController extends Controller
     }
 
     public function addCustomer(Add $request){
-    
-        if( $request->password == $request->c_password ):
+
+        if( $request->password == $request->password_confirmation ):
             $customer = new Customer();
             $customer->first_name  = $request->first_name;
             $customer->last_name = $request->last_name;
@@ -121,7 +121,7 @@ class CustomerController extends Controller
             endif;
             $customer->avatar = Storage::putFile('avatar', $request->file('image'));
         endif;
-        
+
         if( $customer->save() ) :
             return Notify::send('success','Customer updated successfully')->reload('table','CustomersTable')->json();
         endif;
@@ -143,7 +143,7 @@ class CustomerController extends Controller
     public function customerPasswordReset( Reset $request ,$id){
         $customer = Customer::find($id);
 
-        if( $request->password == $request->c_password ):
+        if( $request->password == $request->password_confirmation ):
             $customer->password  = Hash::make($request->password);
             if( $customer->save() ):
                 return Notify::send('success','Password reset successfully')->reload('table','CustomersTable')->json();
@@ -153,7 +153,7 @@ class CustomerController extends Controller
         endif;
     }
 
-    
+
 
     public function switchActivationStatus($id){
         $customer = Customer::findOrFail($id);
