@@ -34,7 +34,6 @@ class BookingController extends Controller
     public function bookNow(Request $request){
         $this->__set_customer__();
 
-
         $validator = Validator::make($request->all(),[
             'billing_id' => 'required|exists:billings,id',
             'date' => 'required',
@@ -80,7 +79,7 @@ class BookingController extends Controller
         endif;
 
         $booking->customer_id = $this->customer->id;
-        $booking->provider_id = $billing->property_id;
+        $booking->provider_id = $billing->property->provider_id;
         $booking->property_id = $billing->property_id;
         $booking->item_id = $billing->item_id;
         $booking->item_type = $billing->item_type;
@@ -103,19 +102,10 @@ class BookingController extends Controller
         $booking->provider_cut = Configs::get('provider_booking_cut') / 100 * $booking->cost_total;
 
         $provider = Provider::find($booking->provider_id);
-        $provider->balance += $booking->provider_cut;
+        $provider->increment('balance', $booking->provider_cut);
 
         if($booking->save() && $provider->save() ):
-
-            //create transaction
-            $transaction = new Transaction();
-            $transaction->booking_id = $booking->id;
-            $transaction->amount = $booking->cost_per_unit;
-
-            if($transaction->save()):
-                return Api::data($booking->refresh())->message('Booked Successfully. Now Pay The Invoice To Confirm It.')->send();
-            endif;
-
+            return Api::data($booking->refresh())->message('Booked Successfully. Now Pay The Invoice To Confirm It.')->send();
         endif;
         return Api::message('Can\'t Book Now, Please Try Again Later.')->statusCode(403)->send();
     }

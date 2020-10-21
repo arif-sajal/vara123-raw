@@ -42,22 +42,11 @@ class Configs
     }
 
     public function refresh(){
-        $configs = Config::all();
-        $this->__setToSession($configs);
+        $this->configs = Config::all();
+        return $this;
     }
 
     private function __load(){
-        if(session()->has('config')):
-            $configs = session()->get('config');
-        else:
-            $configs = Config::all();
-            $this->__setToSession($configs);
-        endif;
-        return $configs;
-    }
-
-    private function __setToSession($configs){
-        session()->forget('config');
-        session()->put('config',$configs);
+        return Config::all();
     }
 }

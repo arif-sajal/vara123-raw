@@ -20,16 +20,18 @@ class BookingController extends Controller
          return view('administration.pages.booking.list');
     }
 
-    public function viewModal($id){
+    public function bookingConfirmationModal($id){
         $booking = Booking::find($id);
-        $vat = Configs::get('tax') / 100;
+        $vat = Configs::get('default_customer_tax_rate') / 100;
         $total_price = Booking::find($id)->cost_total * $vat + Booking::find($id)->cost_total;
-        $due_amount = $total_price - Transaction::all()->where('booking_id', $id)->sum('amount') ;
+
+        $due_amount = Converter::from('currency.'.strtoupper($booking->currency->short_code))->to('currency.'.strtoupper($booking->provider->currency->short_code))->convert($total_price)->getValue();
         return view('administration.modals.booking.confirm', compact('due_amount','booking'));
     }
 
     public function confirmBooking(Confirm $request, $id){
         $booking = Booking::find($id);
+        $booking->payment_type = $request->payment_type;
         $booking->payment_type = $request->payment_type;
         $booking->is_payment_done = 1;
         if( $booking->save() ){

@@ -82,14 +82,14 @@ class PaymentController extends Controller
             'cus_phone' => $this->customer->phone,
             'shipping_method' => 'NO',
             'num_of_item' => 1,
-            'product_name' => $booking->item->name,
+            'product_name' => "Booking",
             'product_profile' => 'non-physical-goods',
             'value_a' => $bookingId
         ];
 
         $client = new Client();
 
-        $response = $client->post('https://sandbox.sslcommerz.com/gwprocess/v4/api.php',['form_params'=>$postData])->getBody();
+        $response = $client->post('https://sandbox.sslcommerz.com/gwprocess/v4/api.php',['form_params'=>$postData, 'verify'=>false])->getBody();
         $response = json_decode($response->getContents());
 
         $transaction->payment_initiation_server_response = $response;

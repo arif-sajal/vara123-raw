@@ -33,6 +33,13 @@
                 </div>
             </div>
         </div>
+
+        @php
+            $vat = \Library\Configs\Facades\Configs::get('default_customer_tax_rate') / 100;
+            $total_vat_price = $booking->cost_total * $vat;
+            $total_price = $total_vat_price + $booking->cost_total;
+        @endphp
+
         <div class="content-body"><section class="card">
                 <div id="invoice-template" class="card-body p-4">
                     <!-- Invoice Company Details -->
@@ -58,7 +65,11 @@
                                 <ul class="px-0 list-unstyled">
                                     <li>Payment Due</li>
                                     <li class="lead text-bold-800">
-                                        {{ Converter::from('currency.'.strtoupper($booking->currency->short_code))->to('currency.'.strtoupper($booking->provider->currency->short_code))->convert($booking->cost_total)->format() }}
+                                        {{
+                                            Converter::from('currency.'.strtoupper($booking->currency->short_code))
+                                                ->to('currency.'.strtoupper($booking->provider->currency->short_code))
+                                                ->convert($total_price)->format()
+                                        }}
                                     </li>
                                 </ul>
                             @endif
@@ -78,7 +89,13 @@
                                 <li> <b>Email :</b> {{ $booking->provider->email }}</li>
                                 <li> <b>Phone :</b> {{ $booking->provider->phone ? $booking->provider->phone : 'N/A' }}</li>
                                 <li> <b>Address :</b> {{ $booking->provider->address ? $booking->provider->address : 'N/A'  }}</li>
-                                <li> <b>Provider Cut :</b> {{ $booking->provider_cut }} tk</li>
+                                <li> <b>Provider Will Get :</b>
+                                    {{
+                                        Converter::from('currency.'.strtoupper($booking->currency->short_code))
+                                            ->to('currency.'.strtoupper($booking->provider->currency->short_code))
+                                            ->convert($booking->provider_cut)->format()
+                                    }}
+                                </li>
                             </ul>
                         </div>
                         <div class="col-sm-6 col-12 text-center text-sm-right">
@@ -89,6 +106,7 @@
                     </div>
                     @endif
                     <!-- Invoice Provider Details -->
+
                     <!-- Invoice Items Details -->
                     <div id="invoice-items-details" class="pt-2">
                         <div class="row">
@@ -149,7 +167,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div>0
                         <div class="row">
                             <div class="col-sm-7 col-12 text-center text-sm-left">
 
@@ -161,28 +179,53 @@
                                         <tbody>
                                         <tr>
                                             <td>Sub Total</td>
-                                            <td class="text-right">${{ $booking->cost_total }}</td>
+                                            <td class="text-right">
+                                                {{
+                                                    \Cartalyst\Converter\Laravel\Facades\Converter::from('currency.'.strtoupper($booking->currency->short_code))
+                                                        ->to('currency.'.strtoupper($booking->provider->currency->short_code))
+                                                        ->convert($booking->cost_total)->format()
+                                                }}
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td>TAX ({{ \Library\Configs\Facades\Configs::get('tax') }}%)</td>
-                                            @php
-                                                $vat = \Library\Configs\Facades\Configs::get('tax') / 100;
-                                                $total_vat_price = $booking->cost_total * $vat;
-                                                $total_price = $total_vat_price + $booking->cost_total;
-                                            @endphp
-                                            <td class="text-right">${{ $total_vat_price }}</td>
+                                            <td>TAX ({{ \Library\Configs\Facades\Configs::get('default_customer_tax_rate') }}%)</td>
+                                            <td class="text-right">
+                                                {{
+                                                    \Cartalyst\Converter\Laravel\Facades\Converter::from('currency.'.strtoupper($booking->currency->short_code))
+                                                        ->to('currency.'.strtoupper($booking->provider->currency->short_code))
+                                                        ->convert($total_vat_price)->format()
+                                                }}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="text-bold-800">Total</td>
-                                            <td class="text-bold-800 text-right">${{ $total_price }}</td>
+                                            <td class="text-bold-800 text-right">
+                                                {{
+                                                    \Cartalyst\Converter\Laravel\Facades\Converter::from('currency.'.strtoupper($booking->currency->short_code))
+                                                        ->to('currency.'.strtoupper($booking->provider->currency->short_code))
+                                                        ->convert($total_price)->format()
+                                                }}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Payment Made</td>
-                                            <td class="pink text-right">(-) {{ $booking->cost_per_unit }}</td>
+                                            <td class="pink text-right">
+                                                {{
+                                                    \Cartalyst\Converter\Laravel\Facades\Converter::from('currency.'.strtoupper($booking->currency->short_code))
+                                                        ->to('currency.'.strtoupper($booking->provider->currency->short_code))
+                                                        ->convert(\App\Models\Transaction::where('booking_id',$booking->id)->sum('amount') - $total_price)->format()
+                                                }}
+                                            </td>
                                         </tr>
                                         <tr class="bg-grey bg-lighten-4">
                                             <td class="text-bold-800">Payment Due</td>
-                                            <td class="text-bold-800 text-right">${{ $total_price - $booking->cost_per_unit }}</td>
+                                            <td class="text-bold-800 text-right">
+                                                {{
+                                                    \Cartalyst\Converter\Laravel\Facades\Converter::from('currency.'.strtoupper($booking->currency->short_code))
+                                                        ->to('currency.'.strtoupper($booking->provider->currency->short_code))
+                                                        ->convert($total_price - \App\Models\Transaction::where('booking_id',$booking->id)->sum('amount'))->format()
+                                                }}
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>

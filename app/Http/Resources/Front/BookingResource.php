@@ -44,8 +44,8 @@ class BookingResource extends JsonResource
                 'formatted'=> $this->getConvertedCostTotal($request, true)
             ],
             'currency'=> new CurrencyResource($this->currency),
-            'transaction'=> $this->when($request->get('transaction'),function(){
-                return new BookingTransactionResource($this->transaction);
+            'transaction'=> $this->when($request->has('transaction'),function(){
+                return BookingTransactionResource::collection($this->transactions);
             }),
             'isPaymentDone'=> $this->is_payment_done,
             'note'=> $this->note,

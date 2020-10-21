@@ -11,7 +11,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Due amount</label>
-                        <input type="text" readonly value="{{ $due_amount }}" class="form-control">
+                        <input type="text" value="{{ $due_amount }}" name="amount" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-12">

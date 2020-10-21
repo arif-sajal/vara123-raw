@@ -27,9 +27,9 @@ Route::group(['prefix'=>'modal','namespace'=>'Administration','as'=>'app.modal.'
         Route::get('resetpassword/{provider:id}','ProviderController@providerPasswordReset')->name('resetpassword');
     });
 
-    //booking confirm route start
+    //booking start
     Route::group(['as' => 'booking.', 'prefix'=>'booking'], function(){
-        Route::get('modal/{id}','BookingController@viewModal')->name('modal');
+        Route::get('modal/{id}','BookingController@bookingConfirmationModal')->name('modal');
     });
 
     //for admin
