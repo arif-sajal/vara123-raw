@@ -37,8 +37,7 @@ class Add extends FormRequest
             'passport_number'   => 'unique:customers,passport_number,'.$this->route()->id,
             'birth_certificate_number'  => 'unique:customers,birth_certificate_number,'.$this->route()->id,
             'username' => 'required|unique:customers,username,'.$this->route()->id,
-            'password' => 'required',
-            'c_password' => 'required',
+            'password' => 'required|confirmed'
         ];
     }
 }

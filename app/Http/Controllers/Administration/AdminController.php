@@ -122,7 +122,7 @@ class AdminController extends Controller
     public function reset(Reset $request, $id){
         $admin = Admin::find($id);
 
-        if( $request->password == $request->c_password ):
+        if( $request->password == $request->password_confirmation ):
             $admin->password = Hash::make($request->password);
             if($admin->save()):
                 return Notify::send('success', 'Password reset successfully')->reload('table','AdminsTable')->json();

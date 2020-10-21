@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Administration;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Administration\Booking\Confirm;
 use Cartalyst\Converter\Laravel\Facades\Converter;
 use Illuminate\Http\Request;
 use App\Models\Booking;
+use App\Models\Config;
+use App\Models\Transaction;
+use Library\Configs\Facades\Configs;
 use Library\Notify\Facades\Notify;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -14,6 +18,23 @@ class BookingController extends Controller
     public function bookingListView()
     {
          return view('administration.pages.booking.list');
+    }
+
+    public function viewModal($id){
+        $booking = Booking::find($id);
+        $vat = Configs::get('tax') / 100;
+        $total_price = Booking::find($id)->cost_total * $vat + Booking::find($id)->cost_total;
+        $due_amount = $total_price - Transaction::all()->where('booking_id', $id)->sum('amount') ;
+        return view('administration.modals.booking.confirm', compact('due_amount','booking'));
+    }
+
+    public function confirmBooking(Confirm $request, $id){
+        $booking = Booking::find($id);
+        $booking->payment_type = $request->payment_type;
+        $booking->is_payment_done = 1;
+        if( $booking->save() ){
+            return Notify::send('success','Booking Confirmed Successfully')->json();
+        }
     }
 
     public function singleBookingView($id){

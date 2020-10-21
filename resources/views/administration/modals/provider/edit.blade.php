@@ -45,6 +45,12 @@
                         <input type="date" name="date_of_birth" class="form-control" value="{{ $provider->date_of_birth }}">
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" class="form-control" name="address" value="{{ $provider->address }}">
+                    </div>
+                </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Email Address</label>

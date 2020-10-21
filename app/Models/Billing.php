@@ -13,6 +13,7 @@ class Billing extends Model
     public function billing_type(){
         return $this->belongsTo(BillingType::class);
     }
+    
 
     public function currency(){
         return $this->belongsTo(Currency::class);

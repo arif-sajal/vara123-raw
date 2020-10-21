@@ -33,6 +33,7 @@ class CreateBookingsTable extends Migration
             $table->decimal('cost_total','8','2');
 
             $table->integer('currency_id');
+            $table->integer('payment_type')->default(0);
             $table->boolean('is_payment_done');
             $table->text('note')->nullable();
             $table->timestamps();

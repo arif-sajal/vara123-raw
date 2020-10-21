@@ -58,7 +58,7 @@ class CustomerController extends Controller
 
     public function addCustomer(Add $request){
 
-        if( $request->password == $request->c_password ):
+        if( $request->password == $request->password_confirmation ):
             $customer = new Customer();
             $customer->first_name  = $request->first_name;
             $customer->last_name = $request->last_name;
@@ -143,7 +143,7 @@ class CustomerController extends Controller
     public function customerPasswordReset( Reset $request ,$id){
         $customer = Customer::find($id);
 
-        if( $request->password == $request->c_password ):
+        if( $request->password == $request->password_confirmation ):
             $customer->password  = Hash::make($request->password);
             if( $customer->save() ):
                 return Notify::send('success','Password reset successfully')->reload('table','CustomersTable')->json();
