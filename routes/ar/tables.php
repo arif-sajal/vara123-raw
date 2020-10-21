@@ -20,6 +20,7 @@ Route::group(['prefix'=>'table','namespace'=>'Administration','as'=>'app.table.'
     Route::group(['as'=>'setting.', 'prefix'=>'setting', 'namespace'=>'Setting'],function(){
         Route::post('vehicle-types', 'VehicleTypeController@vehicleTypesTable')->name('vehicle.types');
         Route::post('vehicle-manufacturers', 'VehicleManufacturerController@vehicleManufacturersTable')->name('vehicle.manufacturers');
+        Route::post('vehicle-models', 'VehicleModelController@vehicleModelsTable')->name('vehicle.models');
     });
 
 });

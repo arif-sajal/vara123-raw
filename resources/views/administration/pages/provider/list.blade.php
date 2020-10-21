@@ -45,7 +45,7 @@
                                     </thead>
 
                                     <tfoot>
-                                        
+
                                     </tfoot>
                                 </table>
                             </div>
