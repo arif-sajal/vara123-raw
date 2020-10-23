@@ -42,7 +42,6 @@ New Pending Bookings
                                       <th>From</th>
                                       <th>To</th>
                                       <th>Total</th>
-                                      <th>Payment</th>
                                       <th>Action</th>
                                   </tr>
                                   </thead>
@@ -55,7 +54,6 @@ New Pending Bookings
                                       <th>From</th>
                                       <th>To</th>
                                       <th>Total</th>
-                                      <th>Payment</th>
                                       <th>Action</th>
                                   </tr>
                                   </tfoot>
@@ -83,7 +81,6 @@ New Pending Bookings
             { data: 'booking_from', name: 'booking_from'},
             { data: 'booking_to', name: 'booking_to'},
             { data: 'total_price', name: 'total_price'},
-            { data: 'is_payment_done', name: 'is_payment_done'},
             { data: 'action', name: 'action', orderable: false },
         ];
     </script>

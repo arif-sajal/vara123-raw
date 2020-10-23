@@ -108,6 +108,7 @@ class CustomerController extends Controller
         $customer->post_code  = $request->p_code;
         $customer->gender  = $request->gender;
         $customer->date_of_birth = $request->date_of_birth;
+        $customer->username  = $request->username;
         $customer->email  = $request->email;
         $customer->phone = $request->phone;
         $customer->nid_number  = $request->nid_number;

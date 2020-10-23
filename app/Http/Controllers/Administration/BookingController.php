@@ -7,17 +7,60 @@ use App\Http\Requests\Administration\Booking\Confirm;
 use Cartalyst\Converter\Laravel\Facades\Converter;
 use Illuminate\Http\Request;
 use App\Models\Booking;
+use App\Models\BookingTransaction;
 use App\Models\Config;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Library\Configs\Facades\Configs;
 use Library\Notify\Facades\Notify;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Console\Scheduling\Schedule;
+use Prophecy\Promise\ReturnPromise;
 
 class BookingController extends Controller
 {
     public function bookingListView()
     {
-         return view('administration.pages.booking.list');
+        return view('administration.pages.booking.list');
+    }
+
+    public function completePayment($id){
+        $booking_transaction = BookingTransaction::find($id);
+        $booking_transaction->is_payment_done = 1;
+        if( $booking_transaction->save() ):
+
+            return Notify::send('success','Payment confirmed')->json();
+        endif;
+    }
+
+    //booking completion for provider
+    public function providerCompletion($id){
+        $booking = Booking::find($id);
+        $booking->provider_completion = 1;
+        if( $booking->save() ):
+            if( $booking->provider_completion == 'true'  && $booking->customer_completion == 'true' ):
+                $booking->provider->increment('balance',$booking->provider_cut);
+                $booking->provider->decrement('pending_balance',$booking->provider_cut);
+                return Notify::send('success','Booking Completion done')->json();
+            else:
+                return Notify::send('success','Booking Completion done')->json();
+            endif;
+        endif;
+    }
+
+    //booking completion for customer
+    public function customerCompletion($id){
+        $booking = Booking::find($id);
+        $booking->customer_completion = 1;
+        if( $booking->save() ):
+            if( $booking->provider_completion == 'true'  && $booking->customer_completion == 'true' ):
+                $booking->provider->increment('balance',$booking->provider_cut);
+                $booking->provider->decrement('pending_balance',$booking->provider_cut);
+                return Notify::send('success','Booking Completion done')->json();
+            else:
+                return Notify::send('success','Booking Completion done')->json();
+            endif;
+        endif;
     }
 
     public function bookingConfirmationModal($id){
@@ -33,7 +76,6 @@ class BookingController extends Controller
         $booking = Booking::find($id);
         $booking->payment_type = $request->payment_type;
         $booking->payment_type = $request->payment_type;
-        $booking->is_payment_done = 1;
         if( $booking->save() ){
             return Notify::send('success','Booking Confirmed Successfully')->json();
         }
@@ -52,9 +94,6 @@ class BookingController extends Controller
         endif;
 
         return DataTables::make($booking->latest()->get())
-            ->editColumn('is_payment_done',function(Booking $booking){
-                return $booking->is_payment_done ? 'Paid' : "Unpaid";
-            })
             ->addColumn('booking_from',function(Booking $booking){
                 return $booking->from_date->format('d M, Y') . ($booking->from_time && $booking->from_time != $booking->to_time ?  ' at '.$booking->from_time->format('h:m a') : '');
             })

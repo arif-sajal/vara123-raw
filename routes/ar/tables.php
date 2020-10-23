@@ -8,6 +8,7 @@ Route::group(['prefix'=>'table','namespace'=>'Administration','as'=>'app.table.'
     Route::post('all/customers','CustomerController@customersTable')->name('customers');
     Route::post('all/admins','AdminController@adminsTable')->name('admins');
     Route::post('all/coupons','CouponController@couponsTable')->name('coupons');
+    Route::post('all/payoutrequests','PayoutController@payoutTable')->name('payout');
 
     Route::group(['as'=>'property.', 'prefix'=>'property','namespace'=>'Property'], function () {
         Route::post('room/list/{id}','RoomController@roomsTable')->name('rooms');
@@ -20,7 +21,6 @@ Route::group(['prefix'=>'table','namespace'=>'Administration','as'=>'app.table.'
     Route::group(['as'=>'setting.', 'prefix'=>'setting', 'namespace'=>'Setting'],function(){
         Route::post('vehicle-types', 'VehicleTypeController@vehicleTypesTable')->name('vehicle.types');
         Route::post('vehicle-manufacturers', 'VehicleManufacturerController@vehicleManufacturersTable')->name('vehicle.manufacturers');
-        Route::post('vehicle-models', 'VehicleModelController@vehicleModelsTable')->name('vehicle.models');
     });
 
 });

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Administration\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix'=>'app/form-submission','namespace'=>'Administration','as'=>'app.form.submission.'],function(){
@@ -26,6 +27,7 @@ Route::group(['prefix'=>'app/form-submission','namespace'=>'Administration','as'
         Route::post('update/{id}', 'ProviderController@updateProvider')->name('update');
         Route::get('delete/{id}','ProviderController@deleteProvider')->name('delete');
         Route::post('passwordreset/{id}', 'ProviderController@reset')->name('passwordreset');
+        Route::post('update/profile/{id}','ProfileController@updateProviderProfile')->name('profile.update');
     });
 
     //for booking confirmation
@@ -39,6 +41,7 @@ Route::group(['prefix'=>'app/form-submission','namespace'=>'Administration','as'
         Route::post('update/{id}', 'AdminController@updateAdmin')->name('update');
         Route::get('delete/{id}', 'AdminController@deleteAdmin')->name('delete');
         Route::post('password-reset/{id}', 'AdminController@reset')->name('passwordreset');
+        Route::post('update/profile/{id}','ProfileController@updateAdminProfile')->name('profile.update');
     });
 
     //for customer
@@ -49,25 +52,10 @@ Route::group(['prefix'=>'app/form-submission','namespace'=>'Administration','as'
         Route::post('passwordreset/{id}','CustomerController@customerPasswordReset')->name('passwordreset');
     });
 
-    //SETTING (for Vehicle Type)
-    Route::group(['as'=>'setting-vehicle-type.','namespace'=>'Setting','prefix'=>'setting-vehicle-type'], function(){
-        Route::post('add','VehicleTypeController@addVehicleType')->name('add');
-        Route::post('update/{id}','VehicleTypeController@updateVehicleType')->name('update');
-        Route::get('delete/{id}','VehicleTypeController@deleteVehicleType')->name('delete');
-    });
-
-    //SETTING (for Vehicle Manufacturer)
-    Route::group(['as'=>'setting-vehicle-manufacturer.','namespace'=>'Setting','prefix'=>'setting-vehicle-manufacturer'], function(){
-        Route::post('add','VehicleManufacturerController@addVehicleManufacturer')->name('add');
-        Route::post('update/{id}','VehicleManufacturerController@updateVehicleManufacturer')->name('update');
-        Route::get('delete/{id}','VehicleManufacturerController@deleteVehicleManufacturer')->name('delete');
-    });
-
-    //SETTING (for Vehicle Model)
-    Route::group(['as'=>'setting-vehicle-model.','namespace'=>'Setting','prefix'=>'setting-vehicle-model'], function(){
-        Route::post('add','VehicleModelController@addVehicleModel')->name('add');
-        Route::post('update/{id}','VehicleModelController@updateVehicleModel')->name('update');
-        Route::get('delete/{id}','VehicleModelController@deleteVehicleModel')->name('delete');
+    //for payout request
+    Route::group(['as'=>'payout.','prefix'=>'payout'], function(){
+        Route::post('payout/request/{id}','PayoutController@payout')->name('request');
+        Route::get('confirm/{id}','PayoutController@payoutDone')->name('done');
     });
 
 });

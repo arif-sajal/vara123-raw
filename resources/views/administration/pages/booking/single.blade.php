@@ -167,7 +167,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>0
+                        </div>
                         <div class="row">
                             <div class="col-sm-7 col-12 text-center text-sm-left">
 
@@ -240,6 +240,8 @@
                         </div>
                     </div>
 
+
+
                     <!-- Invoice Footer -->
                     <div id="invoice-footer">
                         <div class="row">
@@ -247,12 +249,23 @@
                                 <h6>Terms &amp; Condition</h6>
                                 <p>Test pilot isn't always the healthiest business.</p>
                             </div>
-                            @if(!$booking->is_payment_done)
+                            @if( auth('provider')->check() )
                             <div class="col-sm-5 col-12 text-center">
-                                <button type="button" data-content="{{ route('app.modal.booking.modal', $booking->id) }}" class="btn btn-info btn-print btn-lg my-1" data-toggle="modal" data-target="#myModal" >
-                                 <i class="la la-paper-plane-o mr-50"></i>
-                                    Booking Confirm
+                                @if( $booking->transaction->is_payment_done == 0 )
+                                <button class="btn btn-info btn-print btn-lg my-1" data-action-route="{{ route('app.modal.paynow.modal',$booking->id) }}" data-action='confirm'  data-hover='tooltip'
+                                data-original-title='Paymet Confirmation'>
+                                    Pay now
                                 </button>
+                                @endif
+
+                                @if( $booking->to_date->toDateString() < Carbon\Carbon::now()->toDateString() )
+                                    @if( $booking->provider_completion == 0 )
+                                    <button class="btn btn-info btn-print btn-lg my-1" data-action='confirm' data-action-route="{{ route('app.modal.booking.providerCompletion',$booking->id) }}"  data-hover='tooltip'
+                                    data-original-title='Booking Completion'>
+                                        Booking Completion
+                                    </button>
+                                    @endif
+                                @endif
                             </div>
                             @endif
                         </div>

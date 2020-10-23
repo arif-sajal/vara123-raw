@@ -95,7 +95,6 @@ class BookingController extends Controller
         $booking->quantity = $quantity;
         $booking->cost_total = $billing->amount * $quantity;
         $booking->currency_id = $billing->currency_id;
-        $booking->is_payment_done = false;
         $booking->note = $request->get('note');
 
         $booking->admin_cut = Configs::get('admin_booking_cut') / 100 * $booking->cost_total;

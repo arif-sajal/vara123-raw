@@ -10,7 +10,7 @@ Route::group(['namespace'=>'Administration'],function(){
 
     Route::group(['middleware'=>[],'as'=>'app.'],function(){
         Route::get('dashboard','DashboardController@dashboardView')->name('dashboard');
-        Route::get('profile','ProfileController@viewProfile')->name('profile');
+        Route::get('profile/{id}','ProfileController@viewProfile')->name('profile');
 
         Route::group(['as'=>'property.', 'prefix'=>'property'], function () {
             Route::get('all','PropertyController@propertyListView')->name('list');
@@ -27,6 +27,11 @@ Route::group(['namespace'=>'Administration'],function(){
         //coupon
         Route::group(['as'=>'coupon.','prefix'=>'coupon'], function() {
             Route::get('all','CouponController@couponList')->name('list');
+        });
+
+        //payout request view
+        Route::group(['as'=>'payreq.','prefix'=>'payreq'], function(){
+            Route::get('all','PayoutController@view')->name('all');
         });
 
         Route::group(['as'=>'customer.', 'prefix'=>'customer'], function () {
