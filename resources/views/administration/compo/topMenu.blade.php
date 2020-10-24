@@ -180,10 +180,17 @@
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="{{ route('app.profile') }}">
+                        @if( auth('admin')->check() )
+                            <a class="dropdown-item" href="{{ route('app.profile', auth('admin')->user()->id ) }}">
                                 <i class="ft-user"></i>
                                 Profile
                             </a>
+                            @elseif( auth('provider')->check() )
+                            <a class="dropdown-item" href="{{ route('app.profile', auth('provider')->user()->id ) }}">
+                                <i class="ft-user"></i>
+                                Profile
+                            </a>
+                            @endif
                             <a class="dropdown-item" href="{{ route('logout') }}">
                                 <i class="ft-power"></i>
                                 Logout

@@ -8,10 +8,12 @@ use App\Models\Booking;
 use App\Models\BookingTransaction;
 use App\Models\Customer;
 use App\Models\PaymentMethod;
+use App\Models\Provider;
 use Cartalyst\Converter\Laravel\Facades\Converter;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Library\Api\Facades\Api;
+use Library\Configs\Facades\Configs;
 
 class PaymentController extends Controller
 {
@@ -95,6 +97,11 @@ class PaymentController extends Controller
         $transaction->payment_initiation_server_response = $response;
         $transaction->save();
 
+        $booking->admin_cut = Configs::get('admin_booking_cut') / 100 * $booking->cost_total;
+        $booking->provider_cut = Configs::get('provider_booking_cut') / 100 * $booking->cost_total;
+        $provider = Provider::find($booking->provider_id);
+        $provider->increment('pending_balance', $booking->provider_cut);
+
         return Api::data(BookingTransactionResource::make($transaction->refresh()))->send();
     }
 
@@ -169,6 +176,11 @@ class PaymentController extends Controller
         $transaction->is_payment_done = false;
         $transaction->paid_by = null;
         $transaction->save();
+
+        $booking->admin_cut = Configs::get('admin_booking_cut') / 100 * $booking->cost_total;
+        $booking->provider_cut = Configs::get('provider_booking_cut') / 100 * $booking->cost_total;
+        $provider = Provider::find($booking->provider_id);
+        $provider->increment('pending_balance', $booking->provider_cut);
 
         return Api::data(BookingTransactionResource::make($transaction->refresh()))->send();
     }

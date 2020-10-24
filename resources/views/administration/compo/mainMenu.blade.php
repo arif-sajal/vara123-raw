@@ -76,6 +76,12 @@
                         <span class="menu-title">Settings</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('app.payreq.all') }}">
+                        <i class="la la-cogs"></i>
+                        <span class="menu-title">Payout Requestes</span>
+                    </a>
+                </li>
             @endif
 
         </ul>

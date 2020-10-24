@@ -27,9 +27,15 @@ Route::group(['prefix'=>'modal','namespace'=>'Administration','as'=>'app.modal.'
         Route::get('resetpassword/{provider:id}','ProviderController@providerPasswordReset')->name('resetpassword');
     });
 
-    //booking start
+    //booking payment confirm route start
+    Route::group(['as' => 'paynow.', 'prefix'=>'booking'], function(){
+        Route::get('paynow/{id}','BookingController@completePayment')->name('modal');
+    });
+
+    //booking completion route start
     Route::group(['as' => 'booking.', 'prefix'=>'booking'], function(){
-        Route::get('modal/{id}','BookingController@bookingConfirmationModal')->name('modal');
+        Route::get('completion/provider/{id}','BookingController@providerCompletion')->name('providerCompletion');
+        Route::get('completion/customer/{id}','BookingController@customerCompletion')->name('customerCompletion');
     });
 
     //for admin
@@ -47,23 +53,9 @@ Route::group(['prefix'=>'modal','namespace'=>'Administration','as'=>'app.modal.'
         Route::get('resetpassword/{customers:id}','CustomerController@customerResetPassword')->name('resetpassword');
     });
 
-    //SETTING (for Vehicle Type)
-    Route::group(['as'=>'setting-vehicle-type-modal.','namespace'=>'Setting','prefix'=>'setting-vehicle-type-modal'], function(){
-        Route::get('add','VehicleTypeController@viewSettingVehicleTypeModal')->name('add');
-        Route::get('edit/{vehicle_types:id}','VehicleTypeController@editVehicleTypeModal')->name('edit');
-    });
-
-    //SETTING (for Vehicle Manufacturer)
-    Route::group(['as'=>'setting-vehicle-manufacturer-modal.','namespace'=>'Setting','prefix'=>'setting-vehicle-manufacturer-modal'], function(){
-        Route::get('add','VehicleManufacturerController@viewSettingVehicleManufacturerModal')->name('add');
-        Route::get('edit/{vehicle_manufacturers:id}','VehicleManufacturerController@editVehicleManufacturerModal')->name('edit');
-    });
-
-    //SETTING (for Vehicle Model)
-    Route::group(['as'=>'setting-vehicle-model-modal.','namespace'=>'Setting','prefix'=>'setting-vehicle-model-modal'], function(){
-        Route::get('add','VehicleModelController@addSettingVehicleModelModal')->name('add');
-        Route::get('view/{vehicle_models:id}','VehicleModelController@viewSettingVehicleModelModal')->name('view');
-        Route::get('edit/{vehicle_models:id}','VehicleModelController@editVehicleModelModal')->name('edit');
+    //payout request modal start
+    Route::group(['as'=>'provider.payout.','prefix'=>'payout'], function(){
+        Route::get('payout/modal/{id}','PayoutController@payoutModal')->name('modal');
     });
 
 });

@@ -92,6 +92,7 @@ class ProviderController extends Controller
         $provider->email = $request->email;
         $provider->address = $request->address;
         $provider->phone  = $request->phone;
+        $provider->username  = $request->username;
 
         if ($request->image) :
             if (Storage::exists($provider->avatar)):
