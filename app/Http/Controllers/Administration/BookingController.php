@@ -26,7 +26,7 @@ class BookingController extends Controller
 
     public function completePayment($id){
         $booking_transaction = BookingTransaction::find($id);
-        $booking_transaction->is_payment_done = 1;
+        $booking_transaction->is_payment_done = true;
         if( $booking_transaction->save() ):
 
             return Notify::send('success','Payment confirmed')->json();
@@ -36,9 +36,9 @@ class BookingController extends Controller
     //booking completion for provider
     public function providerCompletion($id){
         $booking = Booking::find($id);
-        $booking->provider_completion = 1;
+        $booking->provider_completion = true;
         if( $booking->save() ):
-            if( $booking->provider_completion == 'true'  && $booking->customer_completion == 'true' ):
+            if( $booking->provider_completion == true  && $booking->customer_completion == true ):
                 $booking->provider->increment('balance',$booking->provider_cut);
                 $booking->provider->decrement('pending_balance',$booking->provider_cut);
                 return Notify::send('success','Booking Completion done')->json();
@@ -51,9 +51,9 @@ class BookingController extends Controller
     //booking completion for customer
     public function customerCompletion($id){
         $booking = Booking::find($id);
-        $booking->customer_completion = 1;
+        $booking->customer_completion = true;
         if( $booking->save() ):
-            if( $booking->provider_completion == 'true'  && $booking->customer_completion == 'true' ):
+            if( $booking->provider_completion == true  && $booking->customer_completion == true ):
                 $booking->provider->increment('balance',$booking->provider_cut);
                 $booking->provider->decrement('pending_balance',$booking->provider_cut);
                 return Notify::send('success','Booking Completion done')->json();

@@ -30,6 +30,11 @@ class AdminController extends Controller
         return view('administration.modals.admin.edit')->with('admin', $admin);
     }
 
+    public function editProfile($id){
+        $user = Admin::find($id);
+        return view('administration.modals.admin.editProfile')->with('user', $user);
+    }
+
     public function adminsTable(){
         $admins = Admin::query();
 

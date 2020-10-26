@@ -23,6 +23,10 @@ class ProviderController extends Controller
         return view('administration.modals.provider.edit', compact('provider'));
     }
 
+    public function editProfile($id){
+        $user = Provider::find($id);
+        return view('administration.modals.provider.editProfile')->with('user', $user);
+    }
 
     public function providersTable()
     {

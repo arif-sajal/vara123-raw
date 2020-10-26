@@ -166,13 +166,13 @@
                             <span class="avatar avatar-online">
                                 @if(auth('admin')->check())
                                     @if(Storage::has(auth('admin')->user()->avatar))
-                                        <img src="{{ Storage::url(auth('admin')->user()->avatar) }}" alt="{{ auth('admin')->user()->full_name }}"><i></i>
+                                        <img src="{{ Storage::url(auth('admin')->user()->avatar) }}" class="img-fluid" style="width: 40px;height:40px; border-radius:100%"  alt="{{ auth('admin')->user()->full_name }}"><i></i>
                                     @else
                                         <img src="{{ Storage::url(config('default_user_avatar')) }}" alt="{{ auth('admin')->user()->full_name }}"><i></i>
                                     @endif
                                 @elseif(auth('provider')->check())
                                     @if(Storage::has(auth('provider')->user()->avatar))
-                                        <img src="{{ Storage::url(auth('provider')->user()->avatar) }}" alt="{{ auth('provider')->user()->full_name }}"><i></i>
+                                        <img src="{{ Storage::url(auth('provider')->user()->avatar) }}" class="img-fluid" style="width: 40px;height:40px; border-radius:100%"  alt="{{ auth('provider')->user()->full_name }}"><i></i>
                                     @else
                                         <img src="{{ Storage::url(config('default_user_avatar')) }}" alt="{{ auth('provider')->user()->full_name }}"><i></i>
                                     @endif

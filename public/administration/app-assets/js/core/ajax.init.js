@@ -139,6 +139,129 @@ $(document).on('click','[data-toggle="modal"]',function(e) {
     });
 });
 
+//confirm payment start
+$(document).on('click','[data-action="confirm-payment"]',function(e){
+    e.preventDefault();
+    var $this = $(this);
+    if($(this).data('title')){
+        var title = $(this).data('title');
+    }else{
+        var title = 'Want To Confirm Payment ?';
+    }
+    if($(this).data('text')){
+        var text = $(this).data('text');
+    }else{
+        var text = "Are You Sure !!!, You Wont Be Able To Undo...";
+    }
+    if($(this).data('type')){
+        var type = $(this).data('type');
+    }else{
+        var type = 'warning';
+    }
+
+    if($(this).data('confirm-button-text')){
+        var conbt = $(this).data('confirm-button-text');
+    }else{
+        var conbt = 'Yes, Confirm it';
+    }
+
+    if($(this).data('cancel-button-text')){
+        var canbt = $(this).data('cancel-button-text');
+    }else{
+        var canbt = 'Cancel';
+    }
+
+    swal({
+        title: title,
+        text: text,
+        icon: type,
+        buttons: {
+            cancel: {
+                text: canbt,
+                value: null,
+                visible: true,
+                className: "btn-success",
+                closeModal: true,
+            },
+            confirm: {
+                text: conbt,
+                value: true,
+                visible: true,
+                className: "btn-danger",
+                closeModal: true
+            }
+        }
+    })
+    .then((isConfirm) => {
+        if (isConfirm) {
+            fireAjax($(this).data('action-route'));
+        }
+    });
+});
+//confirm payment end
+
+//provider complete booking start
+$(document).on('click','[data-action="complete-booking"]',function(e){
+    e.preventDefault();
+    var $this = $(this);
+    if($(this).data('title')){
+        var title = $(this).data('title');
+    }else{
+        var title = 'Want To Complete Booking ?';
+    }
+    if($(this).data('text')){
+        var text = $(this).data('text');
+    }else{
+        var text = "Are You Sure !!!, You Wont Be Able To Undo...";
+    }
+    if($(this).data('type')){
+        var type = $(this).data('type');
+    }else{
+        var type = 'warning';
+    }
+
+    if($(this).data('confirm-button-text')){
+        var conbt = $(this).data('confirm-button-text');
+    }else{
+        var conbt = 'Yes, Complete it';
+    }
+
+    if($(this).data('cancel-button-text')){
+        var canbt = $(this).data('cancel-button-text');
+    }else{
+        var canbt = 'Cancel';
+    }
+
+    swal({
+        title: title,
+        text: text,
+        icon: type,
+        buttons: {
+            cancel: {
+                text: canbt,
+                value: null,
+                visible: true,
+                className: "btn-success",
+                closeModal: true,
+            },
+            confirm: {
+                text: conbt,
+                value: true,
+                visible: true,
+                className: "btn-danger",
+                closeModal: true
+            }
+        }
+    })
+    .then((isConfirm) => {
+        if (isConfirm) {
+            fireAjax($(this).data('action-route'));
+        }
+    });
+});
+//provider complete booking end
+
+
 $(document).on('click','[data-action="confirm"]',function(e){
     e.preventDefault();
     var $this = $(this);

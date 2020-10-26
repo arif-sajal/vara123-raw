@@ -8,90 +8,62 @@ Admins
 <div class="content-wrapper">
     <div class="content-body">
 
-        <form action="{{ route('app.form.submission.admin.profile.update', $user->id) }}" method="post" enctype="multipart/form-data">
-            @csrf
-            <!-- pofile pic start -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        @if( \Illuminate\Support\Facades\Storage::exists($user->avatar) )
-                        <img src="{{ \Illuminate\Support\Facades\Storage::url($user->avatar) }}" width="50px" style="border-radius: 100%" alt=""> <br> <br>
-                        @else
-                        <img src="{{ asset('images/user.png') }}" width="50px" alt=""> <br> <br>
-                        @endif
-                        <label>Upload new photo</label>
-                        <input type="file" class="form-control-file" name="avatar">
+        <section class="row" style="padding: 30px 0;">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body p-0">
+                            <div class="row">
+                                <!-- left part start -->
+                                <div class="col-md-12" style="padding: 30px">
+                                    <h2> <b>Name : </b> {{ $user->first_name }} {{ $user->last_name }}</h2>
+                                    <p>
+                                        <b>Username :</b> {{ $user->username }}
+                                    </p>
+                                    <p>
+                                        <b>Email : </b>{{ $user->email }}
+                                    </p>
+                                    <p>
+                                        <b>Phone : </b>{{ $user->phone }}
+                                    </p>
+                                    <p>
+                                        <b>Emergency Contact : </b> {{ $user->emergency_contact_number }}
+                                    </p>
+                                    <p>
+                                        <b>Date of Birth : </b> {{ $user->date_of_birth }}
+                                    </p>
+                                    <p>
+                                        <b>Gender : </b>
+
+                                        @if( $user->gender == 1 )
+                                            Male
+                                        @elseif( $user->gender == 2 )
+                                            Female
+                                        @else
+                                            Other
+                                        @endif
+                                    </p>
+                                    <button class="btn btn-success" style="margin-top:15px" data-toggle="modal" data-target="#myModal" data-content="{{ route('app.modal.admin.editProfile', $user->id) }}">Edit Profile Information</button>
+                                </div>
+                                <!-- left part end -->
+
+                                <!-- right part start -->
+                                <div class="col-md-12" style="margin-top: 15px;">
+                                    @if( \Illuminate\Support\Facades\Storage::exists($user->avatar) )
+                                    <img src="{{ \Illuminate\Support\Facades\Storage::url($user->avatar) }}" style="width: 10%;display:block;margin: 0 auto;" class="img-fluid" alt=""> <br> <br>
+                                    @else
+                                    <img src="{{ asset('images/user.png') }}" width="50px" alt=""> <br> <br>
+                                    @endif
+                                </div>
+                                <!-- right part end -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- pofile pic end -->
-
-            <!-- personal information start -->
-            <div class="row">
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>First Name</label>
-                        <input type="text" class="form-control" value="{{ $user->first_name }}" name="first_name">
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>last Name</label>
-                        <input type="text" class="form-control" value="{{ $user->last_name }}" name="last_name">
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Select your gender</label>
-                        <select name="gender" class="form-control">
-                            <option value="1" @if ( $user->gender == 1 ) selected @endif >Male</option>
-                            <option value="2" @if ( $user->gender == 2 ) selected @endif >Female</option>
-                            <option value="3" @if ( $user->gender ==3 ) selected @endif >Others</option>
-                        </select>
-
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Date of Birth</label>
-                        <input type="date" value="{{ $user->date_of_birth }}" name="date_of_birth" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="email" placeholder="Email Address" value="{{ $user->email }}" name="email" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Phone Number</label>
-                        <input type="text" name="phone" value="{{ $user->phone }}" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Emergency Contact number</label>
-                        <input type="text" name="emergency_number" value="{{ $user->emergency_contact_number }}" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" name="username" placeholder="Username" value="{{ $user->username }}" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <button type="submit" class="btn btn-primary" >Update information</button>
-                </div>
-            </div>
-            <!-- personal information end -->
+        </section>
 
 
-        </form>
 
     </div>
 </div>

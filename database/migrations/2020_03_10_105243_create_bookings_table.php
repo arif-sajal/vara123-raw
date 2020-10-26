@@ -32,8 +32,8 @@ class CreateBookingsTable extends Migration
             $table->decimal('cost_per_unit','8','2');
             $table->decimal('cost_total','8','2');
 
-            $table->boolean('provider_completion')->default(0);
-            $table->boolean('customer_completion')->default(0);
+            $table->boolean('provider_completion')->default(false);
+            $table->boolean('customer_completion')->default(false);
 
             $table->integer('currency_id');
             $table->text('note')->nullable();

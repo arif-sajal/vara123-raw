@@ -25,6 +25,7 @@ Route::group(['prefix'=>'modal','namespace'=>'Administration','as'=>'app.modal.'
         Route::get('add','ProviderController@viewAddModal')->name('add');
         Route::get('edit/{provider:id}','ProviderController@viewEditModal')->name('edit');
         Route::get('resetpassword/{provider:id}','ProviderController@providerPasswordReset')->name('resetpassword');
+        Route::get('editProfile/{id}','ProviderController@editProfile')->name('editProfile');
     });
 
     //booking payment confirm route start
@@ -43,6 +44,7 @@ Route::group(['prefix'=>'modal','namespace'=>'Administration','as'=>'app.modal.'
         Route::get('add','AdminController@viewAddAdminModal')->name('add');
         Route::get('edit/{admins:id}','AdminController@viewEditAdminModal')->name('edit');
         Route::get('resetpassword/{admins:id}','AdminController@adminPasswordReset')->name('resetpassword');
+        Route::get('editProfile/{id}','AdminController@editProfile')->name('editProfile');
     });
 
     //for customer

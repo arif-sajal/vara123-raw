@@ -40,19 +40,20 @@ class CustomerCompletion extends Command
      */
     public function handle()
     {
-        foreach( Booking::all() as $key => $book ):
+        foreach (Booking::all() as $key => $book) :
             $today = Carbon::now()->toDateString();
             $to_date = $book->to_date->toDateString();
             $different_days = Carbon::parse($to_date)->diffInDays($today);
-            if( $different_days  >= Configs::get('default_customer_completion') ):
-                $book->provider_completion = 1;
-                $book->customer_completion = 1;
-                if( $book->save() ):
-                    $book->provider->increment('balance',$book->provider_cut);
-                    $book->provider->decrement('pending_balance',$book->provider_cut);
+            if ($different_days  >= Configs::get('default_customer_completion')) :
+                $book->provider_completion = true;
+                $book->customer_completion = true;
+                if ($book->save()) :
+                    if ($book->provider->pending_balance != 0) :
+                        $book->provider->increment('balance', $book->provider_cut);
+                        $book->provider->decrement('pending_balance', $book->provider_cut);
+                    endif;
                 endif;
             endif;
         endforeach;
-
     }
 }
