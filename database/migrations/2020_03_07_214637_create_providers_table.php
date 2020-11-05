@@ -26,6 +26,7 @@ class CreateProvidersTable extends Migration
             $table->string('phone')->nullable();
             $table->unsignedInteger('balance')->default(0);
             $table->unsignedInteger('pending_balance')->default(0);
+            $table->unsignedInteger('due_balance')->default(0);
             $table->boolean('is_phone_verified')->default(false);
             $table->string('username');
             $table->string('password');

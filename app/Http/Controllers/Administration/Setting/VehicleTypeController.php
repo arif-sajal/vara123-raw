@@ -26,18 +26,18 @@ class VehicleTypeController extends Controller
             ->addColumn('action',function(VehicleTYpe $vehicleTypes){
                 return "
                     <button class='btn btn-sm btn-info' data-content='"
-                    .route('app.modal.setting-vehicle-type-modal.edit',$vehicleTypes->id)."
+                    .route('app.modal.setting.vehicle.type.edit',$vehicleTypes->id)."
                     ' data-hover='tooltip' data-original-title='Edit Vehicle Type'data-toggle='modal'
                     data-target='#myModal'><i class='la la-pencil'></i></button>
 
                     <button class='btn btn-sm btn-danger' data-action='confirm' data-action-route='".
-                    route('app.form.submission.setting-vehicle-type.delete',$vehicleTypes->id)."' data-hover='tooltip'
+                    route('app.modal.setting.vehicle.type.delete',$vehicleTypes->id)."' data-hover='tooltip'
                     data-original-title='Delete Room'><i class='la la-trash'></i></button>
                 ";
             })
             ->editColumn('icon',function($vehicleTypes){
                 if(Storage::has($vehicleTypes->icon)):
-                    return "<img src='".Storage::url($vehicleTypes->icon)."' alt='error.png'/>";
+                    return "<img src='".Storage::url($vehicleTypes->icon)."' class='img-fluid' style='width:32px' alt='error.png'/>";
                 else:
                     return "Icon Not Uploaded";
                 endif;
@@ -63,7 +63,8 @@ class VehicleTypeController extends Controller
         return Notify::send('warning','Data didn\'t insert')->json();
     }
 
-    public function editVehicleTypeModal(VehicleType $vehicleTypes){
+    public function editVehicleTypeModal($id){
+        $vehicleTypes = VehicleType::find($id);
         return view('administration.modals.setting-vehicle-type.edit',compact('vehicleTypes'));
     }
 

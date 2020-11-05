@@ -9,7 +9,7 @@ Providers
     <div class="content-body">
 
         <section class="row" style="padding: 15px 0;">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body p-0">
@@ -29,6 +29,67 @@ Providers
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <button class="btn btn-success" data-toggle="modal" data-target="#myModal" data-content="{{ route('app.modal.provider.payout.modal', $user->id) }}">Payout request</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- payout request end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body p-0">
+                            <!-- payout request start -->
+                            <div class="row" style="padding: 30px">
+
+                                <div class="col-md-12">
+                                    @if( session()->has('sslSuccess') )
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>Success</strong> {{ session()->get('sslSuccess') }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    @endif
+                                    @if( session()->has('sslFailed') )
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <strong>Success</strong> {{ session()->get('sslFailed') }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    @endif
+                                    @if( session()->has('sslCancel') )
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <strong>Success</strong> {{ session()->get('sslCancel') }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    @endif
+                                    @if( session()->has('sslIpnValidation') )
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>Success</strong> {{ session()->get('sslIpnValidation') }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    @endif
+                                </div>
+
+                                <!-- account balance start -->
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <h3>Due balance is : ${{ $user->due_balance }}</h3>
+                                    </div>
+
+                                </div>
+                                <!-- account balance end -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <button class="btn btn-success" data-toggle="modal" data-target="#myModal" data-content="{{ route('app.modal.provider.dueModal', $user->id) }}">Due request</button>
                                     </div>
                                 </div>
                             </div>

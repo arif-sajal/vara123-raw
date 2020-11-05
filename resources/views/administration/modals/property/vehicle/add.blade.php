@@ -4,7 +4,7 @@
         <span aria-hidden="true">×</span>
     </button>
 </div>
-<form class="ajax-form" action="{{ route('admin.form.submission.property.vehicle.add',$property->id) }}" method="POST">
+<form class="ajax-form" action="{{ route('app.form.submission.property.vehicle.add',$property->id) }}" method="POST">
     <div class="modal-body">
 
         <div class="form-group">
@@ -39,7 +39,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Price Per {{ $billing->per }}" name="price[{{ $billing->id }}]">
+                                <input type="text" class="form-control" placeholder="Price Per {{ $billing->per }}"  name="price[{{ $billing->id }}]">
                                 <div class="input-group-append">
                                     <span class="input-group-text">{{ $property->provider->currency->symbol }}</span>
                                 </div>

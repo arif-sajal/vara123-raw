@@ -14,6 +14,10 @@ class Billing extends Model
         return $this->belongsTo(Property::class);
     }
 
+    public function propertyVehicle(){
+        return $this->belongsTo(PropertyVehicle::class,'item_id','id');
+    }
+
     public function billing_type(){
         return $this->belongsTo(BillingType::class);
     }

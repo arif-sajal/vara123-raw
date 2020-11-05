@@ -17,7 +17,7 @@ $.ajaxSetup({
 
 $(document).on('submit','.ajax-form',function(form){
     form.preventDefault();
-
+    
     var $this = $(this);
     $this.find(".form-control-position i").removeClass('has-error');
     $this.find(".has-danger").removeClass('has-error');
@@ -30,6 +30,12 @@ $(document).on('submit','.ajax-form',function(form){
         url : $this.attr('action'),
         data : formData,
         success:function(response){
+
+            if($this[0].dataset.name && $this[0].dataset.name == "payment"){
+                let redirectUrl = JSON.parse(response).GatewayPageURL
+                return window.location.href = redirectUrl
+            }
+                
             $('[data-dismiss="modal"]').click()
 
             notify(response.status,response.message);

@@ -24,7 +24,7 @@ class PropertyVehicle extends Model
     }
 
     public function billings(){
-        return $this->morphMany(Billing::class,'item');
+        return $this->hasMany(Billing::class,'item_id','id');
     }
 
     public static function boot(){

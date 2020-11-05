@@ -179,8 +179,9 @@ class PaymentController extends Controller
 
         $booking->admin_cut = Configs::get('admin_booking_cut') / 100 * $booking->cost_total;
         $booking->provider_cut = Configs::get('provider_booking_cut') / 100 * $booking->cost_total;
+
         $provider = Provider::find($booking->provider_id);
-        $provider->increment('pending_balance', $booking->provider_cut);
+        $provider->increment('due_balance', $booking->admin_cut);
 
         return Api::data(BookingTransactionResource::make($transaction->refresh()))->send();
     }
