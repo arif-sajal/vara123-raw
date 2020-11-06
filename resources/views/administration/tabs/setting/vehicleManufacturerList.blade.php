@@ -3,7 +3,7 @@
     <div class="heading-elements">
         <ul class="list-inline mb-0">
             <li>
-                <button class="btn btn-success btn-sm btn-icon" data-hover="tooltip" data-original-title="Add Vehicle Manufacturer" data-toggle="modal" data-target="#myModal" data-content="{{ route('app.modal.setting-vehicle-manufacturer-modal.add') }}">
+                <button class="btn btn-success btn-sm btn-icon" data-hover="tooltip" data-original-title="Add Vehicle Manufacturer" data-toggle="modal" data-target="#myModal" data-content="{{ route('app.modal.setting.vehicle.manufacture.add') }}">
                     <i class="fa ft-plus"></i>
                     Add Vehicle Manufacturer
                 </button>
@@ -26,11 +26,6 @@
                                 </tr>
                             </thead>
                             <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Logo</th>
-                                    <th>Action</th>
-                                </tr>
                             </tfoot>
                         </table>
                     </div>

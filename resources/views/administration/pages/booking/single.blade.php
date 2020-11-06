@@ -251,16 +251,16 @@
                             </div>
                             @if( auth('provider')->check() )
                             <div class="col-sm-5 col-12 text-center">
-                                @if( $booking->transaction->is_payment_done == 0 )
-                                <button class="btn btn-info btn-print btn-lg my-1" data-action-route="{{ route('app.modal.paynow.modal',$booking->id) }}" data-action='confirm'  data-hover='tooltip'
+                                @if( $booking->transaction->is_payment_done == false )
+                                <button class="btn btn-info btn-print btn-lg my-1" data-action-route="{{ route('app.modal.paynow.modal',$booking->id) }}" data-action='confirm-payment'  data-hover='tooltip'
                                 data-original-title='Paymet Confirmation'>
                                     Pay now
                                 </button>
                                 @endif
 
                                 @if( $booking->to_date->toDateString() < Carbon\Carbon::now()->toDateString() )
-                                    @if( $booking->provider_completion == 0 )
-                                    <button class="btn btn-info btn-print btn-lg my-1" data-action='confirm' data-action-route="{{ route('app.modal.booking.providerCompletion',$booking->id) }}"  data-hover='tooltip'
+                                    @if( $booking->provider_completion == false )
+                                    <button class="btn btn-info btn-print btn-lg my-1" data-action='complete-booking' data-action-route="{{ route('app.modal.booking.providerCompletion',$booking->id) }}"  data-hover='tooltip'
                                     data-original-title='Booking Completion'>
                                         Booking Completion
                                     </button>

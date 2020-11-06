@@ -27,7 +27,6 @@ class PropertyController extends Controller
         if(auth('provider')->check()):
             $properties->where('provider_id',auth('provider')->id());
         endif;
-
         return view('administration.pages.property.list',['properties'=>$properties->paginate(15)]);
     }
 
@@ -46,6 +45,10 @@ class PropertyController extends Controller
             return view('administration.tabs.property.vehicles')->with('property',$property);
         elseif($type === 'amenities'):
             return view('administration.tabs.property.amenities')->with('property',$property);
+        elseif($type === 'gallery'):
+            return view('administration.tabs.property.gallery')->with('property',$property);
+        elseif($type === 'timings'):
+            return view('administration.tabs.property.timing')->with('property',$property);
         endif;
     }
 
@@ -133,16 +136,33 @@ class PropertyController extends Controller
         $property->point = new Point($request->get('lat'),$request->get('lng'));
 
         if($request->hasFile('featured_image')):
-            if(Storage::has($property->featured_image)):
+            if(Storage::exists($property->featured_image)):
                 Storage::delete($property->featured_image);
             endif;
             $property->featured_image = Storage::putFile('/',$request->file('featured_image'));
         endif;
 
         if($property->save()):
-            return Notify::send('success','Property Saved Successfully')->callback(['redirect'=>route('admin.property.view',$property->id)])->json();
+            return Notify::send('success','Property Saved Successfully')->callback(['redirect'=>route('app.property.list')])->json();
         endif;
 
         return Notify::send('error','Can\'t Save Property Now, Please Try Again later.')->json();
+    }
+
+    public function deleteModal($id){
+        $property = Property::find($id);
+        if($property):
+            return view('administration.modals.property.deletemodal',compact('property'));
+        endif;
+    }
+
+    public function deleteProperty($id){
+        $property = Property::find($id);
+        if(Storage::exists($property->featured_image)):
+            Storage::delete($property->featured_image);
+        endif;
+        if($property->delete()):
+            return Notify::send('success','Property deleted Successfully')->callback(['redirect'=>route('app.property.list')])->json();
+        endif;
     }
 }

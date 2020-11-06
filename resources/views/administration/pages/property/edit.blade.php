@@ -6,7 +6,7 @@
                 <h4 class="card-title">Edit Property</h4>
             </div>
             <div class="card-body">
-                <form class="ajax-form" action="{{ route('admin.property.edit',$property->id) }}" method="POST">
+                <form class="ajax-form" action="{{ route('app.property.update',$property->id) }}" method="POST">
                     <div class="form-body">
                         <div class="row">
 

@@ -4,7 +4,7 @@
     <div class="heading-elements">
         <ul class="list-inline mb-0">
             <li>
-                <button class="btn btn-success btn-sm btn-icon" data-hover="tooltip" data-original-title="Add Vehicle Type" data-toggle="modal" data-target="#myModal" data-content="{{ route('app.modal.setting-vehicle-type-modal.add') }}">
+                <button class="btn btn-success btn-sm btn-icon" data-hover="tooltip" data-original-title="Add Vehicle Type" data-toggle="modal" data-target="#myModal" data-content="{{ route('app.modal.setting.vehicle.type.add') }}">
                     <i class="fa ft-plus"></i>
                     Add Vehicle Type
                 </button>

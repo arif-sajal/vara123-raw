@@ -4,7 +4,7 @@
         <div class="heading-elements">
             <ul class="list-inline mb-0">
                 <li>
-                    <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#myModalLarge" data-content="{{ route('app.modal.property.room.add',$property->id) }}">
+                    <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#myModalLarge" data-content="{{ route('app.modal.property.aminities.add',$property->id) }}">
                         Add Amenity
                     </button>
                 </li>
@@ -25,15 +25,11 @@
                     <tr>
                         <th>Name</th>
                         <th>Icon</th>
+                        <th>For</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tfoot>
-                    <tr>
-                        <th>Name</th>
-                        <th>Icon</th>
-                        <th>Action</th>
-                    </tr>
                 </tfoot>
             </table>
         </div>
@@ -45,6 +41,7 @@
     window.datatable.AmenitiesTable.columns = [
         { data: 'amenity.name', name: 'amenity.name'},
         { data: 'amenity.icon', name: 'amenity.icon'},
+        { data: 'amenity.for', name: 'amenity.for'},
         { data: 'action', name: 'action', orderable: false },
     ];
 

@@ -20,6 +20,8 @@ class VehicleManufacturerController extends Controller
         return view('administration.tabs.setting.vehicleManufacturerList');
     }
 
+    
+
     public function vehicleManufacturersTable(){
         $vehicleManufacturer = VehicleManufacturer::query();
 
@@ -27,7 +29,7 @@ class VehicleManufacturerController extends Controller
             ->rawColumns(['logo', 'action'])
             ->editColumn('logo',function(VehicleManufacturer $vehicleManufacturer){
                 if(Storage::has($vehicleManufacturer->logo)):
-                    return "<img src='".Storage::url($vehicleManufacturer->logo)."' alt='{$vehicleManufacturer->name}'/>";
+                    return "<img src='".Storage::url($vehicleManufacturer->logo)."' class='img-fluid' style='width:32px' alt='{$vehicleManufacturer->name}'/>";
                 else:
                     return "Logo Not Uploaded";
                 endif;
@@ -35,12 +37,12 @@ class VehicleManufacturerController extends Controller
             ->addColumn('action',function(VehicleManufacturer $vehicleManufacturer){
                 return "
                         <button class='btn btn-sm btn-info' data-content='"
-                    .route('app.modal.setting-vehicle-manufacturer-modal.edit',$vehicleManufacturer->id)."
+                    .route('app.modal.setting.vehicle.manufacture.edit',$vehicleManufacturer->id)."
                         ' data-hover='tooltip' data-original-title='Edit Manufacturer'data-target='#myModal'
                         data-toggle='modal'><i class='la la-pencil'></i></button>
 
                         <button class='btn btn-sm btn-danger' data-action='confirm' data-action-route='".
-                    route('app.form.submission.setting-vehicle-manufacturer.delete',$vehicleManufacturer->id)."' data-hover='tooltip'
+                    route('app.modal.setting.vehicle.manufacture.delete',$vehicleManufacturer->id)."' data-hover='tooltip'
                         data-original-title='Delete Manufacturer'><i class='la la-trash'></i></button>
                     ";
             })
@@ -67,12 +69,13 @@ class VehicleManufacturerController extends Controller
           return Notify::send('warning','Data didn\'t insert')->json();
     }
 
-    public function editVehicleManufacturerModal(VehicleManufacturer $vehicleManufacturers){
-        $countries = Country::all();
-        return view('administration.modals.setting-vehicle-manufacturer.edit',compact('countries','vehicleManufacturers'));
+    public function editVehicleModelModal($id){
+      $vehicleManufacturers = VehicleManufacturer::find($id);
+      $countries = Country::all();
+      return view('administration.modals.setting-vehicle-manufacturer.edit', compact('vehicleManufacturers','countries'));
     }
 
-    public function updateVehicleManufacturer(Update $request, $id){
+    public function updateVehicleModel(Update $request, $id){
       $vehicleManufacturerUpdate = VehicleManufacturer::find($id);
       $vehicleManufacturerUpdate->name = $request->name;
       $vehicleManufacturerUpdate->country_id = $request->country_id;
@@ -90,7 +93,7 @@ class VehicleManufacturerController extends Controller
     return Notify::send('warning','Vehicle Manufacturer Didn\'t update')->json();
     }
 
-    public function deleteVehicleManufacturer($id){
+    public function deleteVehicleModel($id){
 
       $vehicleManufacturerDelete = VehicleManufacturer::find($id);
         if(Storage::exists($vehicleManufacturerDelete->logo)):

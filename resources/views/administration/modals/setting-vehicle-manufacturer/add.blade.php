@@ -5,7 +5,7 @@
             <span aria-hidden="true">×</span>
         </button>
     </div>
-    <form action="{{ route('app.form.submission.setting-vehicle-manufacturer.add') }}" class="ajax-form" method="post" enctype="multipart/form-data" >
+    <form action="{{ route('app.form.submission.setting.vehicle.manufacture.add') }}" class="ajax-form" method="post" enctype="multipart/form-data" >
         <div class="modal-body">
             <div class="row">
                 <div class="col-md-6">

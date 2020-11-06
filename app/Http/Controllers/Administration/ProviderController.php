@@ -4,13 +4,21 @@ namespace App\Http\Controllers\Administration;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Administration\Provider\Add;
+use App\Http\Requests\Administration\Provider\DuePay;
 use App\Http\Requests\Administration\Provider\Reset;
 use App\Http\Requests\Administration\Provider\Update;
+use App\Models\DueAmountTransaction;
+use App\Http\Resources\Front\DueAmountResource;
 use App\Models\Provider;
+use Library\Api\Facades\Api;
+use GuzzleHttp\Client;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Library\Notify\Facades\Notify;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
+
 
 class ProviderController extends Controller
 {
@@ -23,6 +31,10 @@ class ProviderController extends Controller
         return view('administration.modals.provider.edit', compact('provider'));
     }
 
+    public function editProfile($id){
+        $user = Provider::find($id);
+        return view('administration.modals.provider.editProfile')->with('user', $user);
+    }
 
     public function providersTable()
     {
@@ -137,6 +149,114 @@ class ProviderController extends Controller
     }
 
 
+    public function dueModal($id){
+        $provider = Provider::find($id);
+        return view('administration.modals.provider.dueModal', compact('provider'));
+    }
+
+    public function duePay(DuePay $request, $id){
+        
+        $provider = Provider::find($id);
+        if( $provider->due_balance >= $request->amount ):
+            return $this->payWithSSLCommerz($request, $provider);
+        else:
+            return Notify::send('warning','Insufficient Amount')->json();
+        endif;
+        
+    }
+
+    public function payWithSSLCommerz(DuePay $request, $provider){
+       
+        $transaction = new DueAmountTransaction();
+        $transaction->amount = $request['amount'];
+        $transaction->provider_id = $provider['id'];
+        $transaction->save();
+
+        $post_data = [
+            'store_id'=> 'perso5f9cfe76d402b',
+            'store_passwd'=> 'perso5f9cfe76d402b@ssl',
+            'total_amount'=> $request->amount,
+            'tran_id' => $transaction->refresh()->id,
+            'currency' => 'BDT',
+            'product_category' => 'Due Amount Pay',
+            'success_url' => 'http://127.0.0.1:8000/sslcommerz/success',
+            'fail_url' => 'http://127.0.0.1:8000/sslcommerz/fail',
+            'cancel_url' => 'http://127.0.0.1:8000/sslcommerz/cancel',
+            'ipn_url' => 'http://127.0.0.1:8000/sslcommerz/ipn',
+            'emi_option' => 0,
+            'cus_name' => $provider->first_name,
+            'cus_email' => $provider->email,
+            'cus_city' => $provider->address,
+            'cus_country' => $provider->address,
+            'cus_add1' => $provider->address,
+            'cus_phone' => $provider->phone,
+            'shipping_method' => 'NO',
+            'num_of_item' => 1,
+            'product_name' => "Due Amount Pay",
+            'product_profile' => 'non-physical-goods',
+            'value_a' => $provider->id,
+        ];
+
+        $client = new Client();
+        $response = $client->post('https://sandbox.sslcommerz.com/gwprocess/v4/api.php', ['form_params'=>$post_data, 'verify'=>false])->getBody();
+
+        $transaction->payment_initiation_server_response = $response->getContents();
+        $transaction->save();
+
+        return $transaction->payment_initiation_server_response;
+
+        // return Api::data(DueAmountResource::make($transaction->refresh()))->send();
+
+    }
+
+
+    public function sslcomemrzSuccess(Request $request){
+
+        $transaction = DueAmountTransaction::find($request->get('tran_id'));
+
+        $transaction->payment_validation_server_response = $request->all();
+        $transaction->status = 'SUCCESS';
+        $transaction->is_payment_done = true;
+        $transaction->paid_by = 'Online Payment';
+
+        if( $transaction->save() ):
+            $transaction->provider->decrement('due_balance', $transaction->amount);
+            return redirect('http://127.0.0.1:8000/profile/'. $transaction->provider_id)->with('sslSuccess','Payment complete');
+        endif;
+    }
+
+    public function sslcomemrzFailed(Request $request){
+        $transaction = DueAmountTransaction::find($request->get('tran_id'));
+        $transaction->payment_validation_server_response = $request->all();
+        $transaction->status = 'FAILED';
+        $transaction->is_payment_done = false;
+        $transaction->paid_by = 'Online Payment';
+
+        if( $transaction->save() ):
+            return redirect('http://127.0.0.1:8000/profile/'. $transaction->provider_id)->with('sslFailed','Payment Failed');
+        endif;
+    }
+
+    public function sslcomemrzCanceled(Request $request){
+        $transaction = DueAmountTransaction::find($request->get('tran_id'));
+        $transaction->payment_validation_server_response = $request->all();
+        $transaction->status = 'CANCEL';
+        $transaction->is_payment_done = false;
+        $transaction->paid_by = 'Online Payment';
+
+        if( $transaction->save() ):
+            return redirect('http://127.0.0.1:8000/profile/'. $transaction->provider_id)->with('sslCancel','Payment Cancelled');
+        endif;
+    }
+
+    public function sslcomemrzIpnValidation(Request $request){
+        $transaction = DueAmountTransaction::find($request->get('tran_id'));
+        $transaction->payment_validation_server_response = $request->all();
+        if( $transaction->save() ):
+            return redirect('http://127.0.0.1:8000/profile/'. $transaction->provider_id)->with('sslIpnValidation','Ipn validation done');
+        endif;
+    }
+
 
     public function switchActivationStatus($id)
     {
@@ -149,4 +269,5 @@ class ProviderController extends Controller
 
         return Notify::send('error', 'Can\'t ' . ($provider->is_active ? 'Activate' : 'Deactivate') . ' Provider Now, Please Try Again')->reload('table', 'ProvidersTable')->json();
     }
+
 }

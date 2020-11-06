@@ -24,9 +24,9 @@
                 <a href="{{ route('app.property.edit',$property->id) }}" class="btn btn-primary w-100">
                     <i class="la la-pencil"></i>
                 </a>
-                <a href="#" class="btn btn-danger w-100">
+                <button class="btn btn-danger w-100 style="margin-top:15px" data-toggle="modal" data-target="#myModal" data-content="{{ route('app.property.delete.modal', $property->id) }}">
                     <i class="la la-trash-o"></i>
-                </a>
+                </button>
             </div>
 
         </div>

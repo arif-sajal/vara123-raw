@@ -20,6 +20,11 @@ class VehicleModelController extends Controller
         return view('administration.tabs.setting.vehicleModelList');
     }
 
+    public function view_vehicle_modal($id){
+      $vehicleModels = VehicleModel::find($id);
+      return view('administration.modals.setting-vehicle-model.view', compact('vehicleModels'));
+    }
+
     public function vehicleModelsTable(){
 
         $vehicleModel = VehicleModel::query();
@@ -27,7 +32,7 @@ class VehicleModelController extends Controller
                   ->rawColumns(['image', 'action'])
                   ->editColumn('image',function(VehicleModel $vehicleModel){
             if(Storage::has($vehicleModel->image)):
-                return "<img src='".Storage::url($vehicleModel->image)."' alt='{$vehicleModel->image}'/>";
+                return "<img src='".Storage::url($vehicleModel->image)."' class='img-fluid' style='width:32px' alt='{$vehicleModel->image}'/>";
             else:
                 return "Logo Not Uploaded";
             endif;
@@ -35,17 +40,17 @@ class VehicleModelController extends Controller
         ->addColumn('action',function(VehicleModel $vehicleModel){
             return "
                     <button class='btn btn-sm btn-success'data-content='"
-                .route('app.modal.setting-vehicle-model-modal.view',$vehicleModel->id)."'data-hover='tooltip'
+                .route('app.modal.setting.vehicle.modal.view',$vehicleModel->id)."'data-hover='tooltip'
                       data-original-title='Quick View' data-toggle='modal' data-target='#myModal'>
                       <i class='la la-eye'></i></button>
 
                     <button class='btn btn-sm btn-info' data-content='"
-                .route('app.modal.setting-vehicle-model-modal.edit',$vehicleModel->id)."
+                .route('app.modal.setting.vehicle.modal.edit',$vehicleModel->id)."
                     ' data-hover='tooltip' data-original-title='Edit Vehicle Model'data-target='#myModal'
                     data-toggle='modal'><i class='la la-pencil'></i></button>
 
                     <button class='btn btn-sm btn-danger' data-action='confirm' data-action-route='"
-                .route('app.form.submission.setting-vehicle-model.delete',$vehicleModel->id)."' data-hover='tooltip'
+                .route('app.modal.setting.vehicle.modal.delete',$vehicleModel->id)."' data-hover='tooltip'
                     data-original-title='Delete Vehicle Model'><i class='la la-trash'></i></button>
                 ";
         })
@@ -86,7 +91,8 @@ class VehicleModelController extends Controller
           return view('administration.modals.setting-vehicle-model.view',compact('vehicleModels'));
     }
 
-    public function editVehicleModelModal(VehicleModel $vehicleModels){
+    public function editVehicleModelModal($id){
+          $vehicleModels = VehicleModel::find($id);
           $manufacturers = VehicleManufacturer::all();
           $types = VehicleType::all();
           return view('administration.modals.setting-vehicle-model.edit',compact('vehicleModels','manufacturers','types'));

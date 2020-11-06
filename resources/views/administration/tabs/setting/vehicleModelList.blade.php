@@ -4,7 +4,7 @@
     <div class="heading-elements">
         <ul class="list-inline mb-0">
             <li>
-                <button class="btn btn-success btn-sm btn-icon" data-hover="tooltip" data-original-title="Add Vehicle Type" data-toggle="modal" data-target="#myModal" data-content="{{ route('app.modal.setting-vehicle-model-modal.add') }}">
+                <button class="btn btn-success btn-sm btn-icon" data-hover="tooltip" data-original-title="Add Vehicle Type" data-toggle="modal" data-target="#myModal" data-content="{{ route('app.modal.setting.vehicle.modal.add') }}">
                     <i class="fa ft-plus"></i>
                     Add Vehicle Model
                 </button>
@@ -18,7 +18,7 @@
             <div class="card">
                 <div class="card-content collapse show">
                     <div class="card-body card-dashboard">
-                        <table class="table table-striped table-bordered" data-table-type="datatable" data-table-name="VehicleModelsTable" data-table-content="{{ route('app.table.setting.vehicle.models') }}"  style="width: 100%;">
+                        <table class="table table-striped table-bordered" data-table-type="datatable" data-table-name="VehicleModelsTable" data-table-content="{{ route('app.table.setting.vehicle_modal') }}"  style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th>ID</th>

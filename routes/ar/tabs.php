@@ -10,6 +10,7 @@ Route::group(['namespace' => 'Administration'], function () {
             Route::get('vehicle-models', 'VehicleModelController@vehicleModelsListView')->name('vehicle.model');
             Route::get('vehicle-manufacturers', 'VehicleManufacturerController@vehicleManufacturersListView')->name('vehicle.manufacturer');
             Route::get('vehicle-type', 'VehicleTypeController@vehicleTypesListView')->name('vehicle.type');
+            Route::get('config', 'ConfigController@config_list')->name('vehicle.config');
         });
     });
 

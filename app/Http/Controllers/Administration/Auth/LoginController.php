@@ -17,9 +17,9 @@ class LoginController extends Controller
         $cred1 = ['username'=>$request->get('username'),'password'=>$request->get('password')];
         $cred2 = ['email'=>$request->get('username'),'password'=>$request->get('password')];
 
-        if(auth('admin')->attempt($cred1,$request->get('remember')) or auth('provider')->attempt($cred1,$request->get('remember'))):
+        if(auth('admin')->attempt($cred1,$request->get('remember')) or auth('provider')->attempt($cred1,true)):
             return $this->checkBan();
-        elseif(auth('admin')->attempt($cred2,$request->get('remember')) or auth('provider')->attempt($cred2,$request->get('remember'))):
+        elseif(auth('admin')->attempt($cred2,$request->get('remember')) or auth('provider')->attempt($cred2,true)):
             return $this->checkBan();
         endif;
 
