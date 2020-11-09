@@ -6,7 +6,7 @@
                 <li class="nav-item">
                     <a class="navbar-brand" href="{{ route('app.dashboard') }}">
                         {{--<img class="brand-logo" alt="modern admin logo" src="{{ asset('app-assets/images/logo/logo.png') }}">--}}
-                        <h3 class="brand-text">Modern Admin</h3>
+                        <h3 class="brand-text">Vara123 Admin</h3>
                     </a>
                 </li>
                 <li class="nav-item d-md-none">
@@ -168,13 +168,13 @@
                                     @if(Storage::has(auth('admin')->user()->avatar))
                                         <img src="{{ Storage::url(auth('admin')->user()->avatar) }}" class="img-fluid" style="width: 40px;height:40px; border-radius:100%"  alt="{{ auth('admin')->user()->full_name }}"><i></i>
                                     @else
-                                        <img src="{{ Storage::url(config('default_user_avatar')) }}" alt="{{ auth('admin')->user()->full_name }}"><i></i>
+                                        <img src="{{ asset('administration/app-assets/images/logo/user.png') }}" alt="{{ auth('admin')->user()->full_name }}"><i></i>
                                     @endif
                                 @elseif(auth('provider')->check())
                                     @if(Storage::has(auth('provider')->user()->avatar))
                                         <img src="{{ Storage::url(auth('provider')->user()->avatar) }}" class="img-fluid" style="width: 40px;height:40px; border-radius:100%"  alt="{{ auth('provider')->user()->full_name }}"><i></i>
                                     @else
-                                        <img src="{{ Storage::url(config('default_user_avatar')) }}" alt="{{ auth('provider')->user()->full_name }}"><i></i>
+                                        <img src="{{ asset('administration/app-assets/images/logo/user.png') }}" alt="{{ auth('provider')->user()->full_name }}"><i></i>
                                     @endif
                                 @endif
                             </span>
@@ -197,7 +197,7 @@
                             </a>
                         </div>
                     </li>
-                    <li class="dropdown dropdown-notification nav-item">
+                    {{-- <li class="dropdown dropdown-notification nav-item">
                         <a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon ft-bell"></i>
                             <span class="badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">5</span>
                         </a>
@@ -270,8 +270,8 @@
                             </li>
                             <li class="dropdown-menu-footer"><a class="dropdown-item text-muted text-center" href="javascript:void(0)">Read all notifications</a></li>
                         </ul>
-                    </li>
-                    <li class="dropdown dropdown-notification nav-item">
+                    </li> --}}
+                    {{-- <li class="dropdown dropdown-notification nav-item">
                         <a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon ft-mail">             </i></a>
                         <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                             <li class="dropdown-menu-header">
@@ -344,7 +344,7 @@
                             </li>
                             <li class="dropdown-menu-footer"><a class="dropdown-item text-muted text-center" href="javascript:void(0)">Read all messages</a></li>
                         </ul>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
         </div>
