@@ -43,7 +43,7 @@ class DashboardController extends Controller
         foreach($complete_payment as $payment){
             $payment_date = $payment->updated_at->toDateString();
             $different_days = Carbon::parse($payment_date)->diffInDays($today);
-            if( $different_days >= 30 ):
+            if( $different_days <= 30 ):
                 $one_month_amount += $payment->amount;
             endif;
         }
