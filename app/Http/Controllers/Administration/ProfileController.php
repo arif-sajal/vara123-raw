@@ -53,7 +53,7 @@ class ProfileController extends Controller
 
     //for provider
     public function updateProviderProfile(ProfileUpdate $request, $id){
-        $user = Provider::find($id);
+        
         $user = Provider::find($id);
         $user->first_name  = $request->first_name;
         $user->last_name  = $request->last_name;

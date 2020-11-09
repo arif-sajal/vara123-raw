@@ -11,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Quicksand:300,400,500,700" rel="stylesheet">
     <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css" rel="stylesheet">
 
+    <!-- font awesome V5 cdn link -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"> 
+
     <!-- BEGIN VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('administration/app-assets/css/vendors.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('administration/app-assets/vendors/css/forms/toggle/bootstrap-switch.min.css') }}">
