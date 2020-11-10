@@ -67,6 +67,7 @@ class PropertyController extends Controller
         //property Information
         $property->provider_id = auth('provider')->id();
         $property->property_type_id = $request->get('property_type');
+        $property->provider_id = $request->provider_id;
         $property->name = $request->get('name');
         $property->slug = Str::slug($request->get('name'));
         $property->description = $request->get('description');
@@ -108,7 +109,7 @@ class PropertyController extends Controller
                 Timing::insert($timings);
             endif;
 
-            return Notify::send('success','Property Added Successfully')->callback(['redirect'=>route('admin.property.list')])->json();
+            return Notify::send('success','Property Added Successfully')->callback(['redirect'=>route('app.property.list')])->json();
         endif;
 
         return Notify::send('error','Can\'t Add Property Now, Please Try Again later.')->json();

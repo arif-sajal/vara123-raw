@@ -49,6 +49,7 @@
             <!-- payment complete of total booking end -->
 
             <!-- total admin start -->
+            @if(auth('admin')->check())
             <div class="col-lg-4 col-12">
                 <div class="card pull-up">
                     <div class="card-content">
@@ -66,9 +67,11 @@
                     </div>
                 </div>
             </div>
+            @endif
             <!-- total admin end -->
 
             <!-- provider start -->
+            @if(auth('admin')->check())
             <div class="col-lg-3 col-12">
                 <div class="card pull-up">
                     <div class="card-content">
@@ -86,9 +89,11 @@
                     </div>
                 </div>
             </div>
+            @endif
             <!-- provider end -->
 
             <!-- customer start -->
+            @if(auth('admin')->check())
             <div class="col-lg-3 col-12">
                 <div class="card pull-up">
                     <div class="card-content">
@@ -106,9 +111,11 @@
                     </div>
                 </div>
             </div>
+            @endif
             <!-- customer end -->
 
             <!-- total sale start -->
+            @if(auth('admin')->check())
             <div class="col-lg-3 col-12">
                 <div class="card pull-up">
                     <div class="card-content">
@@ -126,9 +133,11 @@
                     </div>
                 </div>
             </div>
+            @endif
             <!-- total sale end -->
 
             <!-- total cities start -->
+            @if(auth('admin')->check())
             <div class="col-lg-3 col-12">
                 <div class="card pull-up">
                     <div class="card-content">
@@ -146,6 +155,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <!-- total cities end -->
 
             <!-- total property start -->
@@ -160,6 +170,14 @@
                         </div>
                     </div>
                     <div class="card-content collapse show">
+                        <div class="card-body pt-0">
+                            <p>Property Types
+                                <span class="float-right text-bold-600">{{ $property_types->count() }}</span>
+                            </p>
+                            <div class="progress progress-sm mt-1 mb-0 box-shadow-1">
+                                <div class="progress-bar bg-gradient-x-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
                         <div class="card-body pt-0">
                             <p>Property Rooms
                                 <span class="float-right text-bold-600">{{ $rooms->count() }}</span>
@@ -190,6 +208,7 @@
             <!-- total property end -->
 
             <!--default amount start -->
+            @if(auth('admin')->check())
             <div class="col-12 col-md-4">
                 <div class="card">
                     <div class="card-header">
@@ -239,10 +258,12 @@
                     </div>
                 </div>
             </div>
+            @endif
             <!--default amount end -->
 
 
             <!-- total review  start -->
+            @if(auth('admin')->check())
             <div class="col-lg-4 col-12">
                 <div class="card pull-up">
                     <div class="card-content">
@@ -260,9 +281,11 @@
                     </div>
                 </div>
             </div>
+            @endif
             <!-- total review  end -->
 
              <!-- total  states start -->
+             @if(auth('admin')->check())
              <div class="col-lg-3 col-12">
 
                 <div class="card pull-up">
@@ -281,6 +304,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <!-- total states end -->
 
             <!-- total amount booked start -->
@@ -303,6 +327,46 @@
             </div>
             <!-- total amount bookeds end -->
 
+            <!-- todays sale start -->
+            <div class="col-lg-3 col-12">
+                <div class="card pull-up">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h6 class="text-muted">Todays Sale</h6>
+                                    <h3>{{ $todays_amount }}$</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-money-bill success font-large-2 float-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- todays sale end -->
+
+            <!-- todays sale start -->
+            <div class="col-lg-3 col-12">
+                <div class="card pull-up">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h6 class="text-muted">Total Booking Today</h6>
+                                    <h3>{{ $total_today_book }}</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-money-bill success font-large-2 float-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- todays sale end -->
+
             <!-- last one month start -->
             <div class="col-lg-3 col-12">
                 <div class="card pull-up">
@@ -323,7 +387,28 @@
             </div>
             <!-- last one month end -->
 
+            <!-- last one month start -->
+            <div class="col-lg-3 col-12">
+                <div class="card pull-up">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h6 class="text-muted">Last One Booked</h6>
+                                    <h3>{{ $total_one_month_book }}</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-money-bill success font-large-2 float-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- last one month end -->
+
             <!-- last one year start -->
+            @if(auth('admin')->check())
             <div class="col-lg-3 col-12">
                 <div class="card pull-up">
                     <div class="card-content">
@@ -341,6 +426,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <!-- last one year end -->
 
         </div>

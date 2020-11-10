@@ -24,7 +24,7 @@ class Edit extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required',
+            'name'=>'required|unique:properties,name,'.$this->route()->id,
             'description'=>'required',
             'phone'=>'required',
             'email'=>'required',

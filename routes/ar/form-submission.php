@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix'=>'app/form-submission','namespace'=>'Administration','as'=>'app.form.submission.'],function(){
 
-    
+    Route::group(['as'=>'allProperty.','prefix'=>'allProperty'], function(){
+        Route::post('add','PropertyController@addProperty')->name('add');
+    });    
 
     Route::group(['as'=>'property.', 'prefix'=>'property','namespace'=>'Property'], function () {
         Route::post('room/add/{id}','RoomController@addRoom')->name('room.add');

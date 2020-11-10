@@ -25,7 +25,7 @@ class Add extends FormRequest
     {
         return [
             'property_type'=>'required|exists:property_types,id',
-            'name'=>'required',
+            'name'=>'required|unique:properties,name,',
             'description'=>'required',
             'phone'=>'required',
             'email'=>'required',
