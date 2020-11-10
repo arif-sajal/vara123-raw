@@ -6,7 +6,7 @@
                 <h4 class="card-title">Add Property</h4>
             </div>
             <div class="card-body">
-                <form class="ajax-form" action="" method="POST">
+                <form class="ajax-form" action="{{ route('app.form.submission.allProperty.add') }}" method="POST" enctype="multipart/form-data">
                     <div class="form-body">
                         <div class="row">
 
@@ -17,6 +17,20 @@
                                         <option value="">Select Property Type</option>
                                         @forelse(\App\Models\PropertyType::all() as $pt)
                                             <option value="{{ $pt->id }}">{{ $pt->name }}</option>
+                                        @empty
+                                            <option value="">No Property Type Found</option>
+                                        @endforelse
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Provider</label>
+                                    <select name="provider_id" class="select2" style="width:100%;">
+                                        <option value="">Select Provider</option>
+                                        @forelse(\App\Models\Provider::all() as $provider)
+                                            <option value="{{ $provider->id }}">{{ $provider->first_name }} {{ $provider->last_name }}</option>
                                         @empty
                                             <option value="">No Property Type Found</option>
                                         @endforelse
@@ -228,7 +242,7 @@
                 addMarker(e.latLng);
             });
         }
-
+        initMap()
         function addMarker(location) {
             var marker = new google.maps.Marker({
                 map: map,

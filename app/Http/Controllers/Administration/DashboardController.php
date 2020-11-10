@@ -12,6 +12,7 @@ use App\Models\Customer;
 use App\Models\Property;
 use App\Models\PropertyRoom;
 use App\Models\PropertySpot;
+use App\Models\PropertyType;
 use App\Models\PropertyVehicle;
 use App\Models\Provider;
 use App\Models\Review;
@@ -40,11 +41,16 @@ class DashboardController extends Controller
         $today = Carbon::now()->toDateString();
         $one_month_amount = 0;
         $one_year_amount = 0;
+        $todays_amount = 0;
+        $total_today_book = 0;
+        $total_one_month_book = 0;
+        $property_types = PropertyType::all();
         foreach($complete_payment as $payment){
             $payment_date = $payment->updated_at->toDateString();
             $different_days = Carbon::parse($payment_date)->diffInDays($today);
             if( $different_days <= 30 ):
                 $one_month_amount += $payment->amount;
+                $total_one_month_book += 1;
             endif;
         }
 
@@ -55,10 +61,20 @@ class DashboardController extends Controller
                 $one_year_amount += $payment->amount;
             endif;
         }
+
+        foreach($complete_payment as $payment){
+            $payment_date = $payment->updated_at->toDateString();
+            $different_days = Carbon::parse($payment_date)->diffInDays($today);
+            if( $different_days == 0 ):
+                 $todays_amount += $payment->amount;
+                $total_today_book += 1;
+            endif;
+        }
         
         return view('administration.pages.dashboard', compact(
             'all_booking','complete_payment','admin','provider','customer','amount_success','city', 'all_property','rooms','vehicles',
-            'spot','review','config','states','total_amount_booked','one_month_amount','one_year_amount'
+            'spot','review','config','states','total_amount_booked','one_month_amount','one_year_amount','todays_amount','total_today_book',
+            'property_types','total_one_month_book'
         ));
     }
 }
