@@ -19,13 +19,10 @@
 
           <div class="form-group">
                <label class="form-label">For<span class="text-danger">*</span></label>
-               <select name="for" class="form-control">
-                    <option value="1">accommodation</option>
-                    <option value="2">vehicle_rental</option>
-                    <option value="3">parking_lot</option>
-                    <option value="4">room</option>
-                    <option value="5">vehicle</option>
-                    <option value="6">spot</option>
+               <select name="property_type_id" class="form-control">
+                    @foreach( \App\Models\PropertyType::all() as $property_type )
+                    <option value="{{ $property_type->id }}">{{ $property_type->name }}</option>
+                    @endforeach
                </select>
           </div>
 

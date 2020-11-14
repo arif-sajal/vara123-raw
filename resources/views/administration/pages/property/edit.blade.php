@@ -24,6 +24,27 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Things To Know</label>
+                                    <textarea name="house_rule">{{ $property->house_rule }}</textarea>                  
+                                </div>                            
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Terms & Conditions</label>
+                                    <textarea name="health_safety">{{ $property->health_safety }}</textarea>                  
+                                </div>                            
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Cancellation Policy</label>
+                                    <textarea name="cancellation_policy">{{ $property->cancellation_policy }}</textarea>                  
+                                </div>                            
+                            </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Phone</label>
@@ -115,6 +136,7 @@
 
 @push('page.vendor.js')
     <script src="{{ asset('administration/app-assets/vendors/js/forms/toggle/bootstrap-checkbox.min.js') }}" type="text/javascript"></script>
+    <script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZDni5W-iV-mDZmL44FwTFqhWbv7YgMGI&callback=initMap"></script>
 @endpush
 
@@ -124,6 +146,10 @@
 
 @push('page.js')
     <script>
+        
+        CKEDITOR.replace( 'house_rule' );
+        CKEDITOR.replace( 'health_safety' );
+        CKEDITOR.replace( 'cancellation_policy' );
 
         $(".select2").select2();
 
@@ -166,7 +192,8 @@
                 clearMarkers();
                 addMarker(e.latLng);
             });
-        }
+        };
+        initMap();
 
         function addMarker(location) {
             var marker = new google.maps.Marker({

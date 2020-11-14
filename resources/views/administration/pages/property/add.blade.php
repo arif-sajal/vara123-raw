@@ -12,18 +12,12 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Property Type</label>
-                                    <select name="property_type" class="select2" style="width:100%;">
-                                        <option value="">Select Property Type</option>
-                                        @forelse(\App\Models\PropertyType::all() as $pt)
-                                            <option value="{{ $pt->id }}">{{ $pt->name }}</option>
-                                        @empty
-                                            <option value="">No Property Type Found</option>
-                                        @endforelse
-                                    </select>
+                                    <label>Property Name</label>
+                                    <input type="text" class="form-control" placeholder="Property Name" name="name">
                                 </div>
                             </div>
 
+                            @if(auth('admin')->check())
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Provider</label>
@@ -37,19 +31,54 @@
                                     </select>
                                 </div>
                             </div>
+                            @endif
 
+                            @if(auth('provider')->check())
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Property Name</label>
-                                    <input type="text" class="form-control" placeholder="Property Name" name="name">
+                                    <label>Provider</label>
+                                    <select name="provider_id" class="select2" style="width:100%;">
+                                        <option value="">Select Provider</option>
+                                        @forelse(\App\Models\Provider::all() as $provider)
+                                            @if( $provider->id == auth('provider')->user()->id )
+                                            <option value="{{ $provider->id }}">{{ $provider->first_name }} {{ $provider->last_name }}</option>
+                                            @endif
+                                        @empty
+                                            <option value="">No Property Type Found</option>
+                                        @endforelse
+                                    </select>
                                 </div>
                             </div>
+                            @endif
+
+                            
 
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Description</label>
                                     <textarea name="description" class="form-control" rows="6" placeholder="Description"></textarea>
                                 </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Things To Know</label>
+                                    <textarea name="house_rule"></textarea>                  
+                                </div>                            
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Terms & Conditions</label>
+                                    <textarea name="health_safety"></textarea>                  
+                                </div>                            
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Cancellation Policy</label>
+                                    <textarea name="cancellation_policy"></textarea>                  
+                                </div>                            
                             </div>
 
                             <div class="col-md-6">
@@ -68,14 +97,24 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Amenities</label>
-                                    <select name="amenities[]" class="select2" style="width:100%;" multiple>
-                                        <option value="">Select Amenities</option>
-                                        @forelse(\App\Models\Amenity::all() as $amenity)
-                                            <option value="{{ $amenity->id }}">{{ $amenity->name }}</option>
+                                    <label>Property Type</label>
+                                    <select name="property_type" class="form-control select2" style="width:100%">
+                                        <option value="">Select Property Type</option>
+                                        @forelse(\App\Models\PropertyType::all() as $pt)
+                                            <option value="{{ $pt->id }}">{{ $pt->name }}</option>
                                         @empty
-                                            <option value="">No Amenity Found</option>
+                                            <option value="">No Property Type Found</option>
                                         @endforelse
+                                    </select>
+                                    {{ csrf_field() }}
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label> Select Amenities</label>
+                                    <select name="amenities[]" class="form-control select2" style="width:100%" multiple>
+                                        <option>Select Amenities</option>
                                     </select>
                                 </div>
                             </div>
@@ -192,6 +231,7 @@
 
 @push('page.vendor.js')
     <script src="{{ asset('administration/app-assets/vendors/js/forms/toggle/bootstrap-checkbox.min.js') }}" type="text/javascript"></script>
+    <script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZDni5W-iV-mDZmL44FwTFqhWbv7YgMGI&callback=initMap"></script>
 @endpush
 
@@ -201,6 +241,10 @@
 
 @push('page.js')
     <script>
+ 
+        CKEDITOR.replace( 'house_rule' );
+        CKEDITOR.replace( 'health_safety' );
+        CKEDITOR.replace( 'cancellation_policy' );
 
         $(".select2").select2();
 
@@ -273,5 +317,32 @@
             });
         });
 
+        $(document).ready(function(){
+            jQuery('select[name="property_type"]').on('change',function(){
+               var property_id = jQuery(this).val();
+               if(property_id)
+               {
+                  jQuery.ajax({
+                     url : 'dynamicdependent/' +property_id,
+                     type : "GET",
+                     dataType : "json",
+                     success:function(data)
+                     {
+                        console.log(data);
+                        jQuery('select[name="amenities[]"]').empty();
+                        jQuery.each(data, function(key,value){
+                           $('select[name="amenities[]"]').append('<option value="'+ key +'">'+ value +'</option>');
+                        });
+                     }
+                  });
+               }
+               else
+               {
+                  $('select[name="amenities"]').empty();
+               }
+            });
+        })
+
+         
     </script>
 @endpush

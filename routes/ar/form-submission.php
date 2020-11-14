@@ -4,6 +4,7 @@ use App\Http\Controllers\Administration\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix'=>'app/form-submission','namespace'=>'Administration','as'=>'app.form.submission.'],function(){
+    
 
     Route::group(['as'=>'allProperty.','prefix'=>'allProperty'], function(){
         Route::post('add','PropertyController@addProperty')->name('add');

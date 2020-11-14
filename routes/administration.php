@@ -19,10 +19,14 @@ Route::group(['namespace' => 'Administration'], function () {
 
         Route::get('dashboard', 'DashboardController@dashboardView')->name('dashboard');
         Route::get('profile/{id}', 'ProfileController@viewProfile')->name('profile');
+        Route::get('search/{item}','SearchController@search')->name('search');
+        Route::get('search/{item}/property_type_id/{id}','SearchController@searchPropertyType')->name('search.property.type');
 
         Route::group(['as' => 'property.', 'prefix' => 'property'], function () {
+            Route::get('dynamicdependent/{id}','PropertyController@dynamicdependent')->name('dynamicdependent');
             Route::get('all', 'PropertyController@propertyListView')->name('list');
             Route::get('view/{id}', 'PropertyController@singlePropertyView')->name('view');
+            Route::get('view/', 'PropertyController@allPropertyList')->name('all.property.view');
             Route::get('add', 'PropertyController@addPropertyView')->name('add');
             Route::get('edit/{id}', 'PropertyController@editPropertyView')->name('edit');
             Route::post('update/{id}','PropertyController@editProperty')->name('update');

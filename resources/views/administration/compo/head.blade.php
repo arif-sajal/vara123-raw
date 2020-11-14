@@ -14,6 +14,7 @@
     <!-- font awesome V5 cdn link -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"> 
 
+
     <!-- BEGIN VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('administration/app-assets/css/vendors.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('administration/app-assets/vendors/css/forms/toggle/bootstrap-switch.min.css') }}">

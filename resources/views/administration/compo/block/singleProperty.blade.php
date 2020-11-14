@@ -1,4 +1,5 @@
-<div class="col-xl-4 col-md-6 col-sm-12">
+
+<div class="col-xl-4 col-md-6 col-sm-12 search_card" >
     <div class="card">
         <div class="card-content">
             <div class="card-body">
@@ -7,9 +8,9 @@
             </div>
 
             @if(\Illuminate\Support\Facades\Storage::has($property->featured_image))
-                <img class="img-fluid" src="{{ \Illuminate\Support\Facades\Storage::url($property->featured_image) }}" alt="Card image cap">
+                <img class="img-fluid" src="{{ \Illuminate\Support\Facades\Storage::url($property->featured_image) }}">
             @else
-                <img class="img-fluid" src="{{ \Illuminate\Support\Facades\Storage::url($property->property_type->property_featured_image_not_found) }}" alt="Card image cap">
+                <img class="img-fluid" src="{{ \Illuminate\Support\Facades\Storage::url($property->property_type->property_featured_image_not_found) }}" >
             @endif
 
             <div class="card-body">

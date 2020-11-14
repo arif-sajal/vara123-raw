@@ -26,7 +26,7 @@ class Update extends FormRequest
         return [
             'name' => 'required|unique:amenities,name,'.$this->route()->id,
             'icon' => 'required',
-            'for' => 'required',
+            'property_type_id' => 'required',
         ];
     }
 }
