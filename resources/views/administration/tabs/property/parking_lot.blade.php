@@ -14,7 +14,6 @@
           <div class="row search_container">
                @each('administration.compo.block.singleProperty',$properties,'property')
           </div>
-          {{ $properties->onEachSide(2)->links() }}
      </div>
 </div>
 

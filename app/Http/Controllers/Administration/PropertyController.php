@@ -75,35 +75,35 @@ class PropertyController extends Controller
 
     public function getPropertyTab($type){
         if ($type === 'all') :
-            $properties = Property::query();
+            $properties = Property::all();
 
             if (auth('provider')->check()) :
                 $properties->where('provider_id', auth('provider')->id());
             endif;
-            return view('administration.tabs.property.all_list', ['properties' => $properties->paginate(15)])->with('property_type', $this->property_type);
+            return view('administration.tabs.property.all_list', compact('properties'))->with('property_type', $this->property_type);
 
         elseif ($type === 'accomodation') :
-            $properties = Property::query()->where('property_type_id',1);
+            $properties = Property::where('property_type_id',1)->get();
 
             if (auth('provider')->check()) :
                 $properties->where('provider_id', auth('provider')->id());
             endif;
-            return view('administration.tabs.property.acomodation_list', ['properties' => $properties->paginate(15)])->with('property_type', $this->property_type);
+            return view('administration.tabs.property.acomodation_list', compact('properties'))->with('property_type', $this->property_type);
 
         elseif ($type === 'parking_lot') :
-            $properties = Property::query()->where('property_type_id',2);
+            $properties = Property::where('property_type_id',2)->get();
 
             if (auth('provider')->check()) :
                 $properties->where('provider_id', auth('provider')->id());
             endif;
-            return view('administration.tabs.property.parking_lot', ['properties' => $properties->paginate(15)])->with('property_type', $this->property_type);
+            return view('administration.tabs.property.parking_lot', compact('properties'))->with('property_type', $this->property_type);
         elseif ($type === 'vehicle_rental') :
-            $properties = Property::query()->where('property_type_id',3);
+            $properties = Property::where('property_type_id',3)->get();
 
             if (auth('provider')->check()) :
                 $properties->where('provider_id', auth('provider')->id());
             endif;
-            return view('administration.tabs.property.vehicle_rental', ['properties' => $properties->paginate(15)])->with('property_type', $this->property_type);
+            return view('administration.tabs.property.vehicle_rental',compact('properties'))->with('property_type', $this->property_type);
         endif;
     }
 
