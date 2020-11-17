@@ -213,12 +213,9 @@ class ProviderController extends Controller
     public function sslcomemrzSuccess(Request $request){
 
         $transaction = DueAmountTransaction::find($request->get('tran_id'));
-
         $transaction->payment_validation_server_response = $request->all();
-        $transaction->status = 'SUCCESS';
         $transaction->is_payment_done = true;
-        $transaction->paid_by = 'Online Payment';
-
+        
         if( $transaction->save() ):
             $transaction->provider->decrement('due_balance', $transaction->amount);
             return redirect('http://127.0.0.1:8000/profile/'. $transaction->provider_id)->with('sslSuccess','Payment complete');
@@ -228,9 +225,6 @@ class ProviderController extends Controller
     public function sslcomemrzFailed(Request $request){
         $transaction = DueAmountTransaction::find($request->get('tran_id'));
         $transaction->payment_validation_server_response = $request->all();
-        $transaction->status = 'FAILED';
-        $transaction->is_payment_done = false;
-        $transaction->paid_by = 'Online Payment';
 
         if( $transaction->save() ):
             return redirect('http://127.0.0.1:8000/profile/'. $transaction->provider_id)->with('sslFailed','Payment Failed');
@@ -240,9 +234,6 @@ class ProviderController extends Controller
     public function sslcomemrzCanceled(Request $request){
         $transaction = DueAmountTransaction::find($request->get('tran_id'));
         $transaction->payment_validation_server_response = $request->all();
-        $transaction->status = 'CANCEL';
-        $transaction->is_payment_done = false;
-        $transaction->paid_by = 'Online Payment';
 
         if( $transaction->save() ):
             return redirect('http://127.0.0.1:8000/profile/'. $transaction->provider_id)->with('sslCancel','Payment Cancelled');
@@ -252,6 +243,9 @@ class ProviderController extends Controller
     public function sslcomemrzIpnValidation(Request $request){
         $transaction = DueAmountTransaction::find($request->get('tran_id'));
         $transaction->payment_validation_server_response = $request->all();
+        $transaction->status = $request->get('status');
+        $transaction->is_payment_done = true;
+        $transaction->paid_by = 'Online Payment';
         if( $transaction->save() ):
             return redirect('http://127.0.0.1:8000/profile/'. $transaction->provider_id)->with('sslIpnValidation','Ipn validation done');
         endif;

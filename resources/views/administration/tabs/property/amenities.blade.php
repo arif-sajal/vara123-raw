@@ -25,7 +25,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Icon</th>
-                        <th>For</th>
+                        <th>Property Type</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -41,7 +41,7 @@
     window.datatable.AmenitiesTable.columns = [
         { data: 'amenity.name', name: 'amenity.name'},
         { data: 'amenity.icon', name: 'amenity.icon'},
-        { data: 'amenity.for', name: 'amenity.for'},
+        { data: 'amenity.property_type_id', name: 'amenity.property_type_id'},
         { data: 'action', name: 'action', orderable: false },
     ];
 

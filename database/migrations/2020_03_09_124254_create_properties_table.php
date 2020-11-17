@@ -35,6 +35,11 @@ class CreatePropertiesTable extends Migration
             $table->integer('state_id');
             $table->integer('city_id');
 
+            //info
+            $table->longText('house_rule')->nullable();
+            $table->longText('health_safety')->nullable();
+            $table->longText('cancellation_policy')->nullable();
+
             // Contact
             $table->string('phone');
             $table->string('email');

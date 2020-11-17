@@ -10,20 +10,22 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Administration\Property\Time\Add;
 use App\Http\Requests\Administration\Property\Time\Update;
 use Library\Notify\Facades\Notify;
+use Illuminate\Support\Carbon;
 
 class TimeController extends Controller
 {
     public function timeTable($id){
         $timing = Timing::where('property_id', $id)->get();
+
         return DataTables::make($timing)
             ->editColumn('property_id', function(Timing $time){
                 return $time->property->name;
             })
             ->editColumn('opening', function(Timing $time){
-                return $time->opening->toTimeString();
+                return Carbon::parse($time->opening)->toTimeString();
             })
             ->editColumn('closing', function(Timing $time){
-                return $time->closing->toTimeString();
+                return Carbon::parse($time->closing)->toTimeString();
             })
             ->addColumn('action', function (Timing $time) {
                 return "

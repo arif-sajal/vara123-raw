@@ -8,7 +8,8 @@
         <!-- dashboard main information card start -->
         <div class="row">
 
-            <!-- total booking start -->
+            <!-- total booking for admin start -->
+            @if(auth('admin')->check())
             <div class="col-lg-4 col-12">
                 <div class="card pull-up">
                     <div class="card-content">
@@ -26,9 +27,36 @@
                     </div>
                 </div>
             </div>
-            <!-- total booking end -->
+            @endif
+            <!-- total booking for admin end -->
 
-            <!-- payment complete of total booking start -->
+            <!-- total booking for provider start -->
+            @if(auth('provider')->check())
+            <div class="col-lg-4 col-12">
+                <div class="card pull-up">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h6 class="text-muted">Total Booking</h6>
+                                    @php
+                                    $all_booking_provider = App\Models\Booking::where('provider_id',auth('provider')->user()->id)->get();
+                                    @endphp
+                                    <h3>{{ $all_booking_provider->count() }}</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-book success font-large-2 float-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+            <!-- total booking for provider end -->
+
+            <!-- payment complete of total booking for admin start -->
+            @if( auth('admin')->check() )
             <div class="col-lg-4 col-12">
                 <div class="card pull-up">
                     <div class="card-content">
@@ -46,7 +74,41 @@
                     </div>
                 </div>
             </div>
-            <!-- payment complete of total booking end -->
+            @endif
+            <!-- payment complete of total booking for admin end -->
+
+            <!-- payment complete of total booking for provider start -->
+            @if( auth('provider')->check() )
+            <div class="col-lg-4 col-12">
+                <div class="card pull-up">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h6 class="text-muted">Booking Payment Complete</h6>
+                                    @php
+                                    $complete_payment_provider = 0;
+                                    $complete_booking_payment = App\Models\BookingTransaction::where('is_payment_done',true)->get();
+                                    foreach( $all_booking_provider as $single_booking_provider ):
+                                        foreach( $complete_booking_payment as $single_complete_booking ):
+                                            if( $single_complete_booking->booking_id == $single_booking_provider->id ):
+                                                $complete_payment_provider += 1;
+                                            endif;
+                                        endforeach;
+                                    endforeach;
+                                    @endphp
+                                    <h3>{{ $complete_payment_provider }}</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-check success font-large-2 float-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+            <!-- payment complete of total booking for provider end -->
 
             <!-- total admin start -->
             @if(auth('admin')->check())
@@ -158,7 +220,8 @@
             @endif
             <!-- total cities end -->
 
-            <!-- total property start -->
+            <!-- total property for admin start -->
+            @if( auth('admin')->check() )
             <div class="col-12 col-md-4">
                 <div class="card">
                     <div class="card-header">
@@ -205,7 +268,71 @@
                     </div>
                 </div>
             </div>
-            <!-- total property end -->
+            @endif
+            <!-- total property for admin end -->
+
+            <!-- total property for provider start -->
+            @if( auth('provider')->check() )
+            <div class="col-12 col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        @php
+                        $all_property_provider = App\Models\Property::where('provider_id', auth('provider')->user()->id );
+                        @endphp
+                        <h4 class="card-title">Total Property : {{ $all_property_provider->count() }}</h4>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><i class="fas fa-university font-medium-3"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body pt-0">
+                            <p>Property Types
+                                <span class="float-right text-bold-600">{{ $property_types->count() }}</span>
+                            </p>
+                            <div class="progress progress-sm mt-1 mb-0 box-shadow-1">
+                                <div class="progress-bar bg-gradient-x-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <p>Property Rooms
+                                @php
+                                $rooms_provider = App\Models\PropertyRoom::where('provider_id', auth('provider')->user()->id );
+                                @endphp
+                                <span class="float-right text-bold-600">{{ $rooms_provider->count() }}</span>
+                            </p>
+                            <div class="progress progress-sm mt-1 mb-0 box-shadow-1">
+                                <div class="progress-bar bg-gradient-x-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <p>Property Vehicles
+                                @php
+                                $vehicles_provider = App\Models\PropertyVehicle::where('provider_id', auth('provider')->user()->id );
+                                @endphp
+                                <span class="float-right text-bold-600">{{ $vehicles_provider->count() }}</span>
+                            </p>
+                            <div class="progress progress-sm mt-1 mb-0 box-shadow-1">
+                                <div class="progress-bar bg-gradient-x-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <p>Property Spots
+                                @php
+                                $spot_provider = App\Models\PropertySpot::where('provider_id', auth('provider')->user()->id );
+                                @endphp
+                                <span class="float-right text-bold-600">{{ $spot_provider->count() }}</span>
+                            </p>
+                            <div class="progress progress-sm mt-1 mb-0 box-shadow-1">
+                                <div class="progress-bar bg-gradient-x-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+            <!-- total property for provider end -->
 
             <!--default amount start -->
             @if(auth('admin')->check())
@@ -230,7 +357,7 @@
                             </div>
                         </div>
                         @endif
-                        
+
                         <div class="card-body pt-0">
                             <p>Provider Booking Cut
                                 <span class="float-right text-bold-600">{{ $config[3]->value }}%</span>
@@ -284,9 +411,9 @@
             @endif
             <!-- total review  end -->
 
-             <!-- total  states start -->
-             @if(auth('admin')->check())
-             <div class="col-lg-3 col-12">
+            <!-- total  states start -->
+            @if(auth('admin')->check())
+            <div class="col-lg-3 col-12">
 
                 <div class="card pull-up">
                     <div class="card-content">
@@ -307,7 +434,8 @@
             @endif
             <!-- total states end -->
 
-            <!-- total amount booked start -->
+            <!-- total amount booked for admin start -->
+            @if( auth('admin')->check() )
             <div class="col-lg-3 col-12">
                 <div class="card pull-up">
                     <div class="card-content">
@@ -325,9 +453,37 @@
                     </div>
                 </div>
             </div>
-            <!-- total amount bookeds end -->
+            @endif
+            <!-- total amount bookeds for admin end -->
 
-            <!-- todays sale start -->
+            <!-- total amount booked for provider start -->
+            @if( auth('provider')->check() )
+            <div class="col-lg-3 col-12">
+                <div class="card pull-up">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h6 class="text-muted">Total Amount Booked</h6>
+                                    @php
+                                    $all_booking_provider = App\Models\Booking::where('provider_id',auth('provider')->user()->id);
+                                    $total_amount_booked_provider = $all_booking_provider->sum('cost_total');
+                                    @endphp
+                                    <h3>{{ $total_amount_booked_provider }}$</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-money-bill success font-large-2 float-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+            <!-- total amount bookeds for provider end -->
+
+            <!-- todays sale start for admin -->
+            @if( auth('admin')->check() )
             <div class="col-lg-3 col-12">
                 <div class="card pull-up">
                     <div class="card-content">
@@ -345,9 +501,52 @@
                     </div>
                 </div>
             </div>
-            <!-- todays sale end -->
+            @endif
+            <!-- todays sale end for admin -->
 
-            <!-- todays sale start -->
+            <!-- todays sale start for provider -->
+            @if( auth('provider')->check() )
+            <div class="col-lg-3 col-12">
+                <div class="card pull-up">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h6 class="text-muted">Todays Sale</h6>
+                                    @php
+                                        $todays_amount_provider = 0;
+                                        $total_today_book_provider = 0;
+                                        $complete_payment = App\Models\BookingTransaction::where('is_payment_done',true)->get();
+                                        $all_booking_provider = App\Models\Booking::where('provider_id', auth('provider')->user()->id )->get();
+                                        $today = \Carbon\Carbon::now()->toDateString();
+                                        foreach( $all_booking_provider as $single_booking_provider ):
+                                            foreach( $complete_payment as $single_payment ):
+                                                if( $single_booking_provider->id == $single_payment->id ):
+                                                    $payment_date = $single_payment->updated_at->toDateString();
+                                                    $different_days = \Carbon\Carbon::parse($single_payment->updated_at)->diffInDays($today);
+                                                    if( $different_days == 0 ):
+                                                        $todays_amount_provider += $single_payment->amount;
+                                                        $total_today_book_provider += 1;
+                                                    endif;
+                                                endif;
+                                            endforeach;
+                                        endforeach;
+                                    @endphp
+                                    <h3>{{ $todays_amount_provider }}$</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-money-bill success font-large-2 float-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+            <!-- todays sale end for provider -->
+
+            <!-- todays sale for admin start -->
+            @if( auth('admin')->check() )
             <div class="col-lg-3 col-12">
                 <div class="card pull-up">
                     <div class="card-content">
@@ -365,9 +564,33 @@
                     </div>
                 </div>
             </div>
-            <!-- todays sale end -->
+            @endif
+            <!-- todays sale for admin end -->
 
-            <!-- last one month start -->
+            <!-- todays sale for provider start -->
+            @if( auth('provider')->check() )
+            <div class="col-lg-3 col-12">
+                <div class="card pull-up">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h6 class="text-muted">Total Booking Today</h6>
+                                    <h3>{{ $total_today_book_provider }}</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-money-bill success font-large-2 float-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+            <!-- todays sale for provider end -->
+
+            <!-- last one month for admin start -->
+            @if( auth('admin')->check() )
             <div class="col-lg-3 col-12">
                 <div class="card pull-up">
                     <div class="card-content">
@@ -385,16 +608,59 @@
                     </div>
                 </div>
             </div>
-            <!-- last one month end -->
+            @endif
+            <!-- last one month for admin end -->
 
-            <!-- last one month start -->
+            <!-- last one month for provider start -->
+            @if( auth('provider')->check() )
             <div class="col-lg-3 col-12">
                 <div class="card pull-up">
                     <div class="card-content">
                         <div class="card-body">
                             <div class="media d-flex">
                                 <div class="media-body text-left">
-                                    <h6 class="text-muted">Last One Booked</h6>
+                                    <h6 class="text-muted">Last One Month Sale</h6>
+                                    @php
+                                        $one_month_amount_provider = 0;
+                                        $total_one_month_book_provider = 0;
+                                        $complete_payment = App\Models\BookingTransaction::where('is_payment_done',true)->get();
+                                        $all_booking_provider = App\Models\Booking::where('provider_id', auth('provider')->user()->id )->get();
+                                        $today = \Carbon\Carbon::now()->toDateString();
+                                        foreach( $all_booking_provider as $single_booking_provider ):
+                                            foreach( $complete_payment as $single_payment ):
+                                                if( $single_booking_provider->id == $single_payment->id ):
+                                                    $payment_date = $single_payment->updated_at->toDateString();
+                                                    $different_days = \Carbon\Carbon::parse($single_payment->updated_at)->diffInDays($today);
+                                                    if( $different_days <= 30 ):
+                                                        $one_month_amount_provider += $single_payment->amount;
+                                                        $total_one_month_book_provider += 1;
+                                                    endif;
+                                                endif;
+                                            endforeach;
+                                        endforeach;
+                                    @endphp
+                                    <h3>{{ $one_month_amount_provider }}$</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-money-bill success font-large-2 float-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+            <!-- last one month for provider end -->
+
+            <!-- last one month for admin start -->
+            @if( auth('admin')->check() )
+            <div class="col-lg-3 col-12">
+                <div class="card pull-up">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h6 class="text-muted">Last One Month Booked</h6>
                                     <h3>{{ $total_one_month_book }}</h3>
                                 </div>
                                 <div class="align-self-center">
@@ -405,7 +671,30 @@
                     </div>
                 </div>
             </div>
-            <!-- last one month end -->
+            @endif
+            <!-- last one month for admin end -->
+
+            <!-- last one month for provider start -->
+            @if( auth('provider')->check() )
+            <div class="col-lg-3 col-12">
+                <div class="card pull-up">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h6 class="text-muted">Last One Month Booked</h6>
+                                    <h3>{{ $total_one_month_book_provider }}</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-money-bill success font-large-2 float-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+            <!-- last one month for provider end -->
 
             <!-- last one year start -->
             @if(auth('admin')->check())
@@ -428,6 +717,92 @@
             </div>
             @endif
             <!-- last one year end -->
+
+            <!-- last one year for admin start -->
+            @if(auth('admin')->check())
+            <div class="col-lg-3 col-12">
+                <div class="card pull-up">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h6 class="text-muted">Last One Year Booked</h6>
+                                    <h3>{{ $total_one_year_book }}</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-money-bill success font-large-2 float-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+            <!-- last one year for admin end -->
+
+            <!-- last one year for provider start -->
+            @if(auth('provider')->check())
+            <div class="col-lg-3 col-12">
+                <div class="card pull-up">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h6 class="text-muted">Last One Year Sale</h6>
+                                    @php
+                                        $one_year_amount_provider = 0;
+                                        $total_one_year_book_provider = 0;
+                                        $complete_payment = App\Models\BookingTransaction::where('is_payment_done',true)->get();
+                                        $all_booking_provider = App\Models\Booking::where('provider_id', auth('provider')->user()->id )->get();
+                                        $today = \Carbon\Carbon::now()->toDateString();
+                                        foreach( $all_booking_provider as $single_booking_provider ):
+                                            foreach( $complete_payment as $single_payment ):
+                                                if( $single_booking_provider->id == $single_payment->id ):
+                                                    $payment_date = $single_payment->updated_at->toDateString();
+                                                    $different_days = \Carbon\Carbon::parse($single_payment->updated_at)->diffInDays($today);
+                                                    if( $different_days <= 365 ):
+                                                        $one_year_amount_provider += $single_payment->amount;
+                                                        $total_one_year_book_provider += 1;
+                                                    endif;
+                                                endif;
+                                            endforeach;
+                                        endforeach;
+                                    @endphp
+                                    <h3>{{ $one_year_amount_provider }}$</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-money-bill success font-large-2 float-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+            <!-- last one year for provider end -->
+            
+            
+            <!-- last one year for provider start -->
+            @if(auth('provider')->check())
+            <div class="col-lg-3 col-12">
+                <div class="card pull-up">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h6 class="text-muted">Last One Year Booked</h6>
+                                    <h3>{{ $total_one_year_book_provider }}</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-money-bill success font-large-2 float-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+            <!-- last one year for provider end -->
 
         </div>
         <!-- dashboard main information card END -->

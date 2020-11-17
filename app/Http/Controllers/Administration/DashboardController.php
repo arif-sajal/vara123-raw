@@ -23,6 +23,7 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function dashboardView(){
+        
         $all_booking = Booking::all();
         $complete_payment = BookingTransaction::where('is_payment_done',true)->get();
         $admin = Admin::where('is_active', true)->get();
@@ -44,7 +45,9 @@ class DashboardController extends Controller
         $todays_amount = 0;
         $total_today_book = 0;
         $total_one_month_book = 0;
+        $total_one_year_book = 0;
         $property_types = PropertyType::all();
+        
         foreach($complete_payment as $payment){
             $payment_date = $payment->updated_at->toDateString();
             $different_days = Carbon::parse($payment_date)->diffInDays($today);
@@ -59,6 +62,7 @@ class DashboardController extends Controller
             $different_days = Carbon::parse($payment_date)->diffInDays($today);
             if( $different_days <= 365 ):
                 $one_year_amount += $payment->amount;
+                $total_one_year_book += 1;
             endif;
         }
 
@@ -66,15 +70,18 @@ class DashboardController extends Controller
             $payment_date = $payment->updated_at->toDateString();
             $different_days = Carbon::parse($payment_date)->diffInDays($today);
             if( $different_days == 0 ):
-                 $todays_amount += $payment->amount;
+                $todays_amount += $payment->amount;
                 $total_today_book += 1;
             endif;
         }
+
+        
+        
         
         return view('administration.pages.dashboard', compact(
             'all_booking','complete_payment','admin','provider','customer','amount_success','city', 'all_property','rooms','vehicles',
             'spot','review','config','states','total_amount_booked','one_month_amount','one_year_amount','todays_amount','total_today_book',
-            'property_types','total_one_month_book'
+            'property_types','total_one_month_book','total_one_year_book'
         ));
     }
 }

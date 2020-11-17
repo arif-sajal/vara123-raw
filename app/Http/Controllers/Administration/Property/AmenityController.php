@@ -19,6 +19,9 @@ class AmenityController extends Controller
     {
         $amenities = Property::find($id)->property_amenities();
         return DataTables::make($amenities->with('amenity')->get())
+            ->editColumn('amenity.property_type_id', function(PropertyAmenity $amenity){
+                return $amenity->amenity->property_type->name;
+            })
             ->addColumn('action', function (PropertyAmenity $amenity) {
                 return "
                 <button class='btn btn-sm btn-success' data-toggle='modal' data-target='#myModal' data-content='" . route('app.modal.property.aminities.edit', $amenity->id) . "' data-hover='tooltip' data-original-title='View Amenity'><i class='la la-dollar'></i></button>
@@ -44,7 +47,7 @@ class AmenityController extends Controller
 
         $amenity->name = $request->name;
         $amenity->icon = $request->icon;
-        $amenity->for = $request->for;
+        $amenity->property_type_id = $request->property_type_id;
 
         if ($amenity->save()) :
             $property_amenity = new PropertyAmenity();
@@ -68,7 +71,7 @@ class AmenityController extends Controller
 
         $amenity->name = $request->name;
         $amenity->icon = $request->icon;
-        $amenity->for = $request->for;
+        $amenity->property_type_id = $request->property_type_id;
 
         if ($amenity->save()) :
             return Notify::send('success', 'Amenity updated successfully')->reload('table', 'AmenitiesTable')->json();

@@ -17,7 +17,7 @@ class CreateAmenitiesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('icon');
-            $table->enum('for',['accommodation','vehicle_rental','parking_lot','room','vehicle','spot']);
+            $table->foreignId('property_type_id');
             $table->timestamps();
         });
     }

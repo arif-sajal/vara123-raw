@@ -22,4 +22,12 @@ class PropertyType extends Model
             return Storage::url($this->attributes['property_featured_image_not_found']);
         endif;
     }
+
+    public function amenity(){
+        return $this->hasMany(Amenity::class);
+    }
+
+    public function property(){
+        return $this->hasMany(Property::class);
+    }
 }

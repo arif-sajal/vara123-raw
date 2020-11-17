@@ -6,7 +6,15 @@
                 <li class="nav-item">
                     <a class="navbar-brand" href="{{ route('app.dashboard') }}">
                         {{--<img class="brand-logo" alt="modern admin logo" src="{{ asset('app-assets/images/logo/logo.png') }}">--}}
-                        <h3 class="brand-text">Vara123 Admin</h3>
+                        
+                        <h3 class="brand-text">Vara123 
+                            @if( auth('admin')->check() )
+                            Admin
+                            @elseif( auth('provider')->check() )
+                            Provider
+                            @endif
+                        </h3>
+
                     </a>
                 </li>
                 <li class="nav-item d-md-none">

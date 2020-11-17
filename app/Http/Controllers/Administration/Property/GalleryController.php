@@ -11,18 +11,20 @@ use App\Http\Requests\Administration\Property\Gallery\Add;
 use App\Http\Requests\Administration\Property\Gallery\Update;
 use Illuminate\Support\Facades\Storage;
 use Library\Notify\Facades\Notify;
+use Illuminate\Support\Facades\File;
 
 class GalleryController extends Controller
 {
     public function galleryTable($id){
         $galleries = Gallery::where('property_id', $id)->get();
         return DataTables::make($galleries)
+            ->rawColumns(['image','action','property_id'])
             ->editColumn('property_id', function(Gallery $gallery){
                 return $gallery->property->name;
             })
             ->editColumn('image', function(Gallery $gallery){
                 if(Storage::exists($gallery->image)):
-                    return "<img src='".Storage::url($gallery->image)."' class='img-fluid' style='width:50px' />";
+                    return "<img src='".Storage::url($gallery->image)."' width='50px'>";
                 endif;
             })
             ->addColumn('action', function (Gallery $gallery) {
@@ -50,7 +52,7 @@ class GalleryController extends Controller
         $gallery->property_id = $property->id;
 
         if($request->image):
-            $gallery->image = Storage::putFile('gallery',$request->file('image')); 
+            $gallery->image = Storage::putFile('avatar',$request->file('image')); 
         endif;
 
         if($gallery->save()):
@@ -70,7 +72,7 @@ class GalleryController extends Controller
             if(Storage::exists($gallery->image)):
                 Storage::delete($gallery->image);
             endif;
-            $gallery->image = Storage::putFile('gallery',$request->file('image')); 
+            $gallery->image = Storage::putFile('avatar',$request->file('image')); 
             if($gallery->save()):
                 return Notify::send('success','Gallery updated successfully')->reload('table','GalleryTable')->json();
             endif;
