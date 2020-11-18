@@ -88,7 +88,7 @@ class PropertyController extends Controller
 
             if (auth('provider')->check()):
                 $properties = Property::where('provider_id', auth('provider')->user()->id)->where('property_type_id',1)->get();
-                return view('administration.tabs.property.all_list', compact('properties'))->with('property_type', $this->property_type);
+                return view('administration.tabs.property.acomodation_list', compact('properties'))->with('property_type', $this->property_type);
             endif;
             return view('administration.tabs.property.acomodation_list', compact('properties'))->with('property_type', $this->property_type);
 
@@ -97,7 +97,7 @@ class PropertyController extends Controller
 
             if (auth('provider')->check()):
                 $properties = Property::where('provider_id', auth('provider')->user()->id)->where('property_type_id',2)->get();
-                return view('administration.tabs.property.all_list', compact('properties'))->with('property_type', $this->property_type);
+                return view('administration.tabs.property.parking_lot', compact('properties'))->with('property_type', $this->property_type);
             endif;
             return view('administration.tabs.property.parking_lot', compact('properties'))->with('property_type', $this->property_type);
         elseif ($type === 'vehicle_rental') :
@@ -105,7 +105,7 @@ class PropertyController extends Controller
 
             if (auth('provider')->check()):
                 $properties = Property::where('provider_id', auth('provider')->user()->id)->where('property_type_id',3)->get();
-                return view('administration.tabs.property.all_list', compact('properties'))->with('property_type', $this->property_type);
+                return view('administration.tabs.property.vehicle_rental', compact('properties'))->with('property_type', $this->property_type);
             endif;
             return view('administration.tabs.property.vehicle_rental',compact('properties'))->with('property_type', $this->property_type);
         endif;
