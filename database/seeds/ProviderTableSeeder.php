@@ -11,7 +11,7 @@ class ProviderTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\Provider::class,100)->create();
+        factory(\App\Models\Provider::class,10)->create();
 
         \App\Models\Provider::insert([
             'first_name' => 'John',

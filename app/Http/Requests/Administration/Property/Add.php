@@ -29,7 +29,6 @@ class Add extends FormRequest
             'description'=>'required',
             'phone'=>'required',
             'email'=>'required',
-            'amenities'=>'required|array',
             'city'=>'required|exists:cities,id',
             'address'=>'required',
             'lat'=>'required',

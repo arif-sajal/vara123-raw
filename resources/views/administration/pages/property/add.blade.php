@@ -112,15 +112,6 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label> Select Amenities</label>
-                                    <select name="amenities[]" class="form-control select2" style="width:100%" multiple>
-                                        <option>Select Amenities</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="form-group">
                                     <label>City</label>
                                     <select name="city" class="select2" style="width:100%;">
                                         <option value="">Select City</option>

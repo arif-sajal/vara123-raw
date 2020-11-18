@@ -12,6 +12,7 @@ class SettingController extends Controller
         ['name'=>'Vehicle Manufacturer','route'=>'vehicle.manufacturer','icon'=>'la-bank'],
         ['name'=>'Vehicle Model','route'=>'vehicle.model','icon'=>'la-bank'],
         ['name'=>'Configs','route'=>'vehicle.config','icon'=>'la-bank'],
+        ['name'=>'Cities','route'=>'all.city','icon'=>'la-home'],
     ];
 
     public function settingView(){

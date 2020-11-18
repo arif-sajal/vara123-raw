@@ -28,6 +28,7 @@ Route::group(['prefix'=>'modal','namespace'=>'Administration','as'=>'app.modal.'
 
         Route::get('timing/add/{id}','TimeController@addTimeView')->name('timing.add');
         Route::get('timing/edit/{id}','TimeController@editTimeView')->name('timing.edit');
+        
 
     });
 
@@ -101,6 +102,18 @@ Route::group(['prefix'=>'modal','namespace'=>'Administration','as'=>'app.modal.'
         Route::get('add','ConfigController@view_add_modal')->name('add');
         Route::get('edit/{id}','ConfigController@edit_config_modal')->name('edit');
         Route::get('delete/{id}','ConfigController@deleteVehicleType')->name('delete');
+    });
+
+    Route::group(['as'=>'setting.city.','prefix'=>'setting/city', 'namespace'=>'Setting'], function(){
+        Route::get('add','CityController@view_add_modal')->name('add');
+        Route::get('edit/{id}','CityController@edit_city_modal')->name('edit');
+        Route::get('delete/{id}','CityController@delete_city')->name('delete');
+    });
+
+    Route::group(['as'=>'setting.amenity.','prefix'=>'setting/amenity', 'namespace'=>'Setting'], function(){
+        Route::get('add','AmenityController@add_modal')->name('add');
+        Route::get('edit/{id}','AmenityController@edit_modal')->name('edit');
+        Route::get('delete/{id}','AmenityController@delete_amenity')->name('delete');
     });
 
 });

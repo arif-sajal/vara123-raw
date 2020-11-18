@@ -20,7 +20,7 @@
           <div class="form-group">
                <label class="form-label">For<span class="text-danger">*</span></label>
                <select name="property_type_id" class="form-control">
-                    @foreach( \App\Models\PropertyType::all() as $property_type )
+                    @foreach( \App\Models\PropertyType::where('id',$property->property_type_id)->get() as $property_type )
                     <option value="{{ $property_type->id }}">{{ $property_type->name }}</option>
                     @endforeach
                </select>

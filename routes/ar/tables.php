@@ -26,6 +26,8 @@ Route::group(['prefix'=>'table','namespace'=>'Administration','as'=>'app.table.'
         Route::post('vehicle-types', 'VehicleTypeController@vehicleTypesTable')->name('vehicle.types');
         Route::post('vehicle-manufacturers', 'VehicleManufacturerController@vehicleManufacturersTable')->name('vehicle.manufacturers');
         Route::post('config', 'ConfigController@config_table')->name('config.table');
+        Route::post('city', 'CityController@city_table')->name('city.table');
+        Route::post('amenity', 'AmenityController@amenity_table')->name('amenity.table');
     });
 
 });

@@ -6,7 +6,7 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\Models\Amenity::class, function (Faker $faker) {
     $array = [
-        '1'
+        '1','2','3'
     ];
     $iconClasses = [
         'air-freshener','baby','baby-carriage','basketball-ball','bath','broom','capsules','chair','chess'
@@ -14,6 +14,7 @@ $factory->define(\App\Models\Amenity::class, function (Faker $faker) {
     return [
         'name' => $faker->colorName,
         'icon' => $faker->randomElement($iconClasses),
-        'property_type_id' => $faker->randomElement($array)
+        'property_type_id' => $faker->randomElement($array),
+        'provider_id' => $faker->randomElement($array)
     ];
 });
