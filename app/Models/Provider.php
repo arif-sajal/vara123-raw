@@ -33,4 +33,8 @@ class Provider extends Authenticatable
     public function dueAmountTransaction(){
         return $this->hasMany(DueAmountTransaction::class);
     }
+
+    public function amenity(){
+        return $this->hasMany(Amenity::class);
+    }
 }

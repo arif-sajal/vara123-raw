@@ -11,6 +11,6 @@ class PropertyTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\Property::class, 500)->create();
+        factory(\App\Models\Property::class, 10)->create();
     }
 }

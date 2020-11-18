@@ -21,6 +21,7 @@ class SearchController extends Controller
 
     public function searchPropertyType($item, $id){
         if( auth('provider')->check() ):
+            return 1;
             $property = Property::orWhere('name','LIKE',"%$item%")->where('provider_id',auth('provider')->user()->id)->where('property_type_id',$id)->get();
             return response()->json(['property'=>Search::collection($property)]);
         endif;

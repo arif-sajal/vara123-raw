@@ -11,6 +11,6 @@ class VehicleModelTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\VehicleModel::class,50)->create();
+        factory(\App\Models\VehicleModel::class,10)->create();
     }
 }

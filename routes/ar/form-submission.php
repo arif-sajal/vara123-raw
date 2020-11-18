@@ -102,4 +102,14 @@ Route::group(['prefix'=>'app/form-submission','namespace'=>'Administration','as'
         Route::post('update','ConfigController@update_config')->name('update');
     });
 
+    Route::group(['as'=>'setting.city.','prefix'=>'setting/city', 'namespace'=>'Setting'], function(){
+        Route::post('add','CityController@add_city')->name('add');
+        Route::post('update/{id}','CityController@update_city')->name('update');
+    });
+
+    Route::group(['as'=>'setting.amenity.','prefix'=>'setting/amenity', 'namespace'=>'Setting'], function(){
+        Route::post('add','AmenityController@add_amenity')->name('add');
+        Route::post('update/{id}','AmenityController@update_amenity')->name('update');
+    });
+
 });

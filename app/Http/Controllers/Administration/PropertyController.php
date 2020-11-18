@@ -77,31 +77,35 @@ class PropertyController extends Controller
         if ($type === 'all') :
             $properties = Property::all();
 
-            if (auth('provider')->check()) :
-                $properties->where('provider_id', auth('provider')->id());
+            if (auth('provider')->check()):
+                $properties = Property::where('provider_id', auth('provider')->user()->id)->get();
+                return view('administration.tabs.property.all_list', compact('properties'))->with('property_type', $this->property_type);
             endif;
             return view('administration.tabs.property.all_list', compact('properties'))->with('property_type', $this->property_type);
 
         elseif ($type === 'accomodation') :
             $properties = Property::where('property_type_id',1)->get();
 
-            if (auth('provider')->check()) :
-                $properties->where('provider_id', auth('provider')->id());
+            if (auth('provider')->check()):
+                $properties = Property::where('provider_id', auth('provider')->user()->id)->where('property_type_id',1)->get();
+                return view('administration.tabs.property.all_list', compact('properties'))->with('property_type', $this->property_type);
             endif;
             return view('administration.tabs.property.acomodation_list', compact('properties'))->with('property_type', $this->property_type);
 
         elseif ($type === 'parking_lot') :
             $properties = Property::where('property_type_id',2)->get();
 
-            if (auth('provider')->check()) :
-                $properties->where('provider_id', auth('provider')->id());
+            if (auth('provider')->check()):
+                $properties = Property::where('provider_id', auth('provider')->user()->id)->where('property_type_id',2)->get();
+                return view('administration.tabs.property.all_list', compact('properties'))->with('property_type', $this->property_type);
             endif;
             return view('administration.tabs.property.parking_lot', compact('properties'))->with('property_type', $this->property_type);
         elseif ($type === 'vehicle_rental') :
             $properties = Property::where('property_type_id',3)->get();
 
-            if (auth('provider')->check()) :
-                $properties->where('provider_id', auth('provider')->id());
+            if (auth('provider')->check()):
+                $properties = Property::where('provider_id', auth('provider')->user()->id)->where('property_type_id',3)->get();
+                return view('administration.tabs.property.all_list', compact('properties'))->with('property_type', $this->property_type);
             endif;
             return view('administration.tabs.property.vehicle_rental',compact('properties'))->with('property_type', $this->property_type);
         endif;
@@ -120,6 +124,10 @@ class PropertyController extends Controller
 
     public function dynamicdependent($id)
     {
+        if( auth('provider')->check() ):
+            return $states = DB::table("amenities")->where("property_type_id", $id)->where('provider_id', auth('provider')->user()->id )->pluck("name", "id");
+        endif;
+
         return $states = DB::table("amenities")->where("property_type_id", $id)->pluck("name", "id");
 
     }
@@ -163,13 +171,13 @@ class PropertyController extends Controller
         if ($property->save()) :
             $property->refresh();
 
-            if ($request->has('amenities')) :
-                $amenities = [];
-                foreach ($request->get('amenities') as $amenity) :
-                    $amenities[] = ['property_id' => $property->id, 'amenity_id' => $amenity];
-                endforeach;
-                PropertyAmenity::insert($amenities);
-            endif;
+            // if ($request->has('amenities')) :
+            //     $amenities = [];
+            //     foreach ($request->get('amenities') as $amenity) :
+            //         $amenities[] = ['property_id' => $property->id, 'amenity_id' => $amenity];
+            //     endforeach;
+            //     PropertyAmenity::insert($amenities);
+            // endif;
 
             if ($request->has('timings')) :
                 $timings = [];

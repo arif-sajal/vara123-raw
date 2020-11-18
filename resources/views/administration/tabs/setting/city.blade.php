@@ -1,12 +1,11 @@
-
 <div class="card-header border-bottom-danger">
-    <h4 class="card-title">Vehicle Models</h4>
+    <h4 class="card-title">Cities</h4>
     <div class="heading-elements">
         <ul class="list-inline mb-0">
             <li>
-                <button class="btn btn-success btn-sm btn-icon" data-hover="tooltip" data-original-title="Add Vehicle Model" data-toggle="modal" data-target="#myModal" data-content="{{ route('app.modal.setting.vehicle.modal.add') }}">
+                <button class="btn btn-success btn-sm btn-icon" data-hover="tooltip" data-original-title="Add City " data-toggle="modal" data-target="#myModal" data-content="{{ route('app.modal.setting.city.add') }}">
                     <i class="fa ft-plus"></i>
-                    Add Vehicle Model
+                    Add City
                 </button>
             </li>
         </ul>
@@ -18,24 +17,16 @@
             <div class="card">
                 <div class="card-content collapse show">
                     <div class="card-body card-dashboard">
-                        <table class="table table-striped table-bordered" data-table-type="datatable" data-table-name="VehicleModelsTable" data-table-content="{{ route('app.table.setting.vehicle_modal') }}"  style="width: 100%;">
+                        <table class="table table-striped table-bordered" data-table-type="datatable" data-table-name="CityTable" data-table-content="{{ route('app.table.setting.city.table') }}"  style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Name</th>
-                                    <th>Year</th>
-                                    <th>Mileage</th>
+                                    <th>Country</th>
+                                    <th>State</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tfoot>
-                                <tr>
-                                  <th>ID</th>
-                                  <th>Name</th>
-                                  <th>Year</th>
-                                  <th>Mileage</th>
-                                  <th>Action</th>
-                                </tr>
                             </tfoot>
                         </table>
                     </div>
@@ -52,15 +43,14 @@
         $(this).tooltip('hide');
     });
 
-    const name = "VehicleModelsTable";
+    const name = "CityTable";
 
     initiateDatatable(name);
 
     window.datatable[name].columns = [
-        {data: 'id', name: 'id'},
-        {name: 'model_name', data: 'model_name'},
-        {name: 'model_year', data: 'model_year'},
-        {name: 'mileage', data: 'mileage'},
+        {name: 'name', data: 'name'},
+        {name: 'country_id', data: 'country_id'},
+        {name: 'state_id', data: 'state_id'},
         {name: 'action', data: 'action', orderable: false},
     ];
 

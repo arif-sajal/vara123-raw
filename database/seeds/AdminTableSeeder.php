@@ -11,7 +11,7 @@ class AdminTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\Admin::class,50)->create();
+        factory(\App\Models\Admin::class,10)->create();
 
         \App\Models\Admin::insert([
             'first_name' => 'John',

@@ -11,6 +11,6 @@ class AmenityTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\Amenity::class, 500)->create();
+        factory(\App\Models\Amenity::class, 10)->create();
     }
 }

@@ -32,7 +32,7 @@ class VehicleTypeController extends Controller
 
                     <button class='btn btn-sm btn-danger' data-action='confirm' data-action-route='".
                     route('app.modal.setting.vehicle.type.delete',$vehicleTypes->id)."' data-hover='tooltip'
-                    data-original-title='Delete Room'><i class='la la-trash'></i></button>
+                    data-original-title='Delete Vehicle Type'><i class='la la-trash'></i></button>
                 ";
             })
             ->editColumn('icon',function($vehicleTypes){

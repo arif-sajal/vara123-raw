@@ -11,6 +11,6 @@ class PropertyAmenityTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\PropertyAmenity::class, 800)->create();
+        factory(\App\Models\PropertyAmenity::class, 10)->create();
     }
 }

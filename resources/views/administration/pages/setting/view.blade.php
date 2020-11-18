@@ -56,3 +56,9 @@
 @push('page.vendor.js')
     <script src="{{ asset('administration/app-assets/vendors/js/tables/datatable/datatables.min.js') }}" type="text/javascript"></script>
 @endpush
+
+@push('page.js')
+<script>
+     $(".select2").select2();
+</script>
+@endpush
