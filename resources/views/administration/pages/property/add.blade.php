@@ -31,9 +31,7 @@
                                     </select>
                                 </div>
                             </div>
-                            @endif
-
-                            @if(auth('provider')->check())
+                            @elseif( auth('provider')->check() )
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Provider</label>
