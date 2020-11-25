@@ -135,10 +135,10 @@ class ProviderController extends Controller
         endforeach;
 
         foreach( $provider->property as $single_property ):
-            $single_property->delete();
             foreach( $single_property->property_amenities as $single_amenities ):
                 $single_amenities->delete();
             endforeach;
+            $single_property->delete();
         endforeach;
 
         foreach( $provider->payout as $single_payout ):
@@ -146,8 +146,8 @@ class ProviderController extends Controller
         endforeach;
 
         foreach( $provider->booking as $single_booking ):
-            $single_booking->delete();
             $single_booking->transaction->delete();
+            $single_booking->delete();
         endforeach;
 
         if (Storage::exists($provider->avatar)):
