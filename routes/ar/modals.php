@@ -104,6 +104,18 @@ Route::group(['prefix'=>'modal','namespace'=>'Administration','as'=>'app.modal.'
         Route::get('delete/{id}','ConfigController@deleteVehicleType')->name('delete');
     });
 
+    Route::group(['as'=>'setting.country.','prefix'=>'setting/country', 'namespace'=>'Setting'], function(){
+        Route::get('add','CountryController@view_add_modal')->name('add');
+        Route::get('edit/{id}','CountryController@edit_country_modal')->name('edit');
+        Route::get('delete/{id}','CountryController@delete_country')->name('delete');
+    });
+
+    Route::group(['as'=>'setting.state.','prefix'=>'setting/state', 'namespace'=>'Setting'], function(){
+        Route::get('add','StateController@view_add_modal')->name('add');
+        Route::get('edit/{id}','StateController@edit_state_modal')->name('edit');
+        Route::get('delete/{id}','StateController@delete_state')->name('delete');
+    });
+
     Route::group(['as'=>'setting.city.','prefix'=>'setting/city', 'namespace'=>'Setting'], function(){
         Route::get('add','CityController@view_add_modal')->name('add');
         Route::get('edit/{id}','CityController@edit_city_modal')->name('edit');

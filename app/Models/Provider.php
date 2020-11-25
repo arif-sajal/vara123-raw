@@ -37,4 +37,26 @@ class Provider extends Authenticatable
     public function amenity(){
         return $this->hasMany(Amenity::class);
     }
+
+    public function property_vehicle(){
+        return $this->hasMany(PropertyVehicle::class);
+    }
+    public function property_spot(){
+        return $this->hasMany(PropertySpot::class);
+    }
+    public function property_room(){
+        return $this->hasMany(PropertyRoom::class);
+    }
+    public function property(){
+        return $this->hasMany(Property::class);
+    }
+    public function property_amenities(){
+        return $this->hasMany(PropertyAmenity::class);
+    }
+    public function payout(){
+        return $this->hasMany(Payout::class);
+    }
+    public function booking(){
+        return $this->hasMany(Booking::class);
+    }
 }

@@ -12,6 +12,8 @@ Route::group(['namespace' => 'Administration'], function () {
             Route::get('vehicle-manufacturers', 'VehicleManufacturerController@vehicleManufacturersListView')->name('vehicle.manufacturer');
             Route::get('vehicle-type', 'VehicleTypeController@vehicleTypesListView')->name('vehicle.type');
             Route::get('config', 'ConfigController@config_list')->name('vehicle.config');
+            Route::get('country', 'CountryController@country_list')->name('all.country');
+            Route::get('state', 'StateController@state_list')->name('all.state');
             Route::get('city', 'CityController@city_list')->name('all.city');
             Route::get('amenity', 'AmenityController@amenity_list')->name('all.amenity');
         });
