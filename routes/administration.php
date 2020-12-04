@@ -3,6 +3,11 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'Administration'], function () {
+    
+    // Route::get('/clear', function(){
+    //     Artisan::call('storage:link'); 
+    //     return 'success';
+    // });
 
     Route::get('/', 'Auth\LoginController@loginView')->middleware('guest')->name('login.view');
     Route::post('login', 'Auth\LoginController@doLogin')->middleware('guest')->name('login.do');

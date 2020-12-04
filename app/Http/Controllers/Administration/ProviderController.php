@@ -121,9 +121,39 @@ class ProviderController extends Controller
     public function deleteProvider($id)
     {
         $provider = Provider::find($id);
+        
+        foreach( $provider->property_vehicle as $single_vehicle ):
+            $single_vehicle->delete();
+        endforeach;
+
+        foreach( $provider->property_spot as $single_spot ):
+            $single_spot->delete();
+        endforeach;
+
+        foreach( $provider->property_room as $single_room ):
+            $single_room->delete();
+        endforeach;
+
+        foreach( $provider->property as $single_property ):
+            foreach( $single_property->property_amenities as $single_amenities ):
+                $single_amenities->delete();
+            endforeach;
+            $single_property->delete();
+        endforeach;
+
+        foreach( $provider->payout as $single_payout ):
+            $single_payout->delete();
+        endforeach;
+
+        foreach( $provider->booking as $single_booking ):
+            $single_booking->transaction->delete();
+            $single_booking->delete();
+        endforeach;
+
         if (Storage::exists($provider->avatar)):
             Storage::delete($provider->avatar);
         endif;
+
         if ($provider->delete()):
             return Notify::send('success', 'Provider deleted successfully')->reload('table', 'ProvidersTable')->json();
         endif;
