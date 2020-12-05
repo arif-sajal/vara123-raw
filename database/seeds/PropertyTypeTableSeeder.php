@@ -21,7 +21,7 @@ class PropertyTypeTableSeeder extends Seeder
                 'title' => 'Ready To Stay Accommodation',
                 'subtitle' => 'Millions of hosts are ready to share their accommodation with you.',
                 'icon' => 'home',
-                'marker' => 'system/accommodation-pin.png'
+                'marker' => 'system/map-pins/accommodation.png'
             ],
             [
                 'name' => 'Parking Lot',
@@ -32,7 +32,7 @@ class PropertyTypeTableSeeder extends Seeder
                 'title' => 'Find Nearest Parking Spot',
                 'subtitle' => 'Find your nearest parking spots, and park your favorite vehicle without any hassle.',
                 'icon' => 'bacon',
-                'marker' => 'system/parking-lot-pin.png'
+                'marker' => 'system/map-pins/parking-lot.png'
             ],
             [
                 'name' => 'Vehicle Rental',
@@ -43,7 +43,7 @@ class PropertyTypeTableSeeder extends Seeder
                 'title' => 'Your Personal Car As You Want',
                 'subtitle' => 'Hire any kind of vehicle on monthly or weekly even hourly whatever you want.',
                 'icon' => 'taxi',
-                'marker' => 'system/vehicle-rental-pin.png'
+                'marker' => 'system/map-pins/vehicle-rental.png'
             ],
         ];
 

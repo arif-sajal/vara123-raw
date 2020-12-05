@@ -5,10 +5,10 @@
 use Faker\Generator as Faker;
 
 $factory->define(\App\Models\PropertyAmenity::class, function (Faker $faker) {
-    $property = \App\Models\Property::all()->random();
-    $amenity = \App\Models\Amenity::all()->random();
+    $property = \App\Models\Property::inRandomOrder()->first();
+    $amenity = \App\Models\Amenity::inRandomOrder()->first();
     return [
-        'property_id' => $property->id,
-        'amenity_id' => $amenity->id
+        'property_id' => 1,
+        'amenity_id' => 1
     ];
 });
