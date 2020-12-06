@@ -25,7 +25,7 @@ class PropertyRoomResource extends JsonResource
             'total'=> $this->total,
             'available'=> $this->available,
             'booked'=> $this->booked,
-            'featuredImage'=> Storage::has($this->featured_image) ? Storage::url($this->featured_image) : Storage::url('system/no-image-found.png'),
+            'featuredImage'=> Storage::has($this->featured_image) ? Storage::url($this->featured_image) : Storage::url('system/no-image.jpg'),
             'billings'=> BillingResource::collection($this->billings),
         ];
     }

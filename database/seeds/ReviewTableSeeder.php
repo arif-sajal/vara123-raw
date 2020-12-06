@@ -25,7 +25,7 @@ class ReviewTableSeeder extends Seeder
                     for ($i=0;$i <= $total;$i++):
                         $reviews[] = [
                             'property_id'=> $property->id,
-                            'customer_id'=> rand(1,50),
+                            'customer_id'=> rand(1,11),
                             'item_id'=> $room->id,
                             'item_type'=> get_class($room),
                             'quality'=> $quality,
@@ -47,7 +47,7 @@ class ReviewTableSeeder extends Seeder
                     for ($i=0;$i <= $total;$i++):
                         $reviews[] = [
                             'property_id'=> $property->id,
-                            'customer_id'=> rand(1,50),
+                            'customer_id'=> rand(1,11),
                             'item_id'=> $vehicle->id,
                             'item_type'=> get_class($vehicle),
                             'quality'=> $quality,
@@ -69,7 +69,7 @@ class ReviewTableSeeder extends Seeder
                     for ($i=0;$i <= $total;$i++):
                         $reviews[] = [
                             'property_id'=> $property->id,
-                            'customer_id'=> rand(1,50),
+                            'customer_id'=> rand(1,11),
                             'item_id'=> $spot->id,
                             'item_type'=> get_class($spot),
                             'quality'=> $quality,

@@ -21,7 +21,9 @@ class ReviewResource extends JsonResource
             'location'=> $this->location,
             'price'=> $this->price,
             'service'=> $this->service,
-            'review'=> $this->review
+            'avg'=> ($this->service + $this->price + $this->location + $this->quality) / 4,
+            'review'=> $this->review,
+            'createdAt'=> $this->created_at
         ];
     }
 }

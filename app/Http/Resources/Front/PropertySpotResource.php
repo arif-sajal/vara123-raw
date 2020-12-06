@@ -24,7 +24,7 @@ class PropertySpotResource extends JsonResource
             'booked'=> $this->booked,
             'name'=> $this->name,
             'description'=> $this->description,
-            'featuredImage'=> Storage::has($this->featured_image) ? Storage::url($this->featured_image) : Storage::url('system/no-image-found.png'),
+            'featuredImage'=> Storage::has($this->featured_image) ? Storage::url($this->featured_image) : Storage::url('system/no-image.jpg'),
             'compatibleVehicles'=> VehicleModelResource::collection($this->compatible_vehicles),
             'billings'=> BillingResource::collection($this->billings)
         ];

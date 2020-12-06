@@ -23,8 +23,9 @@ class PropertyVehicleResource extends JsonResource
             'booked'=> $this->booked,
             'name'=> $this->name,
             'description'=> $this->description,
-            'featuredImage'=> Storage::has($this->featured_image) ? Storage::url($this->featured_image) : Storage::url('system/no-image-found.png'),
-            'billings'=> BillingResource::collection($this->billings)
+            'featuredImage'=> Storage::has($this->featured_image) ? Storage::url($this->featured_image) : Storage::url('system/no-image.jpg'),
+            'billings'=> BillingResource::collection($this->billings),
+            'createdAt'=> $this->created_at
         ];
     }
 }
