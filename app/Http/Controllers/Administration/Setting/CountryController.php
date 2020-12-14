@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Administration\Setting;
 
 use App\Http\Controllers\Controller;
 use App\Models\Country;
+use App\Models\State;
+use App\Models\City;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Administration\Setting\Country\Add;
@@ -68,6 +70,16 @@ class CountryController extends Controller
 
     public function delete_country($id){
         $country = Country::find($id);
+        $states = State::where('country_id', $id)->get();
+        $cities = City::where('country_id', $id)->get();
+        
+        foreach($states as $state){
+            $state->delete();
+        }
+        
+        foreach($cities as $city){
+            $city->delete();
+        }
 
         if( $country->delete() ):
             return Notify::send('success','Country Deleted Successfully')->reload('table','CountryTable')->json();
