@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['namespace' => 'Administration'], function () {
     
     // Route::get('/clear', function(){
-    //     Artisan::call('storage:link'); 
+    //     Artisan::call('migrate:fresh --seed'); 
     //     return 'success';
     // });
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Administration\Setting;
 
 use App\Http\Controllers\Controller;
 use App\Models\State;
+use App\Models\City;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Administration\Setting\State\Add;
@@ -73,6 +74,11 @@ class StateController extends Controller
 
     public function delete_state($id){
         $state = State::find($id);
+        
+        $cities = City::where('state_id', $id)->get();
+        foreach($cities as $city){
+            $city->delete();
+        }
 
         if( $state->delete() ):
             return Notify::send('success','State Deleted Successfully')->reload('table','StateTable')->json();
